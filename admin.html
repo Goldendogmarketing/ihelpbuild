@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>iHelpBuild — Admin CRM</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --color-bg: #08080a;
+  --color-surface: #111114;
+  --color-surface-elevated: #1a1a1f;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8690;
+  --color-text-dim: #55515c;
+  --color-accent: #c8a97e;
+  --color-accent-warm: #d4a855;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.07);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+html { background: var(--color-bg); color: var(--color-text); font-family: var(--font-body); -webkit-font-smoothing: antialiased; }
+body { background: var(--color-bg); min-height: 100vh; }
+
+/* Login Screen */
+.login-screen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 2rem;
+}
+.login-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 16px;
+  padding: 3rem;
+  max-width: 400px;
+  width: 100%;
+  text-align: center;
+}
+.login-logo {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 1rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 2rem;
+}
+.login-logo span { color: var(--color-accent); font-weight: 600; }
+.login-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  margin-bottom: 0.5rem;
+}
+.login-subtitle {
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  font-weight: 300;
+  margin-bottom: 2rem;
+}
+.login-input {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  text-align: center;
+  margin-bottom: 1rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.login-input:focus { border-color: var(--color-accent); }
+.login-btn {
+  width: 100%;
+  padding: 0.85rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.login-btn:hover { transform: translateY(-1px); box-shadow: 0 10px 30px rgba(200,169,126,0.2); }
+.login-error {
+  color: #e57373;
+  font-size: 0.8rem;
+  margin-top: 0.75rem;
+  display: none;
+}
+
+/* Dashboard Layout */
+.dashboard { display: none; }
+.dashboard.active { display: flex; min-height: 100vh; }
+
+/* Sidebar */
+.sidebar {
+  width: 260px;
+  background: var(--color-surface);
+  border-right: 1px solid var(--color-glass-border);
+  padding: 2rem 0;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+}
+.sidebar-logo {
+  padding: 0 1.5rem 2rem;
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  border-bottom: 1px solid var(--color-glass-border);
+}
+.sidebar-logo span { color: var(--color-accent); font-weight: 600; }
+.sidebar-nav { padding: 1.5rem 0; flex: 1; }
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1.5rem;
+  color: var(--color-text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  border-left: 3px solid transparent;
+}
+.sidebar-item:hover { color: var(--color-text); background: var(--color-glass); }
+.sidebar-item.active {
+  color: var(--color-accent);
+  background: rgba(200,169,126,0.05);
+  border-left-color: var(--color-accent);
+}
+.sidebar-item svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid var(--color-glass-border);
+}
+.sidebar-logout {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  color: var(--color-text-dim);
+  font-size: 0.78rem;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-family: var(--font-body);
+  transition: color 0.2s;
+}
+.sidebar-logout:hover { color: var(--color-text); }
+
+/* Main Content */
+.main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* Top Bar */
+.topbar {
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-glass-border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+.topbar-title {
+  font-family: var(--font-display);
+  font-size: 1.4rem;
+  font-weight: 400;
+}
+.topbar-actions {
+  display: flex;
+  gap: 0.75rem;
+  align-items: center;
+}
+.search-input {
+  padding: 0.6rem 1rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  outline: none;
+  width: 220px;
+  transition: border-color 0.3s;
+}
+.search-input:focus { border-color: var(--color-accent); }
+.search-input::placeholder { color: var(--color-text-dim); }
+.filter-select {
+  padding: 0.6rem 1rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6' viewBox='0 0 10 6'%3E%3Cpath d='M1 1l4 4 4-4' stroke='%238a8690' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.75rem center;
+  padding-right: 2rem;
+}
+.filter-select option { background: var(--color-surface); color: var(--color-text); }
+
+/* Pipeline Stats */
+.pipeline-stats {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1rem;
+  padding: 1.5rem 2rem;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+.stat-card {
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 10px;
+  padding: 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.stat-card:hover { background: var(--color-glass-hover); }
+.stat-card.active { border-color: var(--color-accent); background: rgba(200,169,126,0.05); }
+.stat-count {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--color-text);
+  line-height: 1;
+  margin-bottom: 0.25rem;
+}
+.stat-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+.stat-card[data-status="new"] .stat-count { color: #7eb8c8; }
+.stat-card[data-status="contacted"] .stat-count { color: #c8a97e; }
+.stat-card[data-status="qualified"] .stat-count { color: #a0c878; }
+.stat-card[data-status="proposal"] .stat-count { color: #c8a0d4; }
+.stat-card[data-status="won"] .stat-count { color: #78c8a0; }
+.stat-card[data-status="lost"] .stat-count { color: #c87878; }
+
+/* Leads Table */
+.leads-content { flex: 1; overflow-y: auto; padding: 0; }
+.leads-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+.leads-table th {
+  padding: 0.85rem 1.25rem;
+  text-align: left;
+  font-size: 0.65rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  font-weight: 500;
+  border-bottom: 1px solid var(--color-glass-border);
+  position: sticky;
+  top: 0;
+  background: var(--color-bg);
+  z-index: 1;
+}
+.leads-table td {
+  padding: 1rem 1.25rem;
+  font-size: 0.85rem;
+  border-bottom: 1px solid var(--color-glass-border);
+  color: var(--color-text-muted);
+}
+.leads-table tr { cursor: pointer; transition: background 0.2s; }
+.leads-table tbody tr:hover { background: var(--color-glass); }
+.lead-name { color: var(--color-text); font-weight: 500; }
+.lead-email { font-size: 0.78rem; color: var(--color-text-dim); }
+
+/* Status Badge */
+.status-badge {
+  display: inline-block;
+  padding: 0.3rem 0.75rem;
+  border-radius: 20px;
+  font-size: 0.68rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+.status-new { background: rgba(126,184,200,0.12); color: #7eb8c8; }
+.status-contacted { background: rgba(200,169,126,0.12); color: #c8a97e; }
+.status-qualified { background: rgba(160,200,120,0.12); color: #a0c878; }
+.status-proposal { background: rgba(200,160,212,0.12); color: #c8a0d4; }
+.status-won { background: rgba(120,200,160,0.12); color: #78c8a0; }
+.status-lost { background: rgba(200,120,120,0.12); color: #c87878; }
+
+/* Lead Detail Panel */
+.detail-panel {
+  position: fixed;
+  top: 0;
+  right: -500px;
+  width: 480px;
+  max-width: 90vw;
+  height: 100vh;
+  background: var(--color-surface);
+  border-left: 1px solid var(--color-glass-border);
+  z-index: 100;
+  transition: right 0.5s var(--ease-out-expo);
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+}
+.detail-panel.open { right: 0; }
+.detail-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8,8,10,0.6);
+  z-index: 99;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s, visibility 0.3s;
+}
+.detail-overlay.open { opacity: 1; visibility: visible; }
+
+.detail-header {
+  padding: 2rem;
+  border-bottom: 1px solid var(--color-glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+}
+.detail-close {
+  width: 36px;
+  height: 36px;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  font-size: 1.1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.detail-close:hover { background: var(--color-glass-hover); color: var(--color-text); }
+.detail-name {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  margin-bottom: 0.25rem;
+}
+.detail-meta {
+  font-size: 0.78rem;
+  color: var(--color-text-dim);
+}
+
+.detail-body { padding: 2rem; flex: 1; }
+.detail-section {
+  margin-bottom: 2rem;
+}
+.detail-section-title {
+  font-size: 0.65rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+.detail-field {
+  display: flex;
+  justify-content: space-between;
+  padding: 0.6rem 0;
+  border-bottom: 1px solid var(--color-glass-border);
+  font-size: 0.85rem;
+}
+.detail-field-label { color: var(--color-text-dim); }
+.detail-field-value { color: var(--color-text); text-align: right; }
+
+.detail-description {
+  padding: 1rem;
+  background: var(--color-glass);
+  border-radius: 8px;
+  font-size: 0.85rem;
+  line-height: 1.6;
+  color: var(--color-text-muted);
+}
+
+/* Status Selector */
+.status-selector {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+.status-option {
+  padding: 0.4rem 0.85rem;
+  border-radius: 20px;
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-glass);
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.status-option:hover { background: var(--color-glass-hover); }
+.status-option.active { border-color: var(--color-accent); color: var(--color-accent); background: rgba(200,169,126,0.08); }
+
+/* Notes */
+.notes-list { margin-bottom: 1rem; }
+.note-item {
+  padding: 0.75rem 1rem;
+  background: var(--color-glass);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+.note-date {
+  font-size: 0.68rem;
+  color: var(--color-text-dim);
+  margin-top: 0.35rem;
+}
+.note-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+.note-input {
+  flex: 1;
+  padding: 0.65rem 0.85rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.note-input:focus { border-color: var(--color-accent); }
+.note-input::placeholder { color: var(--color-text-dim); }
+.note-add-btn {
+  padding: 0.65rem 1rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: transform 0.2s;
+  white-space: nowrap;
+}
+.note-add-btn:hover { transform: translateY(-1px); }
+
+/* Delete button */
+.detail-delete {
+  padding: 2rem;
+  border-top: 1px solid var(--color-glass-border);
+}
+.delete-btn {
+  width: 100%;
+  padding: 0.7rem;
+  background: rgba(200,120,120,0.08);
+  border: 1px solid rgba(200,120,120,0.2);
+  border-radius: 8px;
+  color: #c87878;
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.delete-btn:hover { background: rgba(200,120,120,0.15); }
+
+/* Empty State */
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 6rem 2rem;
+  color: var(--color-text-dim);
+  text-align: center;
+}
+.empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
+.empty-text { font-size: 0.9rem; }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .sidebar { display: none; }
+  .pipeline-stats { grid-template-columns: repeat(3, 1fr); }
+  .topbar { flex-wrap: wrap; }
+  .search-input { width: 100%; }
+}
+@media (max-width: 480px) {
+  .pipeline-stats { grid-template-columns: repeat(2, 1fr); }
+  .leads-table th:nth-child(4), .leads-table td:nth-child(4),
+  .leads-table th:nth-child(5), .leads-table td:nth-child(5) { display: none; }
+}
+</style>
+</head>
+<body>
+
+<!-- Login Screen -->
+<div class="login-screen" id="loginScreen">
+  <div class="login-card">
+    <div class="login-logo"><span>i</span>HelpBuild</div>
+    <div class="login-title">Admin CRM</div>
+    <div class="login-subtitle">Enter your admin password to continue</div>
+    <form onsubmit="login(event)">
+      <input type="password" class="login-input" id="loginPassword" placeholder="Password" autocomplete="current-password">
+      <button type="submit" class="login-btn">Sign In</button>
+    </form>
+    <div class="login-error" id="loginError">Invalid password. Please try again.</div>
+  </div>
+</div>
+
+<!-- Dashboard -->
+<div class="dashboard" id="dashboard">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <div class="sidebar-logo"><span>i</span>HelpBuild</div>
+    <div class="sidebar-nav">
+      <div class="sidebar-item active" data-view="leads">
+        <svg viewBox="0 0 24 24"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+        Leads
+      </div>
+      <div class="sidebar-item" data-view="pipeline">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        Pipeline
+      </div>
+    </div>
+    <div class="sidebar-footer">
+      <button class="sidebar-logout" onclick="logout()">
+        <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" fill="none" stroke-width="1.5"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+        Sign Out
+      </button>
+    </div>
+  </div>
+
+  <!-- Main -->
+  <div class="main">
+    <!-- Top Bar -->
+    <div class="topbar">
+      <div class="topbar-title">Lead Management</div>
+      <div class="topbar-actions">
+        <input type="text" class="search-input" id="searchInput" placeholder="Search leads..." oninput="filterLeads()">
+        <select class="filter-select" id="statusFilter" onchange="filterLeads()">
+          <option value="all">All Statuses</option>
+          <option value="new">New</option>
+          <option value="contacted">Contacted</option>
+          <option value="qualified">Qualified</option>
+          <option value="proposal">Proposal</option>
+          <option value="won">Won</option>
+          <option value="lost">Lost</option>
+        </select>
+      </div>
+    </div>
+
+    <!-- Pipeline Stats -->
+    <div class="pipeline-stats" id="pipelineStats"></div>
+
+    <!-- Leads Table -->
+    <div class="leads-content">
+      <table class="leads-table">
+        <thead>
+          <tr>
+            <th>Lead</th>
+            <th>Project</th>
+            <th>Status</th>
+            <th>Date</th>
+            <th>Budget</th>
+          </tr>
+        </thead>
+        <tbody id="leadsBody"></tbody>
+      </table>
+      <div class="empty-state" id="emptyState" style="display:none;">
+        <div class="empty-icon">&#9776;</div>
+        <div class="empty-text">No leads yet. They'll appear here when someone books a consultation.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Detail Panel -->
+<div class="detail-overlay" id="detailOverlay" onclick="closeDetail()"></div>
+<div class="detail-panel" id="detailPanel">
+  <div class="detail-header">
+    <div>
+      <div class="detail-name" id="detailName"></div>
+      <div class="detail-meta" id="detailMeta"></div>
+    </div>
+    <button class="detail-close" onclick="closeDetail()">&times;</button>
+  </div>
+  <div class="detail-body">
+    <div class="detail-section">
+      <div class="detail-section-title">Status</div>
+      <div class="status-selector" id="statusSelector"></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">Contact Info</div>
+      <div id="detailContact"></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">Project Details</div>
+      <div id="detailProject"></div>
+    </div>
+    <div class="detail-section" id="detailDescSection" style="display:none;">
+      <div class="detail-section-title">Description</div>
+      <div class="detail-description" id="detailDescription"></div>
+    </div>
+    <div class="detail-section">
+      <div class="detail-section-title">Notes</div>
+      <div class="notes-list" id="notesList"></div>
+      <div class="note-input-row">
+        <input type="text" class="note-input" id="noteInput" placeholder="Add a note...">
+        <button class="note-add-btn" onclick="addNote()">Add</button>
+      </div>
+    </div>
+  </div>
+  <div class="detail-delete">
+    <button class="delete-btn" onclick="deleteCurrentLead()">Delete Lead</button>
+  </div>
+</div>
+
+<script>
+let token = sessionStorage.getItem('ihb_token') || '';
+let leads = [];
+let currentLead = null;
+
+// Auto-login if token exists
+if (token) {
+  document.getElementById('loginScreen').style.display = 'none';
+  document.getElementById('dashboard').classList.add('active');
+  loadLeads();
+}
+
+async function login(e) {
+  e.preventDefault();
+  const pw = document.getElementById('loginPassword').value;
+  try {
+    const res = await fetch('/api/auth', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ password: pw }),
+    });
+    const data = await res.json();
+    if (data.success) {
+      token = data.token;
+      sessionStorage.setItem('ihb_token', token);
+      document.getElementById('loginScreen').style.display = 'none';
+      document.getElementById('dashboard').classList.add('active');
+      loadLeads();
+    } else {
+      document.getElementById('loginError').style.display = 'block';
+    }
+  } catch {
+    document.getElementById('loginError').style.display = 'block';
+  }
+}
+
+function logout() {
+  token = '';
+  sessionStorage.removeItem('ihb_token');
+  location.reload();
+}
+
+async function loadLeads() {
+  try {
+    const res = await fetch('/api/leads', {
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    if (res.status === 401) { logout(); return; }
+    const data = await res.json();
+    leads = data.leads || [];
+    renderPipeline();
+    renderLeads();
+  } catch (err) {
+    console.error('Failed to load leads:', err);
+  }
+}
+
+function renderPipeline() {
+  const statuses = ['new', 'contacted', 'qualified', 'proposal', 'won', 'lost'];
+  const labels = { new: 'New', contacted: 'Contacted', qualified: 'Qualified', proposal: 'Proposal', won: 'Won', lost: 'Lost' };
+  const container = document.getElementById('pipelineStats');
+  container.innerHTML = statuses.map(function(s) {
+    const count = leads.filter(function(l) { return l.status === s; }).length;
+    return '<div class="stat-card" data-status="' + s + '" onclick="filterByStatus(\'' + s + '\')">' +
+      '<div class="stat-count">' + count + '</div>' +
+      '<div class="stat-label">' + labels[s] + '</div></div>';
+  }).join('');
+}
+
+function renderLeads(filtered) {
+  const list = filtered || leads;
+  const body = document.getElementById('leadsBody');
+  const empty = document.getElementById('emptyState');
+
+  if (list.length === 0) {
+    body.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  body.innerHTML = list.map(function(lead) {
+    const date = new Date(lead.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    return '<tr onclick="openDetail(\'' + lead.id + '\')">' +
+      '<td><div class="lead-name">' + esc(lead.name) + '</div><div class="lead-email">' + esc(lead.email) + '</div></td>' +
+      '<td>' + esc(lead.projectType) + '</td>' +
+      '<td><span class="status-badge status-' + lead.status + '">' + lead.status + '</span></td>' +
+      '<td>' + date + '</td>' +
+      '<td>' + esc(lead.budget || '—') + '</td>' +
+      '</tr>';
+  }).join('');
+}
+
+function filterLeads() {
+  const search = document.getElementById('searchInput').value.toLowerCase();
+  const status = document.getElementById('statusFilter').value;
+  let filtered = leads;
+  if (status !== 'all') {
+    filtered = filtered.filter(function(l) { return l.status === status; });
+  }
+  if (search) {
+    filtered = filtered.filter(function(l) {
+      return l.name.toLowerCase().includes(search) ||
+        l.email.toLowerCase().includes(search) ||
+        (l.company && l.company.toLowerCase().includes(search)) ||
+        l.projectType.toLowerCase().includes(search);
+    });
+  }
+  renderLeads(filtered);
+}
+
+function filterByStatus(status) {
+  document.getElementById('statusFilter').value = status;
+  filterLeads();
+  // Highlight active stat card
+  document.querySelectorAll('.stat-card').forEach(function(c) { c.classList.remove('active'); });
+  document.querySelector('.stat-card[data-status="' + status + '"]').classList.add('active');
+}
+
+function openDetail(id) {
+  currentLead = leads.find(function(l) { return l.id === id; });
+  if (!currentLead) return;
+
+  document.getElementById('detailName').textContent = currentLead.name;
+  document.getElementById('detailMeta').textContent = currentLead.email + (currentLead.company ? ' · ' + currentLead.company : '');
+
+  // Contact fields
+  document.getElementById('detailContact').innerHTML =
+    '<div class="detail-field"><span class="detail-field-label">Email</span><span class="detail-field-value">' + esc(currentLead.email) + '</span></div>' +
+    '<div class="detail-field"><span class="detail-field-label">Phone</span><span class="detail-field-value">' + esc(currentLead.phone || '—') + '</span></div>' +
+    '<div class="detail-field"><span class="detail-field-label">Company</span><span class="detail-field-value">' + esc(currentLead.company || '—') + '</span></div>';
+
+  // Project fields
+  document.getElementById('detailProject').innerHTML =
+    '<div class="detail-field"><span class="detail-field-label">Type</span><span class="detail-field-value">' + esc(currentLead.projectType) + '</span></div>' +
+    '<div class="detail-field"><span class="detail-field-label">Budget</span><span class="detail-field-value">' + esc(currentLead.budget || '—') + '</span></div>' +
+    '<div class="detail-field"><span class="detail-field-label">Preferred Date</span><span class="detail-field-value">' + esc(currentLead.preferredDate || '—') + '</span></div>' +
+    '<div class="detail-field"><span class="detail-field-label">Preferred Time</span><span class="detail-field-value">' + esc(currentLead.preferredTime || '—') + '</span></div>';
+
+  // Description
+  if (currentLead.description) {
+    document.getElementById('detailDescSection').style.display = 'block';
+    document.getElementById('detailDescription').textContent = currentLead.description;
+  } else {
+    document.getElementById('detailDescSection').style.display = 'none';
+  }
+
+  // Status selector
+  var statuses = ['new', 'contacted', 'qualified', 'proposal', 'won', 'lost'];
+  document.getElementById('statusSelector').innerHTML = statuses.map(function(s) {
+    return '<button class="status-option' + (currentLead.status === s ? ' active' : '') + '" onclick="updateStatus(\'' + s + '\')">' + s + '</button>';
+  }).join('');
+
+  // Notes
+  renderNotes();
+
+  // Open panel
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('detailOverlay').classList.add('open');
+}
+
+function closeDetail() {
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('detailOverlay').classList.remove('open');
+  currentLead = null;
+}
+
+function renderNotes() {
+  var container = document.getElementById('notesList');
+  if (!currentLead.notes || currentLead.notes.length === 0) {
+    container.innerHTML = '<div style="color:var(--color-text-dim);font-size:0.8rem;">No notes yet.</div>';
+    return;
+  }
+  container.innerHTML = currentLead.notes.map(function(n) {
+    var date = new Date(n.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit' });
+    return '<div class="note-item">' + esc(n.text) + '<div class="note-date">' + date + '</div></div>';
+  }).join('');
+}
+
+async function updateStatus(status) {
+  if (!currentLead) return;
+  try {
+    const res = await fetch('/api/leads/' + currentLead.id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ status: status }),
+    });
+    const data = await res.json();
+    if (data.lead) {
+      // Update local data
+      const idx = leads.findIndex(function(l) { return l.id === currentLead.id; });
+      if (idx !== -1) leads[idx] = data.lead;
+      currentLead = data.lead;
+      openDetail(currentLead.id);
+      renderPipeline();
+      filterLeads();
+    }
+  } catch (err) { console.error('Status update failed:', err); }
+}
+
+async function addNote() {
+  if (!currentLead) return;
+  var input = document.getElementById('noteInput');
+  var text = input.value.trim();
+  if (!text) return;
+  try {
+    const res = await fetch('/api/leads/' + currentLead.id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ note: text }),
+    });
+    const data = await res.json();
+    if (data.lead) {
+      const idx = leads.findIndex(function(l) { return l.id === currentLead.id; });
+      if (idx !== -1) leads[idx] = data.lead;
+      currentLead = data.lead;
+      renderNotes();
+      input.value = '';
+    }
+  } catch (err) { console.error('Add note failed:', err); }
+}
+
+// Enter key for notes
+document.getElementById('noteInput').addEventListener('keydown', function(e) {
+  if (e.key === 'Enter') addNote();
+});
+
+async function deleteCurrentLead() {
+  if (!currentLead) return;
+  if (!confirm('Delete this lead? This cannot be undone.')) return;
+  try {
+    await fetch('/api/leads/' + currentLead.id, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    leads = leads.filter(function(l) { return l.id !== currentLead.id; });
+    closeDetail();
+    renderPipeline();
+    renderLeads();
+  } catch (err) { console.error('Delete failed:', err); }
+}
+
+function esc(str) {
+  var div = document.createElement('div');
+  div.textContent = str;
+  return div.innerHTML;
+}
+
+// Auto-refresh every 30 seconds
+setInterval(loadLeads, 30000);
+</script>
+</body>
+</html>

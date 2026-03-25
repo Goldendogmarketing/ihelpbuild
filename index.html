@@ -870,27 +870,69 @@ body {
   padding: 8rem 3rem;
   text-align: center;
   position: relative;
+  overflow: hidden;
+}
+.testimonial-slider {
+  position: relative;
+  max-width: 800px;
+  margin: 0 auto;
+  min-height: 200px;
+}
+.testimonial-slide {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+  pointer-events: none;
+}
+.testimonial-slide.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  position: relative;
+}
+.testimonial-slide.exit {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 .social-proof-quote {
   font-family: var(--font-display);
   font-size: clamp(1.6rem, 3vw, 2.6rem);
   font-style: italic;
   line-height: 1.5;
-  max-width: 800px;
-  margin: 0 auto 2.5rem;
-  opacity: 0;
-  transform: translateY(30px);
+  margin-bottom: 2.5rem;
 }
 .social-proof-author {
   font-size: 0.8rem;
   letter-spacing: 0.15em;
   color: var(--color-text-muted);
   text-transform: uppercase;
-  opacity: 0;
-  transform: translateY(20px);
 }
 .social-proof-author span {
   color: var(--color-accent);
+}
+.testimonial-dots {
+  display: flex;
+  justify-content: center;
+  gap: 0.6rem;
+  margin-top: 2.5rem;
+}
+.testimonial-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--color-text-dim);
+  border: none;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+  padding: 0;
+}
+.testimonial-dot.active {
+  background: var(--color-accent);
+  transform: scale(1.3);
 }
 
 /* ═══════════════════════════════════════════
@@ -967,6 +1009,297 @@ body {
   transition: transform 0.4s var(--ease-out-expo);
 }
 .cta-button:hover::after { transform: translateX(4px); }
+
+/* ═══════════════════════════════════════════
+   CONSULTATION MODAL
+   ═══════════════════════════════════════════ */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 10, 0.85);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 9000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s var(--ease-out-expo), visibility 0.5s;
+  padding: 1.5rem;
+}
+.modal-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+.modal {
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 16px;
+  max-width: 680px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  transform: translateY(40px) scale(0.96);
+  transition: transform 0.6s var(--ease-out-expo);
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-glass-hover) transparent;
+}
+.modal-overlay.active .modal {
+  transform: translateY(0) scale(1);
+}
+.modal::-webkit-scrollbar { width: 6px; }
+.modal::-webkit-scrollbar-track { background: transparent; }
+.modal::-webkit-scrollbar-thumb { background: var(--color-glass-hover); border-radius: 3px; }
+.modal-header {
+  padding: 2.5rem 2.5rem 0;
+  position: relative;
+}
+.modal-close {
+  position: absolute;
+  top: 1.5rem;
+  right: 1.5rem;
+  width: 40px;
+  height: 40px;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 50%;
+  color: var(--color-text-muted);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s;
+}
+.modal-close:hover {
+  background: var(--color-glass-hover);
+  color: var(--color-text);
+}
+.modal-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+}
+.modal-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.6rem, 3vw, 2.2rem);
+  font-weight: 400;
+  line-height: 1.2;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+.modal-title em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+.modal-subtitle {
+  font-size: 0.9rem;
+  color: var(--color-text-muted);
+  font-weight: 300;
+  line-height: 1.5;
+}
+.modal-body {
+  padding: 2rem 2.5rem 2.5rem;
+}
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.form-group {
+  margin-bottom: 1.25rem;
+}
+.form-group.full-width {
+  grid-column: 1 / -1;
+}
+.form-label {
+  display: block;
+  font-size: 0.7rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.form-label .required {
+  color: var(--color-accent);
+}
+.form-input,
+.form-select,
+.form-textarea {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  transition: border-color 0.3s, background 0.3s;
+  outline: none;
+}
+.form-input:focus,
+.form-select:focus,
+.form-textarea:focus {
+  border-color: var(--color-accent);
+  background: var(--color-glass-hover);
+}
+.form-input::placeholder,
+.form-textarea::placeholder {
+  color: var(--color-text-dim);
+}
+.form-select {
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238a8690' fill='none' stroke-width='1.5'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  padding-right: 2.5rem;
+  cursor: pointer;
+}
+.form-select option {
+  background: var(--color-surface);
+  color: var(--color-text);
+}
+.form-textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* Date/Time Picker */
+.datetime-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+}
+.form-input[type="date"]::-webkit-calendar-picker-indicator {
+  filter: invert(0.6);
+  cursor: pointer;
+}
+
+/* Time Slots */
+.time-slots {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.5rem;
+}
+.time-slot {
+  padding: 0.6rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.time-slot:hover {
+  border-color: rgba(200, 169, 126, 0.3);
+  color: var(--color-text);
+  background: var(--color-glass-hover);
+}
+.time-slot.selected {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: rgba(200, 169, 126, 0.08);
+}
+
+/* Submit Button */
+.form-submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  width: 100%;
+  padding: 1.1rem 2rem;
+  margin-top: 0.5rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.5s var(--ease-out-expo);
+  position: relative;
+  overflow: hidden;
+}
+.form-submit:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 15px 50px rgba(200, 169, 126, 0.3);
+}
+.form-submit:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+.form-submit .spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid transparent;
+  border-top-color: var(--color-bg);
+  border-radius: 50%;
+  animation: spin 0.6s linear infinite;
+  display: none;
+}
+.form-submit.loading .spinner { display: block; }
+.form-submit.loading .btn-text { opacity: 0.5; }
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Success State */
+.form-success {
+  text-align: center;
+  padding: 3rem 2rem;
+  display: none;
+}
+.form-success.show { display: block; }
+.form-success-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(200, 169, 126, 0.1);
+  border: 2px solid var(--color-accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 1.5rem;
+  color: var(--color-accent);
+}
+.form-success h3 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 0.75rem;
+}
+.form-success p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+/* Modal responsive */
+@media (max-width: 600px) {
+  .modal-header { padding: 2rem 1.5rem 0; }
+  .modal-body { padding: 1.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .datetime-row { grid-template-columns: 1fr; }
+  .time-slots { grid-template-columns: repeat(2, 1fr); }
+}
 
 /* ═══════════════════════════════════════════
    FOOTER
@@ -1092,14 +1425,14 @@ body {
 
 <!-- Navigation -->
 <nav class="nav" id="nav">
-  <a href="#" class="nav-logo"><span class="logo-i">i</span>HelpBuild</a>
+  <a href="#hero" class="nav-logo"><span class="logo-i">i</span>HelpBuild</a>
   <ul class="nav-links">
     <li><a href="#capabilities">Services</a></li>
     <li><a href="#showcase">Work</a></li>
     <li><a href="#process">Process</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-cta" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Book a Call</button>
+  <button class="nav-cta" onclick="openConsultationModal()">Book a Call</button>
   <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
@@ -1125,7 +1458,7 @@ body {
       <h1 class="hero-title" id="heroTitle">Build a <em>Smarter</em> Business</h1>
       <p class="hero-subtitle" id="heroSubtitle">We design, develop, and automate — from cinematic websites to intelligent systems that scale your vision.</p>
       <div class="hero-cta-group" id="heroCta">
-        <button class="btn-primary" onclick="document.getElementById('contact').scrollIntoView({behavior:'smooth'})">Start Your Project</button>
+        <button class="btn-primary" onclick="openConsultationModal()">Start Your Project</button>
         <button class="btn-ghost" onclick="document.getElementById('capabilities').scrollIntoView({behavior:'smooth'})">Explore Services</button>
       </div>
     </div>
@@ -1317,8 +1650,33 @@ body {
 
 <!-- ═══════════════ SOCIAL PROOF ═══════════════ -->
 <section class="social-proof">
-  <div class="social-proof-quote reveal">"They didn't just build us a website — they built us a machine. Our lead flow tripled, our team spends half the time on admin, and the experience our clients get is world-class."</div>
-  <div class="social-proof-author reveal">— Client Testimonial · <span>Real Estate Development Firm</span></div>
+  <div class="testimonial-slider reveal" id="testimonialSlider">
+    <div class="testimonial-slide active">
+      <div class="social-proof-quote">"They didn't just build us a website — they built us a machine. Our lead flow tripled, our team spends half the time on admin, and the experience our clients get is world-class."</div>
+      <div class="social-proof-author">— Client Testimonial · <span>Real Estate Development Firm</span></div>
+    </div>
+    <div class="testimonial-slide">
+      <div class="social-proof-quote">"The custom software they built replaced four different tools we were paying for. One dashboard, everything connected — our operations run themselves now."</div>
+      <div class="social-proof-author">— Client Testimonial · <span>E-Commerce Brand</span></div>
+    </div>
+    <div class="testimonial-slide">
+      <div class="social-proof-quote">"Their AI automation cut our response time from hours to seconds. Leads get instant follow-ups, appointments book themselves, and we haven't missed a prospect since."</div>
+      <div class="social-proof-author">— Client Testimonial · <span>Financial Services Firm</span></div>
+    </div>
+    <div class="testimonial-slide">
+      <div class="social-proof-quote">"We came in with a rough idea and left with a platform. The CRM they built is exactly how our team thinks — no learning curve, just results from day one."</div>
+      <div class="social-proof-author">— Client Testimonial · <span>Healthcare Startup</span></div>
+    </div>
+    <div class="testimonial-slide">
+      <div class="social-proof-quote">"Our marketing used to be guesswork. Now every campaign is tracked, every funnel is automated, and we can see exactly what's driving revenue. Complete game-changer."</div>
+      <div class="social-proof-author">— Client Testimonial · <span>SaaS Company</span></div>
+    </div>
+    <div class="testimonial-slide">
+      <div class="social-proof-quote">"They connected our invoicing, scheduling, inventory, and client portal into one system. What used to take our team all week now happens automatically overnight."</div>
+      <div class="social-proof-author">— Client Testimonial · <span>Construction & Design Firm</span></div>
+    </div>
+  </div>
+  <div class="testimonial-dots" id="testimonialDots"></div>
 </section>
 
 <div class="section-divider"></div>
@@ -1329,9 +1687,110 @@ body {
   <h2 class="reveal">Ready to build<br>something <em>extraordinary?</em></h2>
   <p class="cta-body reveal">Whether you have a clear vision or just a spark of an idea — let's talk. Every great system starts with a conversation.</p>
   <div class="cta-button-wrap reveal">
-    <button class="cta-button">Schedule Your Consultation</button>
+    <button class="cta-button" onclick="openConsultationModal()">Schedule Your Consultation</button>
   </div>
 </section>
+
+<!-- ═══════════════ CONSULTATION MODAL ═══════════════ -->
+<div class="modal-overlay" id="consultModal">
+  <div class="modal">
+    <div class="modal-header">
+      <button class="modal-close" onclick="closeConsultationModal()">&times;</button>
+      <div class="modal-eyebrow">Book Your Discovery Call</div>
+      <div class="modal-title">Let's build something <em>extraordinary</em></div>
+      <div class="modal-subtitle">Tell us about your vision and pick a time that works for you.</div>
+    </div>
+
+    <div class="modal-body">
+      <!-- Form -->
+      <form id="consultForm" onsubmit="submitConsultation(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Full Name <span class="required">*</span></label>
+            <input type="text" class="form-input" name="name" placeholder="John Smith" required>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Email <span class="required">*</span></label>
+            <input type="email" class="form-input" name="email" placeholder="john@company.com" required>
+          </div>
+        </div>
+
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">Phone</label>
+            <input type="tel" class="form-input" name="phone" placeholder="(555) 123-4567">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Company / Business</label>
+            <input type="text" class="form-input" name="company" placeholder="Your Company">
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">What do you want to build? <span class="required">*</span></label>
+          <select class="form-select" name="projectType" required>
+            <option value="" disabled selected>Select a project type</option>
+            <option value="Cinematic Website">Cinematic Website</option>
+            <option value="Custom Software / SaaS">Custom Software / SaaS</option>
+            <option value="AI Automation">AI Automation</option>
+            <option value="CRM / Database System">CRM / Database System</option>
+            <option value="Marketing System">Marketing System</option>
+            <option value="Full Business System">Full Business System</option>
+            <option value="Multiple / Not Sure Yet">Multiple / Not Sure Yet</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Tell us about your project</label>
+          <textarea class="form-textarea" name="description" placeholder="Describe your vision, goals, or challenges you're facing..."></textarea>
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Budget Range</label>
+          <select class="form-select" name="budget">
+            <option value="" disabled selected>Select your budget range</option>
+            <option value="Under $5,000">Under $5,000</option>
+            <option value="$5,000 – $15,000">$5,000 – $15,000</option>
+            <option value="$15,000 – $50,000">$15,000 – $50,000</option>
+            <option value="$50,000+">$50,000+</option>
+            <option value="Not sure yet">Not sure yet</option>
+          </select>
+        </div>
+
+        <div class="datetime-row">
+          <div class="form-group">
+            <label class="form-label">Preferred Date</label>
+            <input type="date" class="form-input" name="preferredDate" id="preferredDate">
+          </div>
+          <div class="form-group">
+            <label class="form-label">Preferred Time</label>
+            <div class="time-slots" id="timeSlots">
+              <button type="button" class="time-slot" data-time="9:00 AM">9:00 AM</button>
+              <button type="button" class="time-slot" data-time="10:00 AM">10:00 AM</button>
+              <button type="button" class="time-slot" data-time="11:00 AM">11:00 AM</button>
+              <button type="button" class="time-slot" data-time="1:00 PM">1:00 PM</button>
+              <button type="button" class="time-slot" data-time="2:00 PM">2:00 PM</button>
+              <button type="button" class="time-slot" data-time="3:00 PM">3:00 PM</button>
+            </div>
+            <input type="hidden" name="preferredTime" id="preferredTime">
+          </div>
+        </div>
+
+        <button type="submit" class="form-submit" id="submitBtn">
+          <span class="btn-text">Schedule Discovery Call</span>
+          <div class="spinner"></div>
+        </button>
+      </form>
+
+      <!-- Success Message -->
+      <div class="form-success" id="formSuccess">
+        <div class="form-success-icon">&#10003;</div>
+        <h3>You're on the calendar!</h3>
+        <p>We've received your consultation request and will confirm your time within 24 hours. Check your email for details.</p>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- ═══════════════ FOOTER ═══════════════ -->
 <footer class="footer">
@@ -1689,6 +2148,140 @@ if (window.matchMedia('(pointer: fine)').matches) {
     const grid = document.querySelector('.hero-grid-overlay');
     if (grid) grid.style.transform = 'translate(' + (x * 10) + 'px, ' + (y * 10) + 'px)';
   });
+}
+
+// ═══════════════════════════════════════════
+// TESTIMONIAL SLIDER
+// ═══════════════════════════════════════════
+(function() {
+  const slides = document.querySelectorAll('.testimonial-slide');
+  const dotsContainer = document.getElementById('testimonialDots');
+  let current = 0;
+  let timer;
+
+  // Build dots
+  slides.forEach(function(_, i) {
+    const dot = document.createElement('button');
+    dot.className = 'testimonial-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', 'Testimonial ' + (i + 1));
+    dot.addEventListener('click', function() { goTo(i); });
+    dotsContainer.appendChild(dot);
+  });
+
+  function goTo(idx) {
+    if (idx === current) return;
+    slides[current].classList.remove('active');
+    slides[current].classList.add('exit');
+    setTimeout(function() { slides[current === idx ? current : current].classList.remove('exit'); }, 800);
+    var prev = current;
+    current = idx;
+    slides[current].classList.add('active');
+    setTimeout(function() { slides[prev].classList.remove('exit'); }, 800);
+
+    dotsContainer.querySelectorAll('.testimonial-dot').forEach(function(d, i) {
+      d.classList.toggle('active', i === current);
+    });
+
+    resetTimer();
+  }
+
+  function next() {
+    goTo((current + 1) % slides.length);
+  }
+
+  function resetTimer() {
+    clearInterval(timer);
+    timer = setInterval(next, 6000);
+  }
+
+  resetTimer();
+})();
+
+// ═══════════════════════════════════════════
+// CONSULTATION MODAL
+// ═══════════════════════════════════════════
+function openConsultationModal() {
+  const modal = document.getElementById('consultModal');
+  modal.classList.add('active');
+  document.body.style.overflow = 'hidden';
+
+  // Set min date to tomorrow
+  const dateInput = document.getElementById('preferredDate');
+  const tomorrow = new Date();
+  tomorrow.setDate(tomorrow.getDate() + 1);
+  // Skip weekends
+  while (tomorrow.getDay() === 0 || tomorrow.getDay() === 6) {
+    tomorrow.setDate(tomorrow.getDate() + 1);
+  }
+  dateInput.min = tomorrow.toISOString().split('T')[0];
+  // Set max date 60 days out
+  const maxDate = new Date();
+  maxDate.setDate(maxDate.getDate() + 60);
+  dateInput.max = maxDate.toISOString().split('T')[0];
+}
+
+function closeConsultationModal() {
+  const modal = document.getElementById('consultModal');
+  modal.classList.remove('active');
+  document.body.style.overflow = '';
+}
+
+// Close on overlay click
+document.getElementById('consultModal').addEventListener('click', function(e) {
+  if (e.target === this) closeConsultationModal();
+});
+
+// Close on Escape
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeConsultationModal();
+});
+
+// Time slot selection
+document.querySelectorAll('.time-slot').forEach(function(slot) {
+  slot.addEventListener('click', function() {
+    document.querySelectorAll('.time-slot').forEach(function(s) { s.classList.remove('selected'); });
+    this.classList.add('selected');
+    document.getElementById('preferredTime').value = this.dataset.time;
+  });
+});
+
+// Form submission
+async function submitConsultation(e) {
+  e.preventDefault();
+  const form = e.target;
+  const btn = document.getElementById('submitBtn');
+  btn.classList.add('loading');
+  btn.disabled = true;
+
+  const data = {
+    name: form.name.value.trim(),
+    email: form.email.value.trim(),
+    phone: form.phone.value.trim(),
+    company: form.company.value.trim(),
+    projectType: form.projectType.value,
+    description: form.description.value.trim(),
+    preferredDate: form.preferredDate.value,
+    preferredTime: form.preferredTime.value,
+    budget: form.budget.value,
+  };
+
+  try {
+    const res = await fetch('/api/leads', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(data),
+    });
+
+    if (!res.ok) throw new Error('Submission failed');
+
+    // Show success
+    form.style.display = 'none';
+    document.getElementById('formSuccess').classList.add('show');
+  } catch (err) {
+    alert('Something went wrong. Please try again or email us directly.');
+    btn.classList.remove('loading');
+    btn.disabled = false;
+  }
 }
 </script>
 </body>

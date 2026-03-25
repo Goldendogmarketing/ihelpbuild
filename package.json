@@ -1,0 +1,13 @@
+{
+  "name": "ihelpbuild",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "start": "vercel dev"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.8",
+    "uuid": "^9.0.0"
+  }
+}
