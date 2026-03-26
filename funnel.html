@@ -1,0 +1,940 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 Free AI Prompts That Will Transform Your Business — iHelpBuild</title>
+<meta name="description" content="Get 10 battle-tested AI prompts used by 500+ business owners to automate, scale, and save 10+ hours every week. 100% free.">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --color-bg: #08080a;
+  --color-surface: #111114;
+  --color-surface-elevated: #1a1a1f;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8690;
+  --color-text-dim: #55515c;
+  --color-accent: #c8a97e;
+  --color-accent-warm: #d4a855;
+  --color-accent-cool: #7eb8c8;
+  --color-white: #ffffff;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  overflow-x: hidden;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   LOGO
+   ═══════════════════════════════════════════ */
+.funnel-logo {
+  text-align: center;
+  padding: 24px 0 0;
+  font-family: var(--font-display);
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.logo-i {
+  color: var(--color-accent);
+  font-style: italic;
+}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════ */
+.funnel-container {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+section {
+  padding: 60px 0;
+}
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL
+   ═══════════════════════════════════════════ */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+.hero {
+  padding: 48px 0 60px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-block;
+  padding: 6px 16px;
+  background: rgba(200, 169, 126, 0.1);
+  border: 1px solid rgba(200, 169, 126, 0.25);
+  border-radius: 100px;
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: var(--color-accent);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 28px;
+}
+
+.hero h1 {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 7vw, 3rem);
+  font-weight: 700;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin-bottom: 20px;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 em {
+  color: var(--color-accent);
+  font-style: italic;
+}
+
+.hero-sub {
+  font-size: clamp(1rem, 3vw, 1.15rem);
+  color: var(--color-text-muted);
+  font-weight: 400;
+  max-width: 480px;
+  margin: 0 auto 36px;
+  line-height: 1.65;
+}
+
+/* ═══════════════════════════════════════════
+   FORM
+   ═══════════════════════════════════════════ */
+.capture-form {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  max-width: 420px;
+  margin: 0 auto;
+}
+
+.capture-form input {
+  width: 100%;
+  padding: 14px 18px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 10px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.capture-form input::placeholder {
+  color: var(--color-text-dim);
+}
+
+.capture-form input:focus {
+  border-color: rgba(200, 169, 126, 0.4);
+  box-shadow: 0 0 0 3px rgba(200, 169, 126, 0.08);
+}
+
+.btn-cta {
+  width: 100%;
+  padding: 16px 24px;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-family: var(--font-body);
+  font-size: 1rem;
+  font-weight: 600;
+  border: none;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.15s ease, box-shadow 0.3s ease;
+  letter-spacing: 0.01em;
+}
+
+.btn-cta:hover {
+  background: var(--color-accent-warm);
+  transform: translateY(-1px);
+  box-shadow: 0 8px 30px rgba(200, 169, 126, 0.2);
+}
+
+.btn-cta:active {
+  transform: translateY(0);
+}
+
+.btn-cta:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.form-disclaimer {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  text-align: center;
+  margin-top: 4px;
+}
+
+.success-message {
+  text-align: center;
+  padding: 32px 20px;
+}
+
+.success-message .success-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  background: rgba(200, 169, 126, 0.12);
+  border-radius: 50%;
+  margin-bottom: 16px;
+}
+
+.success-message .success-icon svg {
+  width: 28px;
+  height: 28px;
+  color: var(--color-accent);
+}
+
+.success-message h3 {
+  font-family: var(--font-display);
+  font-size: 1.35rem;
+  color: var(--color-text);
+  margin-bottom: 8px;
+}
+
+.success-message p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+}
+
+/* ═══════════════════════════════════════════
+   VALUE BULLETS
+   ═══════════════════════════════════════════ */
+.value-section {
+  padding: 0 0 60px;
+}
+
+.value-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.value-card {
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 14px;
+  padding: 24px 20px;
+  transition: border-color 0.3s ease, transform 0.3s var(--ease-out-expo);
+}
+
+.value-card:hover {
+  border-color: rgba(200, 169, 126, 0.15);
+  transform: translateY(-2px);
+}
+
+.value-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42px;
+  height: 42px;
+  background: rgba(200, 169, 126, 0.08);
+  border-radius: 10px;
+  margin-bottom: 14px;
+}
+
+.value-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+}
+
+.value-card h3 {
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin-bottom: 6px;
+}
+
+.value-card p {
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════
+   WHAT'S INSIDE
+   ═══════════════════════════════════════════ */
+.inside-section {
+  padding: 40px 0 60px;
+  text-align: center;
+}
+
+.section-label {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.12em;
+  color: var(--color-accent);
+  margin-bottom: 12px;
+}
+
+.section-title {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 36px;
+  letter-spacing: -0.02em;
+}
+
+.guide-mockup {
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 16px;
+  padding: 32px 28px;
+  text-align: left;
+  position: relative;
+  overflow: hidden;
+}
+
+.guide-mockup::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--color-accent), var(--color-accent-warm), var(--color-accent-cool));
+}
+
+.guide-mockup-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 24px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--color-glass-border);
+}
+
+.guide-mockup-icon {
+  width: 40px;
+  height: 40px;
+  background: rgba(200, 169, 126, 0.1);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.guide-mockup-icon svg {
+  width: 20px;
+  height: 20px;
+  color: var(--color-accent);
+}
+
+.guide-mockup-header-text h4 {
+  font-family: var(--font-display);
+  font-size: 1rem;
+  color: var(--color-text);
+  font-weight: 700;
+}
+
+.guide-mockup-header-text span {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+.guide-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.guide-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: 0.88rem;
+  color: var(--color-text-muted);
+  line-height: 1.5;
+}
+
+.guide-list li .li-num {
+  flex-shrink: 0;
+  width: 24px;
+  height: 24px;
+  background: rgba(200, 169, 126, 0.1);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.7rem;
+  font-weight: 600;
+  color: var(--color-accent);
+}
+
+.guide-list li strong {
+  color: var(--color-text);
+  font-weight: 500;
+}
+
+/* ═══════════════════════════════════════════
+   TESTIMONIAL
+   ═══════════════════════════════════════════ */
+.testimonial-section {
+  padding: 40px 0 60px;
+  text-align: center;
+}
+
+.testimonial-card {
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 16px;
+  padding: 36px 28px;
+  position: relative;
+}
+
+.testimonial-quote-mark {
+  font-family: var(--font-display);
+  font-size: 4rem;
+  color: var(--color-accent);
+  line-height: 1;
+  opacity: 0.3;
+  margin-bottom: -16px;
+}
+
+.testimonial-card blockquote {
+  font-family: var(--font-display);
+  font-size: clamp(1.05rem, 3vw, 1.2rem);
+  font-style: italic;
+  color: var(--color-text);
+  line-height: 1.65;
+  margin-bottom: 24px;
+}
+
+.testimonial-author {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+}
+
+.testimonial-avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--color-accent), var(--color-accent-warm));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--color-bg);
+}
+
+.testimonial-author-info {
+  text-align: left;
+}
+
+.testimonial-author-info .name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--color-text);
+}
+
+.testimonial-author-info .role {
+  font-size: 0.78rem;
+  color: var(--color-text-dim);
+}
+
+/* ═══════════════════════════════════════════
+   BOTTOM CTA
+   ═══════════════════════════════════════════ */
+.bottom-cta {
+  padding: 40px 0 60px;
+  text-align: center;
+}
+
+.bottom-cta h2 {
+  font-family: var(--font-display);
+  font-size: clamp(1.5rem, 5vw, 2rem);
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.bottom-cta p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 28px;
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+.funnel-footer {
+  text-align: center;
+  padding: 24px 20px 32px;
+  border-top: 1px solid var(--color-glass-border);
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+}
+
+/* ═══════════════════════════════════════════
+   POPUP OVERLAY
+   ═══════════════════════════════════════════ */
+.popup-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  background: rgba(8, 8, 10, 0.88);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s ease, visibility 0.4s ease;
+}
+
+.popup-overlay.active {
+  opacity: 1;
+  visibility: visible;
+}
+
+.popup-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 20px;
+  padding: 40px 28px 36px;
+  max-width: 440px;
+  width: 100%;
+  text-align: center;
+  position: relative;
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.5s var(--ease-out-expo);
+}
+
+.popup-overlay.active .popup-card {
+  transform: scale(1) translateY(0);
+}
+
+.popup-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  width: 36px;
+  height: 36px;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: var(--color-text-muted);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.popup-close:hover {
+  background: rgba(255, 255, 255, 0.08);
+  color: var(--color-text);
+}
+
+.popup-close svg {
+  width: 16px;
+  height: 16px;
+}
+
+.popup-emoji {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.popup-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin-bottom: 10px;
+  letter-spacing: -0.02em;
+}
+
+.popup-card > p {
+  color: var(--color-text-muted);
+  font-size: 0.9rem;
+  margin-bottom: 24px;
+  line-height: 1.6;
+}
+
+/* ═══════════════════════════════════════════
+   DIVIDER
+   ═══════════════════════════════════════════ */
+.section-divider {
+  width: 48px;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--color-accent), transparent);
+  margin: 0 auto;
+  opacity: 0.4;
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 480px) {
+  .value-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .guide-mockup {
+    padding: 24px 20px;
+  }
+
+  .testimonial-card {
+    padding: 28px 20px;
+  }
+
+  .popup-card {
+    padding: 32px 20px 28px;
+  }
+
+  section {
+    padding: 48px 0;
+  }
+}
+</style>
+</head>
+<body>
+
+  <!-- Logo -->
+  <div class="funnel-logo">
+    <span class="logo-i">i</span>HelpBuild
+  </div>
+
+  <!-- Hero Section -->
+  <section class="hero">
+    <div class="funnel-container">
+      <div class="reveal">
+        <div class="hero-badge">Free AI Prompt Guide</div>
+        <h1>10 Free AI Prompts That Will <em>Transform</em> Your Business</h1>
+        <p class="hero-sub">Join 500+ business owners using AI to automate, scale, and save 10+ hours every week.</p>
+      </div>
+
+      <div class="reveal">
+        <form class="capture-form" id="heroForm" onsubmit="event.preventDefault(); submitEmail(this);">
+          <input type="text" name="name" placeholder="Your first name" autocomplete="given-name">
+          <input type="email" name="email" placeholder="Your best email" required autocomplete="email">
+          <button type="submit" class="btn-cta">Get Free Access</button>
+          <p class="form-disclaimer">No spam. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Value Bullets -->
+  <section class="value-section">
+    <div class="funnel-container">
+      <div class="value-grid">
+        <div class="value-card reveal">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+          </div>
+          <h3>Instant Access</h3>
+          <p>Get 10 battle-tested prompts delivered to your inbox</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+          </div>
+          <h3>Save 10+ Hours/Week</h3>
+          <p>Automate repetitive tasks that drain your time</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
+          </div>
+          <h3>Real Results</h3>
+          <p>Used by businesses generating $10K-$500K/month</p>
+        </div>
+        <div class="value-card reveal">
+          <div class="value-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><polyline points="9 12 11 14 15 10"/></svg>
+          </div>
+          <h3>Zero Risk</h3>
+          <p>100% free, no credit card required</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- What's Inside -->
+  <section class="inside-section">
+    <div class="funnel-container">
+      <div class="reveal">
+        <p class="section-label">What You Get</p>
+        <h2 class="section-title">A Peek Inside the Guide</h2>
+      </div>
+
+      <div class="guide-mockup reveal">
+        <div class="guide-mockup-header">
+          <div class="guide-mockup-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+          </div>
+          <div class="guide-mockup-header-text">
+            <h4>10 AI Prompts for Business</h4>
+            <span>by iHelpBuild &bull; PDF Guide</span>
+          </div>
+        </div>
+        <ul class="guide-list">
+          <li>
+            <span class="li-num">01</span>
+            <span><strong>The Sales Email Generator</strong> &mdash; Write persuasive outreach emails in seconds</span>
+          </li>
+          <li>
+            <span class="li-num">02</span>
+            <span><strong>The Content Repurposer</strong> &mdash; Turn one idea into 10 pieces of content</span>
+          </li>
+          <li>
+            <span class="li-num">03</span>
+            <span><strong>The SOPs Builder</strong> &mdash; Document any process for your team instantly</span>
+          </li>
+          <li>
+            <span class="li-num">04</span>
+            <span><strong>The Customer Insight Extractor</strong> &mdash; Mine reviews for product opportunities</span>
+          </li>
+          <li>
+            <span class="li-num">05</span>
+            <span><strong>+ 6 more prompts</strong> covering strategy, hiring, financial analysis, and more</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Testimonial -->
+  <section class="testimonial-section">
+    <div class="funnel-container">
+      <div class="testimonial-card reveal">
+        <div class="testimonial-quote-mark">&ldquo;</div>
+        <blockquote>These prompts saved me at least 12 hours in my first week alone. The sales email prompt generated more replies than anything I've written myself. This is the real deal.</blockquote>
+        <div class="testimonial-author">
+          <div class="testimonial-avatar">JR</div>
+          <div class="testimonial-author-info">
+            <div class="name">James R.</div>
+            <div class="role">E-commerce Founder, $85K/mo revenue</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="section-divider"></div>
+
+  <!-- Bottom CTA -->
+  <section class="bottom-cta">
+    <div class="funnel-container">
+      <div class="reveal">
+        <h2>Ready to Work Smarter?</h2>
+        <p>Get the free guide and start saving hours this week.</p>
+      </div>
+      <div class="reveal">
+        <form class="capture-form" id="bottomForm" onsubmit="event.preventDefault(); submitEmail(this);">
+          <input type="text" name="name" placeholder="Your first name" autocomplete="given-name">
+          <input type="email" name="email" placeholder="Your best email" required autocomplete="email">
+          <button type="submit" class="btn-cta">Get Free Access</button>
+          <p class="form-disclaimer">No spam. Unsubscribe anytime.</p>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="funnel-footer">
+    &copy; 2026 iHelpBuild. All rights reserved.
+  </footer>
+
+  <!-- Popup Overlay -->
+  <div class="popup-overlay" id="popupOverlay">
+    <div class="popup-card">
+      <button class="popup-close" id="popupClose" aria-label="Close popup">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+      <div class="popup-emoji">&#9889;</div>
+      <h2>Before You Go...</h2>
+      <p>Don't miss your free AI prompt guide. 500+ business owners already grabbed it.</p>
+      <form class="capture-form" id="popupForm" onsubmit="event.preventDefault(); submitEmail(this);">
+        <input type="text" name="name" placeholder="Your first name" autocomplete="given-name">
+        <input type="email" name="email" placeholder="Your best email" required autocomplete="email">
+        <button type="submit" class="btn-cta">Send Me the Guide</button>
+        <p class="form-disclaimer">100% free. No credit card needed.</p>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    /* ═══════════════════════════════════════════
+       FORM SUBMISSION
+       ═══════════════════════════════════════════ */
+    async function submitEmail(form) {
+      const name = form.querySelector('[name="name"]').value.trim();
+      const email = form.querySelector('[name="email"]').value.trim();
+      if (!email) return;
+
+      const btn = form.querySelector('button[type="submit"]');
+      btn.disabled = true;
+      btn.textContent = 'Sending...';
+
+      try {
+        const res = await fetch('/api/subscribers', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ email, name, source: 'funnel' }),
+        });
+        if (res.ok) {
+          form.innerHTML = `
+            <div class="success-message">
+              <div class="success-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+              </div>
+              <h3>Check your email!</h3>
+              <p>Your guide is on its way.</p>
+            </div>
+          `;
+          // Close popup if this form was inside it
+          if (form.id === 'popupForm') {
+            setTimeout(function() {
+              document.getElementById('popupOverlay').classList.remove('active');
+            }, 2000);
+          }
+        } else {
+          btn.disabled = false;
+          btn.textContent = 'Get Free Access';
+        }
+      } catch (err) {
+        btn.disabled = false;
+        btn.textContent = 'Get Free Access';
+      }
+    }
+
+    /* ═══════════════════════════════════════════
+       SCROLL REVEAL (IntersectionObserver)
+       ═══════════════════════════════════════════ */
+    (function() {
+      var reveals = document.querySelectorAll('.reveal');
+      if (!('IntersectionObserver' in window)) {
+        reveals.forEach(function(el) { el.classList.add('visible'); });
+        return;
+      }
+
+      var observer = new IntersectionObserver(function(entries) {
+        entries.forEach(function(entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+      reveals.forEach(function(el) { observer.observe(el); });
+    })();
+
+    /* ═══════════════════════════════════════════
+       DELAYED POPUP
+       ═══════════════════════════════════════════ */
+    (function() {
+      var overlay = document.getElementById('popupOverlay');
+      var closeBtn = document.getElementById('popupClose');
+      var shown = false;
+
+      function showPopup() {
+        if (shown) return;
+        if (sessionStorage.getItem('funnel-popup-shown') === '1') return;
+        shown = true;
+        sessionStorage.setItem('funnel-popup-shown', '1');
+        overlay.classList.add('active');
+      }
+
+      // Timer: 7 seconds
+      var timer = setTimeout(showPopup, 7000);
+
+      // Scroll: 50% of page
+      function onScroll() {
+        var scrollPct = window.scrollY / (document.documentElement.scrollHeight - window.innerHeight);
+        if (scrollPct >= 0.5) {
+          showPopup();
+          window.removeEventListener('scroll', onScroll);
+        }
+      }
+      window.addEventListener('scroll', onScroll, { passive: true });
+
+      // Close popup
+      closeBtn.addEventListener('click', function() {
+        overlay.classList.remove('active');
+      });
+
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) {
+          overlay.classList.remove('active');
+        }
+      });
+
+      // Cleanup when popup is shown
+      function cleanup() {
+        clearTimeout(timer);
+        window.removeEventListener('scroll', onScroll);
+      }
+
+      // If already shown in session, clean up listeners immediately
+      if (sessionStorage.getItem('funnel-popup-shown') === '1') {
+        shown = true;
+        cleanup();
+      }
+    })();
+  </script>
+</body>
+</html>

@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>10 AI Prompts Every Business Owner Needs in 2026 — iHelpBuild Blog</title>
+<meta name="description" content="These aren't generic prompts. They're battle-tested frameworks that save real business owners 10+ hours every week. Get all 10 prompts here.">
+<meta property="og:title" content="10 AI Prompts Every Business Owner Needs in 2026">
+<meta property="og:description" content="Battle-tested AI prompt frameworks that save real business owners 10+ hours every week.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ihelpbuild.com/blog/10-ai-prompts-every-business-needs.html">
+<meta property="article:published_time" content="2026-03-25">
+<meta property="article:author" content="iHelpBuild Team">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --color-bg: #08080a;
+  --color-surface: #111114;
+  --color-surface-elevated: #1a1a1f;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8690;
+  --color-text-dim: #55515c;
+  --color-accent: #c8a97e;
+  --color-accent-warm: #d4a855;
+  --color-accent-cool: #7eb8c8;
+  --color-white: #ffffff;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.07);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+   ═══════════════════════════════════════════ */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 1.5rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background 0.5s, backdrop-filter 0.5s;
+}
+.nav.scrolled {
+  background: rgba(8, 8, 10, 0.85);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+}
+.nav-logo {
+  font-family: var(--font-body);
+  font-weight: 300;
+  font-size: 0.85rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-text);
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+.nav-logo .logo-i {
+  color: var(--color-accent);
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+.nav-links {
+  display: flex;
+  gap: 2.5rem;
+  list-style: none;
+}
+.nav-links a {
+  color: var(--color-text-muted);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-weight: 400;
+  transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 0;
+  height: 1px;
+  background: var(--color-accent);
+  transition: width 0.4s var(--ease-out-expo);
+}
+.nav-links a:hover { color: var(--color-text); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 0.6rem 1.6rem;
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-glass);
+  color: var(--color-text);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+  backdrop-filter: blur(10px);
+}
+.nav-cta:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+/* Hamburger */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1002;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--color-text);
+  transition: all 0.3s var(--ease-out-expo);
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 10, 0.97);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease-out-expo), visibility 0.4s;
+}
+.mobile-menu.open { opacity: 1; visibility: visible; }
+.mobile-menu a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo), color 0.3s;
+}
+.mobile-menu.open a { opacity: 1; transform: translateY(0); }
+.mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu a:nth-child(6) { transition-delay: 0.35s; }
+.mobile-menu a:hover { color: var(--color-accent); }
+
+/* ═══════════════════════════════════════════
+   ARTICLE LAYOUT
+   ═══════════════════════════════════════════ */
+.article-header {
+  padding: 10rem 2rem 3rem;
+  max-width: 720px;
+  margin: 0 auto;
+  text-align: center;
+}
+.article-category {
+  display: inline-block;
+  font-size: 0.62rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-bg);
+  background: var(--color-accent);
+  padding: 0.3rem 0.75rem;
+  border-radius: 3px;
+  margin-bottom: 1.5rem;
+}
+.article-title {
+  font-family: var(--font-display);
+  font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400;
+  color: var(--color-text);
+  line-height: 1.2;
+  margin-bottom: 1.5rem;
+}
+.article-meta {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+}
+.article-meta .separator {
+  width: 3px;
+  height: 3px;
+  border-radius: 50%;
+  background: var(--color-text-dim);
+  display: inline-block;
+}
+
+/* Blog Content */
+.blog-content {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 2rem 4rem;
+}
+.blog-content h2 {
+  font-family: var(--font-display);
+  color: var(--color-text);
+  font-size: 1.6rem;
+  margin: 2.5rem 0 1rem;
+}
+.blog-content h3 {
+  color: var(--color-accent);
+  font-size: 1.1rem;
+  margin: 2rem 0 0.75rem;
+}
+.blog-content p {
+  color: var(--color-text-muted);
+  line-height: 1.8;
+  margin-bottom: 1.25rem;
+  font-size: 1.05rem;
+}
+.blog-content blockquote {
+  background: var(--color-surface-elevated);
+  border-left: 3px solid var(--color-accent);
+  padding: 1.25rem 1.5rem;
+  margin: 1.5rem 0;
+  border-radius: 4px;
+}
+.blog-content blockquote p {
+  color: var(--color-text);
+  font-style: italic;
+  margin: 0;
+  font-size: 0.95rem;
+}
+.blog-content ul, .blog-content ol {
+  color: var(--color-text-muted);
+  line-height: 2;
+  margin-bottom: 1.25rem;
+  padding-left: 1.5rem;
+}
+.blog-content strong {
+  color: var(--color-text);
+}
+
+/* Mid-article CTA */
+.mid-article-cta {
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 12px;
+  padding: 2.5rem;
+  margin: 3rem 0;
+  text-align: center;
+}
+.mid-article-cta h3 {
+  font-family: var(--font-display);
+  color: var(--color-text) !important;
+  font-size: 1.3rem !important;
+  margin: 0 0 0.75rem !important;
+}
+.mid-article-cta p {
+  color: var(--color-text-muted);
+  font-size: 0.95rem;
+  margin-bottom: 1.5rem;
+}
+.mid-article-cta .cta-form {
+  display: flex;
+  gap: 0.75rem;
+  max-width: 420px;
+  margin: 0 auto;
+}
+.mid-article-cta .cta-form input[type="email"] {
+  flex: 1;
+  padding: 0.8rem 1.2rem;
+  background: var(--color-surface-elevated);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 6px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.mid-article-cta .cta-form input[type="email"]:focus {
+  border-color: var(--color-accent);
+}
+.mid-article-cta .cta-form input[type="email"]::placeholder {
+  color: var(--color-text-dim);
+}
+.mid-article-cta .cta-form button {
+  padding: 0.8rem 1.5rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 6px;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.3s, transform 0.3s;
+  white-space: nowrap;
+}
+.mid-article-cta .cta-form button:hover {
+  background: var(--color-accent-warm);
+  transform: translateY(-1px);
+}
+.cta-success {
+  display: none;
+  color: var(--color-accent);
+  font-size: 0.9rem;
+  margin-top: 1rem;
+}
+
+/* Share Buttons */
+.share-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 0 2rem 3rem;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  border-top: 1px solid var(--color-glass-border);
+  padding-top: 2rem;
+}
+.share-label {
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+}
+.share-btn {
+  padding: 0.55rem 1.2rem;
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 6px;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+.share-btn:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* Related Posts */
+.related-section {
+  max-width: 720px;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
+}
+.related-title {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+.related-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1.5rem;
+}
+.related-card {
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 10px;
+  padding: 1.75rem;
+  text-decoration: none;
+  transition: transform 0.5s var(--ease-out-expo), border-color 0.5s;
+}
+.related-card:hover {
+  transform: translateY(-3px);
+  border-color: rgba(200, 169, 126, 0.25);
+}
+.related-card-category {
+  font-size: 0.6rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 0.75rem;
+  display: block;
+}
+.related-card-title {
+  font-family: var(--font-display);
+  font-size: 1.1rem;
+  color: var(--color-text);
+  line-height: 1.35;
+}
+
+/* Footer */
+.footer {
+  padding: 4rem 3rem;
+  border-top: 1px solid var(--color-glass-border);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.footer-left {
+  font-size: 0.72rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.1em;
+}
+.footer-right {
+  display: flex;
+  gap: 2rem;
+}
+.footer-right a {
+  color: var(--color-text-dim);
+  text-decoration: none;
+  font-size: 0.72rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+.footer-right a:hover { color: var(--color-accent); }
+
+/* Reveal */
+.reveal {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo);
+}
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+  .article-header { padding: 8rem 1.5rem 2rem; }
+  .blog-content { padding: 1.5rem 1.5rem 3rem; }
+  .share-section { padding: 2rem 1.5rem 3rem; }
+  .related-section { padding: 2rem 1.5rem 4rem; }
+  .footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .article-title { font-size: 1.8rem; }
+  .related-grid { grid-template-columns: 1fr; }
+  .mid-article-cta .cta-form { flex-direction: column; }
+  .mid-article-cta .cta-form button { width: 100%; }
+  .mid-article-cta { padding: 1.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#capabilities" data-mobile-link>Services</a>
+  <a href="/#showcase" data-mobile-link>Work</a>
+  <a href="/#process" data-mobile-link>Process</a>
+  <a href="/products" data-mobile-link>Products</a>
+  <a href="/blog" data-mobile-link>Blog</a>
+  <a href="/#contact" data-mobile-link style="color:var(--color-accent);">Book a Call</a>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo"><span class="logo-i">i</span>HelpBuild</a>
+  <ul class="nav-links">
+    <li><a href="/#capabilities">Services</a></li>
+    <li><a href="/#showcase">Work</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='/#contact'">Book a Call</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Article Header -->
+<header class="article-header reveal">
+  <span class="article-category">AI TIPS</span>
+  <h1 class="article-title">10 AI Prompts Every Business Owner Needs in 2026</h1>
+  <div class="article-meta">
+    <span>March 25, 2026</span>
+    <span class="separator"></span>
+    <span>8 min read</span>
+    <span class="separator"></span>
+    <span>iHelpBuild Team</span>
+  </div>
+</header>
+
+<!-- Article Body -->
+<article class="blog-content reveal">
+
+  <p>If you're running a business in 2026 and you're not using AI daily, you're leaving hours on the table every single week. But here's the thing most people get wrong: <strong>the quality of AI output depends entirely on the quality of your prompt.</strong></p>
+
+  <p>Generic prompts get generic answers. The prompts below are different. They're frameworks we've refined with dozens of real business owners, and they consistently save 10+ hours per week when used properly. Copy them, customize them, and start reclaiming your time today.</p>
+
+  <h2>1. The Operations Audit Prompt</h2>
+
+  <h3>Find the hidden inefficiencies bleeding your business dry.</h3>
+
+  <blockquote>
+    <p>"You are a senior operations consultant. I run a [type of business] with [number] employees. Our core processes are: [list 3-5 key processes]. Analyze these processes and identify the top 5 inefficiencies that are most likely costing us time and money. For each, estimate the weekly hours wasted and suggest a specific fix. Prioritize by impact."</p>
+  </blockquote>
+
+  <p>This prompt works because it gives the AI a role, context, and a clear deliverable. Most business owners discover at least two processes they can streamline immediately. One client found they were spending 6 hours a week on a reporting task that could be automated in 20 minutes.</p>
+
+  <h2>2. The Customer Email Writer</h2>
+
+  <h3>Professional responses in seconds, not minutes.</h3>
+
+  <blockquote>
+    <p>"Write a professional email response to a customer who [describe situation]. My business tone is [formal/friendly/casual]. The key point I need to communicate is [main message]. Include an empathetic opening, address their concern directly, and end with a clear next step. Keep it under 150 words."</p>
+  </blockquote>
+
+  <p>Customer emails eat up more time than most owners realize. This framework handles complaints, inquiries, follow-ups, and thank-yous. The tone parameter ensures it always sounds like you, not a robot.</p>
+
+  <h2>3. The Meeting Summarizer</h2>
+
+  <h3>Never lose action items again.</h3>
+
+  <blockquote>
+    <p>"Here are my notes from a meeting about [topic] with [attendees]: [paste notes]. Create a structured summary with: (1) Key decisions made, (2) Action items with owners and deadlines, (3) Open questions that need follow-up, (4) A one-paragraph executive summary I can share with stakeholders."</p>
+  </blockquote>
+
+  <p>Paste your messy notes and get a clean, actionable summary. The executive summary section is gold for keeping leadership aligned without making them sit through a debrief.</p>
+
+  <h2>4. The Social Media Content Generator</h2>
+
+  <h3>A week of content in 15 minutes.</h3>
+
+  <blockquote>
+    <p>"I need 5 social media posts for my [type of business] targeting [ideal customer]. The theme this week is [topic/promotion]. For each post, write: (1) A scroll-stopping hook (first line), (2) The body (2-3 sentences max), (3) A call to action, (4) 3 relevant hashtags. Mix formats: one question, one tip, one behind-the-scenes, one testimonial-style, one promotional."</p>
+  </blockquote>
+
+  <p>The mixed format instruction is what makes this powerful. Most businesses post the same type of content repeatedly. This ensures variety, which is what algorithms reward.</p>
+
+  <h2>5. The Financial Analysis Prompt</h2>
+
+  <h3>Turn raw numbers into strategic insights.</h3>
+
+  <blockquote>
+    <p>"Analyze the following financial data for my [type of business]: [paste revenue, expenses, or key metrics]. Identify: (1) The top 3 trends I should pay attention to, (2) Any red flags or areas of concern, (3) Two opportunities to increase profit margin, (4) A comparison to typical benchmarks for businesses of this size and industry. Present this as a brief executive summary."</p>
+  </blockquote>
+
+  <p>You don't need to be a CFO to get CFO-level insights. This prompt turns your QuickBooks export into strategic intelligence. One retail owner discovered their shipping costs had crept up 23% over six months without anyone noticing.</p>
+
+  <!-- Mid-article CTA -->
+  <div class="mid-article-cta">
+    <h3>Want all 10 prompts in a PDF?</h3>
+    <p>Get the free guide with all prompts formatted and ready to use, plus 5 bonus prompts we didn't include in this article.</p>
+    <form class="cta-form" id="midCtaForm">
+      <input type="email" name="email" placeholder="Enter your email" required>
+      <button type="submit">Get Free Guide</button>
+    </form>
+    <p class="cta-success" id="midCtaSuccess">Check your inbox! The guide is on its way.</p>
+  </div>
+
+  <h2>6. The Customer Feedback Analyzer</h2>
+
+  <h3>Turn reviews into a product roadmap.</h3>
+
+  <blockquote>
+    <p>"Here are the last 20 customer reviews/feedback entries for my [product/service]: [paste reviews]. Categorize them into themes. For each theme, tell me: (1) How many reviews mention it, (2) The overall sentiment (positive/negative/mixed), (3) One specific action I can take to address it. Rank themes by frequency."</p>
+  </blockquote>
+
+  <p>Manually reading reviews is valuable but slow. This prompt gives you a structured analysis in seconds. The action item per theme is what turns feedback into actual improvements instead of just data.</p>
+
+  <h2>7. The Sales Script Writer</h2>
+
+  <h3>Close more deals with conversation frameworks.</h3>
+
+  <blockquote>
+    <p>"Write a sales conversation framework for selling [product/service] to [ideal customer]. Include: (1) A 15-second opening that builds rapport, (2) Three discovery questions to uncover their pain points, (3) A value proposition statement that addresses each pain point, (4) Two objection responses for [common objection 1] and [common objection 2], (5) A non-pushy closing question. Tone: consultative, not salesy."</p>
+  </blockquote>
+
+  <p>This isn't about scripting every word. It's about having a structure so your team always hits the key points. The consultative tone instruction prevents the AI from writing something that sounds like a used car pitch.</p>
+
+  <h2>8. The Process Documentation Prompt</h2>
+
+  <h3>Get processes out of your head and into a system.</h3>
+
+  <blockquote>
+    <p>"I'm going to describe how we do [process name] at my company. Ask me questions one at a time to understand every step, decision point, and exception. Once you have the full picture, create: (1) A step-by-step standard operating procedure (SOP), (2) A decision tree for common exceptions, (3) A checklist version for quick reference. Use simple language that a new hire could follow."</p>
+  </blockquote>
+
+  <p>This is one of the most underused prompts. Every business has critical processes that live only in someone's head. This interactive approach pulls the knowledge out systematically and creates documentation that's actually useful.</p>
+
+  <h2>9. The Competitive Analysis Prompt</h2>
+
+  <h3>Understand your market position in minutes.</h3>
+
+  <blockquote>
+    <p>"I run a [type of business] in [location/market]. My main competitors are [list 3-5 competitors]. Based on publicly available information, create a competitive analysis covering: (1) Each competitor's apparent positioning and target customer, (2) Their pricing strategy (if visible), (3) Their strengths and weaknesses based on their online presence, (4) Gaps in the market none of them are addressing, (5) Three ways I can differentiate. Format as a comparison table where possible."</p>
+  </blockquote>
+
+  <p>AI can't access private data, but it can analyze public positioning, messaging, and reviews remarkably well. The gaps and differentiation sections are where the real strategic value lives.</p>
+
+  <h2>10. The Weekly Planning Prompt</h2>
+
+  <h3>Start every week with clarity and purpose.</h3>
+
+  <blockquote>
+    <p>"Help me plan my week. Here's my context: My top 3 business goals this quarter are [list goals]. Last week I accomplished [wins] but struggled with [challenges]. This week I have these commitments: [list meetings/deadlines]. Based on this, create: (1) My top 3 priorities for the week (things that move the needle most), (2) A suggested daily focus theme (Monday-Friday), (3) One thing I should say no to or delegate, (4) A Friday reflection question to assess the week."</p>
+  </blockquote>
+
+  <p>This is the prompt that ties everything together. Used every Sunday evening or Monday morning, it transforms how you approach your week. The "say no" suggestion is what makes this powerful, because most business owners need to subtract, not add.</p>
+
+  <h2>Putting It All Together</h2>
+
+  <p>You don't need to use all 10 prompts at once. Start with the two or three that address your biggest pain points right now. Customize them with your specific business details. Save them somewhere accessible so you can reuse them daily.</p>
+
+  <p><strong>The business owners who win with AI aren't the ones with the fanciest tools. They're the ones who ask the best questions.</strong> These prompts are your starting framework. Refine them as you learn what works for your specific situation.</p>
+
+  <p>And if you want help building AI systems that go beyond prompts, like full automation workflows, custom AI agents, and intelligent dashboards, <a href="/#contact" style="color:var(--color-accent);">that's exactly what we do at iHelpBuild</a>.</p>
+
+</article>
+
+<!-- Share -->
+<div class="share-section">
+  <span class="share-label">Share</span>
+  <button class="share-btn" onclick="shareTwitter()">Twitter</button>
+  <button class="share-btn" onclick="shareLinkedIn()">LinkedIn</button>
+</div>
+
+<!-- Related Posts -->
+<section class="related-section reveal">
+  <h2 class="related-title">Related Articles</h2>
+  <div class="related-grid">
+    <a href="/blog/why-cinematic-websites-convert-better.html" class="related-card">
+      <span class="related-card-category">WEB DESIGN</span>
+      <h3 class="related-card-title">Why Cinematic Websites Convert 3x Better Than Templates</h3>
+    </a>
+    <a href="/blog/building-your-first-ai-automation.html" class="related-card">
+      <span class="related-card-category">AUTOMATION</span>
+      <h3 class="related-card-title">Building Your First AI Automation: A Step-by-Step Guide</h3>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-left">&copy; 2026 iHelpBuild. All rights reserved.</div>
+  <div class="footer-right">
+    <a href="#">LinkedIn</a>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+(function() {
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }, { passive: true });
+})();
+
+// Hamburger
+(function() {
+  var hamburger = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('[data-mobile-link]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+
+// Mid-article CTA form
+(function() {
+  var form = document.getElementById('midCtaForm');
+  var success = document.getElementById('midCtaSuccess');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = form.querySelector('input[name="email"]').value;
+      fetch('/api/subscribers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'blog-post' })
+      }).then(function(res) {
+        if (res.ok) { form.style.display = 'none'; success.style.display = 'block'; }
+      }).catch(function() { form.style.display = 'none'; success.style.display = 'block'; });
+    });
+  }
+})();
+
+// Share buttons
+function shareTwitter() {
+  var url = encodeURIComponent(window.location.href);
+  var text = encodeURIComponent('10 AI Prompts Every Business Owner Needs in 2026');
+  window.open('https://twitter.com/intent/tweet?url=' + url + '&text=' + text, '_blank', 'width=600,height=400');
+}
+function shareLinkedIn() {
+  var url = encodeURIComponent(window.location.href);
+  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, '_blank', 'width=600,height=400');
+}
+
+// Reveal on scroll
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+</script>
+</body>
+</html>

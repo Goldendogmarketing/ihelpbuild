@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Building Your First AI Automation: A Step-by-Step Guide — iHelpBuild Blog</title>
+<meta name="description" content="You don't need to be technical. This guide walks you through building your first business automation in under an hour.">
+<meta property="og:title" content="Building Your First AI Automation: A Step-by-Step Guide">
+<meta property="og:description" content="A non-technical guide to building your first business automation in under an hour.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://ihelpbuild.com/blog/building-your-first-ai-automation.html">
+<meta property="article:published_time" content="2026-03-15">
+<meta property="article:author" content="iHelpBuild Team">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --color-bg: #08080a;
+  --color-surface: #111114;
+  --color-surface-elevated: #1a1a1f;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8690;
+  --color-text-dim: #55515c;
+  --color-accent: #c8a97e;
+  --color-accent-warm: #d4a855;
+  --color-accent-cool: #7eb8c8;
+  --color-white: #ffffff;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.07);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* NAV */
+.nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+  padding: 1.5rem 3rem; display: flex; align-items: center;
+  justify-content: space-between; transition: background 0.5s, backdrop-filter 0.5s;
+}
+.nav.scrolled {
+  background: rgba(8, 8, 10, 0.85);
+  backdrop-filter: blur(30px) saturate(1.5);
+  -webkit-backdrop-filter: blur(30px) saturate(1.5);
+}
+.nav-logo {
+  font-family: var(--font-body); font-weight: 300; font-size: 0.85rem;
+  letter-spacing: 0.3em; text-transform: uppercase; color: var(--color-text);
+  text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+}
+.nav-logo .logo-i {
+  color: var(--color-accent); font-family: var(--font-display);
+  font-style: italic; font-size: 1.1rem; font-weight: 700;
+}
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a {
+  color: var(--color-text-muted); text-decoration: none; font-size: 0.75rem;
+  letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400;
+  transition: color 0.3s; position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px;
+  background: var(--color-accent); transition: width 0.4s var(--ease-out-expo);
+}
+.nav-links a:hover { color: var(--color-text); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta {
+  padding: 0.6rem 1.6rem; border: 1px solid var(--color-glass-border);
+  background: var(--color-glass); color: var(--color-text); font-size: 0.72rem;
+  letter-spacing: 0.15em; text-transform: uppercase; font-family: var(--font-body);
+  cursor: pointer; transition: all 0.4s var(--ease-out-expo); backdrop-filter: blur(10px);
+}
+.nav-cta:hover {
+  background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent);
+}
+.nav-hamburger {
+  display: none; flex-direction: column; gap: 5px; background: none;
+  border: none; cursor: pointer; padding: 4px; z-index: 1002;
+}
+.nav-hamburger span {
+  display: block; width: 24px; height: 1.5px; background: var(--color-text);
+  transition: all 0.3s var(--ease-out-expo); transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+/* Mobile Menu */
+.mobile-menu {
+  position: fixed; inset: 0; background: rgba(8, 8, 10, 0.97);
+  backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
+  z-index: 1001; display: flex; flex-direction: column; align-items: center;
+  justify-content: center; gap: 2rem; opacity: 0; visibility: hidden;
+  transition: opacity 0.4s var(--ease-out-expo), visibility 0.4s;
+}
+.mobile-menu.open { opacity: 1; visibility: visible; }
+.mobile-menu a {
+  color: var(--color-text); text-decoration: none; font-family: var(--font-display);
+  font-size: 2rem; font-weight: 400; opacity: 0; transform: translateY(20px);
+  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo), color 0.3s;
+}
+.mobile-menu.open a { opacity: 1; transform: translateY(0); }
+.mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu a:nth-child(6) { transition-delay: 0.35s; }
+.mobile-menu a:hover { color: var(--color-accent); }
+
+/* Article Layout */
+.article-header {
+  padding: 10rem 2rem 3rem; max-width: 720px; margin: 0 auto; text-align: center;
+}
+.article-category {
+  display: inline-block; font-size: 0.62rem; letter-spacing: 0.2em;
+  text-transform: uppercase; font-weight: 600; color: var(--color-bg);
+  background: var(--color-accent); padding: 0.3rem 0.75rem; border-radius: 3px;
+  margin-bottom: 1.5rem;
+}
+.article-title {
+  font-family: var(--font-display); font-size: clamp(2rem, 5vw, 3rem);
+  font-weight: 400; color: var(--color-text); line-height: 1.2; margin-bottom: 1.5rem;
+}
+.article-meta {
+  font-size: 0.8rem; color: var(--color-text-dim); display: flex;
+  align-items: center; justify-content: center; gap: 1rem;
+}
+.article-meta .separator {
+  width: 3px; height: 3px; border-radius: 50%; background: var(--color-text-dim);
+  display: inline-block;
+}
+
+/* Blog Content */
+.blog-content { max-width: 720px; margin: 0 auto; padding: 2rem 2rem 4rem; }
+.blog-content h2 { font-family: var(--font-display); color: var(--color-text); font-size: 1.6rem; margin: 2.5rem 0 1rem; }
+.blog-content h3 { color: var(--color-accent); font-size: 1.1rem; margin: 2rem 0 0.75rem; }
+.blog-content p { color: var(--color-text-muted); line-height: 1.8; margin-bottom: 1.25rem; font-size: 1.05rem; }
+.blog-content blockquote {
+  background: var(--color-surface-elevated); border-left: 3px solid var(--color-accent);
+  padding: 1.25rem 1.5rem; margin: 1.5rem 0; border-radius: 4px;
+}
+.blog-content blockquote p { color: var(--color-text); font-style: italic; margin: 0; font-size: 0.95rem; }
+.blog-content ul, .blog-content ol { color: var(--color-text-muted); line-height: 2; margin-bottom: 1.25rem; padding-left: 1.5rem; }
+.blog-content strong { color: var(--color-text); }
+
+/* Step indicator */
+.step-label {
+  display: inline-block;
+  font-size: 0.65rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--color-accent);
+  background: rgba(200, 169, 126, 0.1);
+  padding: 0.25rem 0.7rem;
+  border-radius: 3px;
+  margin-bottom: 0.5rem;
+}
+
+/* Mid-article CTA */
+.mid-article-cta {
+  background: var(--color-surface); border: 1px solid var(--color-glass-border);
+  border-radius: 12px; padding: 2.5rem; margin: 3rem 0; text-align: center;
+}
+.mid-article-cta h3 { font-family: var(--font-display); color: var(--color-text) !important; font-size: 1.3rem !important; margin: 0 0 0.75rem !important; }
+.mid-article-cta p { color: var(--color-text-muted); font-size: 0.95rem; margin-bottom: 1.5rem; }
+.mid-article-cta .cta-form { display: flex; gap: 0.75rem; max-width: 420px; margin: 0 auto; }
+.mid-article-cta .cta-form input[type="email"] {
+  flex: 1; padding: 0.8rem 1.2rem; background: var(--color-surface-elevated);
+  border: 1px solid var(--color-glass-border); border-radius: 6px; color: var(--color-text);
+  font-family: var(--font-body); font-size: 0.9rem; outline: none; transition: border-color 0.3s;
+}
+.mid-article-cta .cta-form input[type="email"]:focus { border-color: var(--color-accent); }
+.mid-article-cta .cta-form input[type="email"]::placeholder { color: var(--color-text-dim); }
+.mid-article-cta .cta-form button {
+  padding: 0.8rem 1.5rem; background: var(--color-accent); color: var(--color-bg);
+  border: none; border-radius: 6px; font-family: var(--font-body); font-size: 0.75rem;
+  font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer;
+  transition: background 0.3s, transform 0.3s; white-space: nowrap;
+}
+.mid-article-cta .cta-form button:hover { background: var(--color-accent-warm); transform: translateY(-1px); }
+.cta-success { display: none; color: var(--color-accent); font-size: 0.9rem; margin-top: 1rem; }
+
+/* Share */
+.share-section {
+  max-width: 720px; margin: 0 auto; padding: 0 2rem 3rem;
+  display: flex; align-items: center; gap: 1rem;
+  border-top: 1px solid var(--color-glass-border); padding-top: 2rem;
+}
+.share-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; color: var(--color-text-dim); }
+.share-btn {
+  padding: 0.55rem 1.2rem; background: var(--color-surface);
+  border: 1px solid var(--color-glass-border); border-radius: 6px;
+  color: var(--color-text-muted); font-family: var(--font-body);
+  font-size: 0.75rem; letter-spacing: 0.05em; cursor: pointer; transition: all 0.3s;
+}
+.share-btn:hover { border-color: var(--color-accent); color: var(--color-accent); }
+
+/* Related */
+.related-section { max-width: 720px; margin: 0 auto; padding: 2rem 2rem 5rem; }
+.related-title { font-family: var(--font-display); font-size: 1.5rem; color: var(--color-text); margin-bottom: 1.5rem; }
+.related-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem; }
+.related-card {
+  background: var(--color-surface); border: 1px solid var(--color-glass-border);
+  border-radius: 10px; padding: 1.75rem; text-decoration: none;
+  transition: transform 0.5s var(--ease-out-expo), border-color 0.5s;
+}
+.related-card:hover { transform: translateY(-3px); border-color: rgba(200, 169, 126, 0.25); }
+.related-card-category { font-size: 0.6rem; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600; color: var(--color-accent); margin-bottom: 0.75rem; display: block; }
+.related-card-title { font-family: var(--font-display); font-size: 1.1rem; color: var(--color-text); line-height: 1.35; }
+
+/* Footer */
+.footer { padding: 4rem 3rem; border-top: 1px solid var(--color-glass-border); display: flex; justify-content: space-between; align-items: center; }
+.footer-left { font-size: 0.72rem; color: var(--color-text-dim); letter-spacing: 0.1em; }
+.footer-right { display: flex; gap: 2rem; }
+.footer-right a { color: var(--color-text-dim); text-decoration: none; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; transition: color 0.3s; }
+.footer-right a:hover { color: var(--color-accent); }
+
+/* Reveal */
+.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.8s var(--ease-out-expo), transform 0.8s var(--ease-out-expo); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+
+/* Responsive */
+@media (max-width: 900px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+  .article-header { padding: 8rem 1.5rem 2rem; }
+  .blog-content { padding: 1.5rem 1.5rem 3rem; }
+  .share-section { padding: 2rem 1.5rem 3rem; }
+  .related-section { padding: 2rem 1.5rem 4rem; }
+  .footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+@media (max-width: 600px) {
+  .article-title { font-size: 1.8rem; }
+  .related-grid { grid-template-columns: 1fr; }
+  .mid-article-cta .cta-form { flex-direction: column; }
+  .mid-article-cta .cta-form button { width: 100%; }
+  .mid-article-cta { padding: 1.75rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#capabilities" data-mobile-link>Services</a>
+  <a href="/#showcase" data-mobile-link>Work</a>
+  <a href="/#process" data-mobile-link>Process</a>
+  <a href="/products" data-mobile-link>Products</a>
+  <a href="/blog" data-mobile-link>Blog</a>
+  <a href="/#contact" data-mobile-link style="color:var(--color-accent);">Book a Call</a>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo"><span class="logo-i">i</span>HelpBuild</a>
+  <ul class="nav-links">
+    <li><a href="/#capabilities">Services</a></li>
+    <li><a href="/#showcase">Work</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/blog">Blog</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='/#contact'">Book a Call</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Article Header -->
+<header class="article-header reveal">
+  <span class="article-category">AUTOMATION</span>
+  <h1 class="article-title">Building Your First AI Automation: A Step-by-Step Guide</h1>
+  <div class="article-meta">
+    <span>March 15, 2026</span>
+    <span class="separator"></span>
+    <span>10 min read</span>
+    <span class="separator"></span>
+    <span>iHelpBuild Team</span>
+  </div>
+</header>
+
+<!-- Article Body -->
+<article class="blog-content reveal">
+
+  <p>The word "automation" sounds intimidating. It conjures images of complex code, expensive software, and months of implementation. But here's the reality in 2026: <strong>you can build your first AI automation in under an hour, with zero coding experience.</strong></p>
+
+  <p>This guide walks you through the entire process, from identifying what to automate to scaling it across your business. No jargon. No prerequisites. Just a step-by-step path to getting hours of your week back.</p>
+
+  <h2><span class="step-label">Step 1</span></h2>
+  <h2>Identify Your Biggest Time Waste</h2>
+
+  <p>Before you touch any tool, you need to know what to automate. The biggest mistake people make is automating something that sounds cool rather than something that actually saves time.</p>
+
+  <h3>How to find your automation target</h3>
+
+  <p>For one week, track every task you do that meets at least two of these criteria:</p>
+
+  <ul>
+    <li><strong>Repetitive:</strong> You do it more than 3 times per week</li>
+    <li><strong>Rule-based:</strong> It follows a predictable pattern or set of rules</li>
+    <li><strong>Time-consuming:</strong> It takes more than 15 minutes each time</li>
+    <li><strong>Low-creativity:</strong> It doesn't require deep strategic thinking</li>
+  </ul>
+
+  <p><strong>Real example:</strong> A marketing agency owner discovered she spent 4 hours every Monday morning compiling client reports from Google Analytics, social media dashboards, and ad platforms. The data was always the same format, pulled from the same sources, arranged the same way. That's a perfect automation candidate.</p>
+
+  <blockquote>
+    <p>"I thought I needed to automate something complex to make it worthwhile. Turns out, automating my Monday morning report saved me more time than any other single change I've made in my business."</p>
+  </blockquote>
+
+  <h2><span class="step-label">Step 2</span></h2>
+  <h2>Choose Your AI Tool</h2>
+
+  <p>You don't need to learn programming. The modern automation landscape is built for non-technical users. Here are the three best starting points, depending on what you're automating:</p>
+
+  <h3>For connecting apps and moving data</h3>
+  <p><strong>Zapier or Make (formerly Integromat):</strong> These tools connect your existing apps and create automatic workflows between them. When X happens in App A, do Y in App B. No code required. If your automation involves moving information between tools you already use, start here.</p>
+
+  <h3>For content and communication tasks</h3>
+  <p><strong>ChatGPT with custom instructions or Claude:</strong> Set up saved prompts with specific instructions for recurring content tasks. Pair with Zapier to trigger them automatically. Perfect for email drafting, report summaries, social media content, and customer response templates.</p>
+
+  <h3>For complex multi-step workflows</h3>
+  <p><strong>n8n or Activepieces:</strong> These are open-source workflow builders that give you more control than Zapier while still being visual and no-code. If your automation has conditional logic (if this, then that, otherwise do something else), these tools handle it elegantly.</p>
+
+  <p><strong>Our recommendation for your first automation:</strong> Start with Zapier. It has the gentlest learning curve and connects to over 6,000 apps. You can always graduate to more powerful tools later.</p>
+
+  <!-- Mid-article CTA -->
+  <div class="mid-article-cta">
+    <h3>Want our automation starter toolkit?</h3>
+    <p>Get our free guide with 15 ready-to-use automation templates for common business tasks, plus video walkthroughs.</p>
+    <form class="cta-form" id="midCtaForm">
+      <input type="email" name="email" placeholder="Enter your email" required>
+      <button type="submit">Get Free Toolkit</button>
+    </form>
+    <p class="cta-success" id="midCtaSuccess">Check your inbox! The toolkit is on its way.</p>
+  </div>
+
+  <h2><span class="step-label">Step 3</span></h2>
+  <h2>Write Your First Prompt</h2>
+
+  <p>If your automation involves AI generating or processing text, the prompt is everything. A mediocre prompt gives mediocre results. A structured prompt gives consistent, professional output every time.</p>
+
+  <h3>The RACE framework for business prompts</h3>
+
+  <ul>
+    <li><strong>Role:</strong> Tell the AI who it is ("You are an experienced email copywriter for a B2B SaaS company")</li>
+    <li><strong>Action:</strong> Tell it exactly what to do ("Write a follow-up email to a prospect who attended our webinar")</li>
+    <li><strong>Context:</strong> Give it the details it needs ("The webinar was about reducing churn. The prospect is a VP of Customer Success at a mid-market company")</li>
+    <li><strong>Expectation:</strong> Define the output format ("Keep it under 100 words. Use a casual but professional tone. Include one specific insight from the webinar and a soft CTA to book a call")</li>
+  </ul>
+
+  <p><strong>Real example:</strong> A real estate agent automated his listing descriptions. Instead of spending 30 minutes writing each one, he created a RACE prompt that takes the property details (bedrooms, location, features) and generates a polished listing description in seconds. He processes 15+ listings a week. That's 7.5 hours saved.</p>
+
+  <blockquote>
+    <p>"The first prompt I wrote was terrible. The output was generic and unusable. But once I added specific context about my brand voice and included an example of a description I liked, the AI nailed it every time."</p>
+  </blockquote>
+
+  <h2><span class="step-label">Step 4</span></h2>
+  <h2>Test and Iterate</h2>
+
+  <p>Your first version will not be perfect. That's expected and fine. The key is to test systematically, not just once.</p>
+
+  <h3>The 10-run test</h3>
+
+  <p>Run your automation 10 times with different inputs. For each run, evaluate:</p>
+
+  <ol>
+    <li><strong>Accuracy:</strong> Did it produce the correct output?</li>
+    <li><strong>Consistency:</strong> Is the quality level the same each time?</li>
+    <li><strong>Speed:</strong> Is it actually faster than doing it manually?</li>
+    <li><strong>Edge cases:</strong> What happens with unusual inputs?</li>
+  </ol>
+
+  <p>After your 10 runs, you'll typically find two or three adjustments to make. Maybe the prompt needs more context for certain scenarios. Maybe you need an additional step in the workflow to handle exceptions. Make those tweaks, run 10 more tests, and you'll have a reliable automation.</p>
+
+  <p><strong>Real example:</strong> An e-commerce store automated their customer support responses. The first version handled standard questions well but fumbled return requests. They added a conditional step: if the message mentions "return" or "refund," route to a different prompt with specific return policy details. Problem solved.</p>
+
+  <h2><span class="step-label">Step 5</span></h2>
+  <h2>Scale to Other Processes</h2>
+
+  <p>Once your first automation is running reliably, resist the urge to automate everything at once. Instead, follow the <strong>compound automation approach</strong>:</p>
+
+  <h3>Week 1-2: Run your first automation</h3>
+  <p>Monitor it. Note any issues. Refine. Get it to 95% reliability before moving on.</p>
+
+  <h3>Week 3-4: Add automation #2</h3>
+  <p>Pick your next highest-impact repetitive task. Build it using the same process. Often your second automation is faster to build because you've learned the tools.</p>
+
+  <h3>Week 5-8: Connect your automations</h3>
+  <p>This is where it gets powerful. Your automations start talking to each other. The output of one becomes the input of another. A lead comes in (automation #1 captures it), gets a personalized follow-up email (automation #2 writes it), and the interaction is logged in your CRM (automation #3 records it). What used to take 20 minutes of manual work happens in 3 seconds.</p>
+
+  <h3>Month 3+: Build your automation ecosystem</h3>
+  <p>By this point, most business owners have 5-8 automations running. The cumulative time savings typically reach <strong>15-20 hours per week</strong>. That's not a theoretical number. It's the average across businesses we've helped implement these systems.</p>
+
+  <blockquote>
+    <p>"We started with one simple automation for invoice reminders. Six months later, we have an entire system that handles lead capture, client onboarding, project updates, and invoicing. We estimated it saves our team 80+ hours per month."</p>
+  </blockquote>
+
+  <h2>Common Mistakes to Avoid</h2>
+
+  <p>After helping hundreds of businesses build their first automations, these are the pitfalls we see most often:</p>
+
+  <ul>
+    <li><strong>Automating before understanding:</strong> If you can't clearly describe the manual process step by step, you're not ready to automate it. Document first, automate second.</li>
+    <li><strong>Skipping the testing phase:</strong> Launching an untested automation to real customers is how you send embarrassing emails to your entire list. Test thoroughly.</li>
+    <li><strong>Over-complicating the first build:</strong> Your first automation should be simple. One trigger, one or two actions. Save the complex multi-branch workflows for automation #3 or #4.</li>
+    <li><strong>Not having a human checkpoint:</strong> For customer-facing automations, add a review step where a human approves the output before it's sent. Remove it later once you trust the system.</li>
+    <li><strong>Ignoring it after setup:</strong> Automations need occasional maintenance. Check them monthly. Platforms update, APIs change, and edge cases emerge over time.</li>
+  </ul>
+
+  <h2>Your Action Plan for Today</h2>
+
+  <p>Don't just read this article. Take one action right now:</p>
+
+  <ol>
+    <li>Open a note on your phone or a document</li>
+    <li>Write down the three tasks you did today that felt repetitive</li>
+    <li>Circle the one that bothers you most</li>
+    <li>Create a free Zapier account</li>
+    <li>Spend 30 minutes exploring whether that task can be connected</li>
+  </ol>
+
+  <p>That's it. You don't need to build the whole thing today. Just take the first step. The business owners who actually save 15+ hours per week with automation all started exactly where you are right now: <strong>with one task and one afternoon.</strong></p>
+
+  <p>Need help building automations that go beyond the basics? We build custom AI automation systems for businesses that are ready to scale. <a href="/#contact" style="color:var(--color-accent);">Book a free consultation</a> and we'll map out your automation roadmap together.</p>
+
+</article>
+
+<!-- Share -->
+<div class="share-section">
+  <span class="share-label">Share</span>
+  <button class="share-btn" onclick="shareTwitter()">Twitter</button>
+  <button class="share-btn" onclick="shareLinkedIn()">LinkedIn</button>
+</div>
+
+<!-- Related Posts -->
+<section class="related-section reveal">
+  <h2 class="related-title">Related Articles</h2>
+  <div class="related-grid">
+    <a href="/blog/10-ai-prompts-every-business-needs.html" class="related-card">
+      <span class="related-card-category">AI TIPS</span>
+      <h3 class="related-card-title">10 AI Prompts Every Business Owner Needs in 2026</h3>
+    </a>
+    <a href="/blog/why-cinematic-websites-convert-better.html" class="related-card">
+      <span class="related-card-category">WEB DESIGN</span>
+      <h3 class="related-card-title">Why Cinematic Websites Convert 3x Better Than Templates</h3>
+    </a>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer">
+  <div class="footer-left">&copy; 2026 iHelpBuild. All rights reserved.</div>
+  <div class="footer-right">
+    <a href="#">LinkedIn</a>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script>
+// Nav scroll
+(function() {
+  var nav = document.getElementById('nav');
+  window.addEventListener('scroll', function() {
+    if (window.scrollY > 50) nav.classList.add('scrolled');
+    else nav.classList.remove('scrolled');
+  }, { passive: true });
+})();
+
+// Hamburger
+(function() {
+  var hamburger = document.getElementById('navHamburger');
+  var mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', function() {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('[data-mobile-link]').forEach(function(link) {
+    link.addEventListener('click', function() {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+
+// Mid-article CTA
+(function() {
+  var form = document.getElementById('midCtaForm');
+  var success = document.getElementById('midCtaSuccess');
+  if (form) {
+    form.addEventListener('submit', function(e) {
+      e.preventDefault();
+      var email = form.querySelector('input[name="email"]').value;
+      fetch('/api/subscribers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: email, source: 'blog-post' })
+      }).then(function(res) {
+        if (res.ok) { form.style.display = 'none'; success.style.display = 'block'; }
+      }).catch(function() { form.style.display = 'none'; success.style.display = 'block'; });
+    });
+  }
+})();
+
+// Share
+function shareTwitter() {
+  var url = encodeURIComponent(window.location.href);
+  var text = encodeURIComponent('Building Your First AI Automation: A Step-by-Step Guide');
+  window.open('https://twitter.com/intent/tweet?url=' + url + '&text=' + text, '_blank', 'width=600,height=400');
+}
+function shareLinkedIn() {
+  var url = encodeURIComponent(window.location.href);
+  window.open('https://www.linkedin.com/sharing/share-offsite/?url=' + url, '_blank', 'width=600,height=400');
+}
+
+// Reveal
+(function() {
+  var reveals = document.querySelectorAll('.reveal');
+  var observer = new IntersectionObserver(function(entries) {
+    entries.forEach(function(entry) {
+      if (entry.isIntersecting) { entry.target.classList.add('visible'); observer.unobserve(entry.target); }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+  reveals.forEach(function(el) { observer.observe(el); });
+})();
+</script>
+</body>
+</html>

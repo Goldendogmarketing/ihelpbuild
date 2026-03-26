@@ -1,0 +1,876 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Products & Resources — iHelpBuild</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --color-bg: #08080a;
+  --color-surface: #111114;
+  --color-surface-elevated: #1a1a1f;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8690;
+  --color-text-dim: #55515c;
+  --color-accent: #c8a97e;
+  --color-accent-warm: #d4a855;
+  --color-accent-cool: #7eb8c8;
+  --color-white: #ffffff;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.07);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* ═══════════════════════════════════════════
+   NAVIGATION
+   ═══════════════════════════════════════════ */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.5s, backdrop-filter 0.5s; }
+.nav.scrolled { background: rgba(8, 8, 10, 0.85); backdrop-filter: blur(30px) saturate(1.5); }
+.nav-logo { font-family: var(--font-body); font-weight: 300; font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--color-text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+.nav-logo .logo-i { color: var(--color-accent); font-family: var(--font-display); font-style: italic; font-size: 1.1rem; font-weight: 700; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400; transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--color-accent); transition: width 0.4s var(--ease-out-expo); }
+.nav-links a:hover, .nav-links a.active { color: var(--color-text); }
+.nav-links a:hover::after, .nav-links a.active::after { width: 100%; }
+.nav-cta { padding: 0.6rem 1.6rem; border: 1px solid var(--color-glass-border); background: var(--color-glass); color: var(--color-text); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: var(--font-body); cursor: pointer; transition: all 0.4s var(--ease-out-expo); backdrop-filter: blur(10px); }
+.nav-cta:hover { background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent); }
+
+/* ═══════════════════════════════════════════
+   MOBILE NAV MENU
+   ═══════════════════════════════════════════ */
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  z-index: 1002;
+}
+.nav-hamburger span {
+  display: block;
+  width: 24px;
+  height: 1.5px;
+  background: var(--color-text);
+  transition: all 0.3s var(--ease-out-expo);
+  transform-origin: center;
+}
+.nav-hamburger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(4px, 5px);
+}
+.nav-hamburger.open span:nth-child(2) {
+  opacity: 0;
+}
+.nav-hamburger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(4px, -5px);
+}
+
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  background: rgba(8, 8, 10, 0.97);
+  backdrop-filter: blur(40px);
+  -webkit-backdrop-filter: blur(40px);
+  z-index: 1001;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.4s var(--ease-out-expo), visibility 0.4s;
+}
+.mobile-menu.open {
+  opacity: 1;
+  visibility: visible;
+}
+.mobile-menu a {
+  color: var(--color-text);
+  text-decoration: none;
+  font-family: var(--font-display);
+  font-size: 2rem;
+  font-weight: 400;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo), color 0.3s;
+}
+.mobile-menu.open a {
+  opacity: 1;
+  transform: translateY(0);
+}
+.mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu a:nth-child(6) { transition-delay: 0.35s; }
+.mobile-menu a:hover { color: var(--color-accent); }
+
+/* ═══════════════════════════════════════════
+   HERO
+   ═══════════════════════════════════════════ */
+.products-hero {
+  position: relative;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 10rem 3rem 5rem;
+  overflow: hidden;
+}
+
+.products-hero::before {
+  content: '';
+  position: absolute;
+  top: -30%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 800px;
+  height: 800px;
+  background: radial-gradient(ellipse, rgba(200, 169, 126, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.hero-eyebrow {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+  font-weight: 500;
+}
+
+.hero-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.15;
+  margin-bottom: 1.5rem;
+  color: var(--color-text);
+}
+
+.hero-headline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.hero-subtitle {
+  font-size: 1.05rem;
+  color: var(--color-text-muted);
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ═══════════════════════════════════════════
+   PRODUCT LADDER
+   ═══════════════════════════════════════════ */
+.products-section {
+  padding: 2rem 3rem 8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.products-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  align-items: center;
+}
+
+.product-card {
+  width: 100%;
+  max-width: 720px;
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 12px;
+  padding: 2.5rem 3rem;
+  position: relative;
+  transition: transform 0.5s var(--ease-out-expo), box-shadow 0.5s var(--ease-out-expo);
+  opacity: 0;
+  transform: translateY(40px);
+}
+
+.product-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+
+.product-card:hover {
+  transform: translateY(-4px);
+}
+
+/* Tier 1 - Free */
+.product-card.tier-1 {
+  border-color: var(--color-glass-border);
+}
+
+/* Tier 2 - $7 */
+.product-card.tier-2 {
+  border-color: rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%);
+}
+
+/* Tier 3 - $27 */
+.product-card.tier-3 {
+  border-color: rgba(200, 169, 126, 0.2);
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%);
+  box-shadow: 0 4px 30px rgba(200, 169, 126, 0.03);
+}
+
+/* Tier 4 - $497 Featured */
+.product-card.tier-4 {
+  border-color: rgba(200, 169, 126, 0.35);
+  background: linear-gradient(135deg, var(--color-surface-elevated) 0%, rgba(200, 169, 126, 0.05) 100%);
+  box-shadow: 0 8px 50px rgba(200, 169, 126, 0.08), 0 0 80px rgba(200, 169, 126, 0.03);
+  max-width: 760px;
+  padding: 3rem 3.5rem;
+}
+
+.product-card.tier-4:hover {
+  box-shadow: 0 12px 60px rgba(200, 169, 126, 0.12), 0 0 100px rgba(200, 169, 126, 0.05);
+}
+
+/* Tier 5 - $997 Premium */
+.product-card.tier-5 {
+  border-color: var(--color-accent-warm);
+  background: linear-gradient(135deg, var(--color-surface-elevated) 0%, rgba(212, 168, 85, 0.08) 100%);
+  box-shadow: 0 8px 60px rgba(212, 168, 85, 0.1), 0 0 100px rgba(212, 168, 85, 0.04);
+  max-width: 780px;
+  padding: 3rem 3.5rem;
+}
+
+.product-card.tier-5:hover {
+  box-shadow: 0 16px 80px rgba(212, 168, 85, 0.15), 0 0 120px rgba(212, 168, 85, 0.06);
+}
+
+.product-badge {
+  position: absolute;
+  top: -12px;
+  right: 2rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  padding: 0.4rem 1.2rem;
+  border-radius: 20px;
+}
+
+.product-tier-label {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.product-name {
+  font-family: var(--font-display);
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.product-price {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 1rem;
+  font-family: var(--font-body);
+}
+
+.product-price.free {
+  color: var(--color-accent-cool);
+}
+
+.product-price.premium {
+  color: var(--color-accent-warm);
+}
+
+.product-description {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+  font-weight: 300;
+}
+
+.product-bullets {
+  list-style: none;
+  margin-bottom: 2rem;
+}
+
+.product-bullets li {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  padding: 0.4rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  font-weight: 400;
+}
+
+.product-bullets li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.6;
+}
+
+.tier-5 .product-bullets li::before {
+  background: var(--color-accent-warm);
+  opacity: 0.8;
+}
+
+.product-cta {
+  display: inline-block;
+  padding: 0.85rem 2.2rem;
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.4s var(--ease-out-expo);
+  border-radius: 4px;
+}
+
+.product-cta.cta-free {
+  background: transparent;
+  border: 1px solid var(--color-accent-cool);
+  color: var(--color-accent-cool);
+}
+
+.product-cta.cta-free:hover {
+  background: var(--color-accent-cool);
+  color: var(--color-bg);
+}
+
+.product-cta.cta-basic {
+  background: transparent;
+  border: 1px solid var(--color-glass-border);
+  color: var(--color-text);
+}
+
+.product-cta.cta-basic:hover {
+  background: var(--color-glass-hover);
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+.product-cta.cta-accent {
+  background: transparent;
+  border: 1px solid rgba(200, 169, 126, 0.3);
+  color: var(--color-accent);
+}
+
+.product-cta.cta-accent:hover {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border-color: var(--color-accent);
+}
+
+.product-cta.cta-featured {
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  color: var(--color-bg);
+  font-weight: 600;
+}
+
+.product-cta.cta-featured:hover {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.product-cta.cta-premium {
+  background: linear-gradient(135deg, var(--color-accent-warm), var(--color-accent));
+  border: none;
+  color: var(--color-bg);
+  font-weight: 600;
+  padding: 0.9rem 2.5rem;
+}
+
+.product-cta.cta-premium:hover {
+  box-shadow: 0 4px 30px rgba(212, 168, 85, 0.3);
+  transform: translateY(-1px);
+}
+
+/* Email capture form - Tier 1 */
+.email-form {
+  display: flex;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+}
+
+.email-form input {
+  flex: 1;
+  min-width: 160px;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 4px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.85rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.email-form input::placeholder {
+  color: var(--color-text-dim);
+}
+
+.email-form input:focus {
+  border-color: var(--color-accent-cool);
+}
+
+.email-form button {
+  padding: 0.75rem 1.8rem;
+  background: transparent;
+  border: 1px solid var(--color-accent-cool);
+  color: var(--color-accent-cool);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.4s var(--ease-out-expo);
+  white-space: nowrap;
+}
+
+.email-form button:hover {
+  background: var(--color-accent-cool);
+  color: var(--color-bg);
+}
+
+.form-success {
+  display: none;
+  color: var(--color-accent-cool);
+  font-size: 0.85rem;
+  padding-top: 0.5rem;
+}
+
+.form-success.visible {
+  display: block;
+}
+
+/* ═══════════════════════════════════════════
+   COMMUNITY SECTION
+   ═══════════════════════════════════════════ */
+.community-section {
+  padding: 0 3rem 8rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  justify-content: center;
+}
+
+.community-card {
+  max-width: 720px;
+  width: 100%;
+  text-align: center;
+  padding: 3.5rem 3rem;
+  border: 1px solid rgba(212, 168, 85, 0.25);
+  border-radius: 12px;
+  background: linear-gradient(135deg, var(--color-surface) 0%, rgba(212, 168, 85, 0.03) 100%);
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.7s var(--ease-out-expo), transform 0.7s var(--ease-out-expo);
+}
+
+.community-card.revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.community-card h2 {
+  font-family: var(--font-display);
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+}
+
+.community-card p {
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  font-weight: 300;
+  max-width: 480px;
+  margin: 0 auto 2rem;
+}
+
+.community-cta {
+  display: inline-block;
+  padding: 0.85rem 2.2rem;
+  border: 1px solid var(--color-accent-warm);
+  background: transparent;
+  color: var(--color-accent-warm);
+  font-size: 0.75rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.community-cta:hover {
+  background: var(--color-accent-warm);
+  color: var(--color-bg);
+}
+
+/* ═══════════════════════════════════════════
+   FOOTER
+   ═══════════════════════════════════════════ */
+.footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 2rem 3rem;
+  border-top: 1px solid var(--color-glass-border);
+}
+
+.footer-left {
+  font-size: 0.75rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.05em;
+}
+
+.footer-right {
+  display: flex;
+  gap: 2rem;
+}
+
+.footer-right a {
+  color: var(--color-text-dim);
+  text-decoration: none;
+  font-size: 0.75rem;
+  letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+
+.footer-right a:hover {
+  color: var(--color-accent);
+}
+
+/* ═══════════════════════════════════════════
+   RESPONSIVE
+   ═══════════════════════════════════════════ */
+@media (max-width: 900px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+  .products-hero { padding: 8rem 1.5rem 3rem; }
+  .products-section { padding: 2rem 1.5rem 6rem; }
+  .product-card { padding: 2rem 1.5rem; }
+  .product-card.tier-4, .product-card.tier-5 { padding: 2.5rem 2rem; max-width: 100%; }
+  .community-section { padding: 0 1.5rem 6rem; }
+  .community-card { padding: 2.5rem 1.5rem; }
+  .footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+  .email-form { flex-direction: column; }
+  .email-form input { min-width: 100%; }
+}
+
+@media (max-width: 600px) {
+  .products-hero { padding: 7rem 1rem 2rem; }
+  .products-section { padding: 1rem 1rem 4rem; }
+  .hero-headline { font-size: clamp(2rem, 8vw, 3rem); }
+  .product-name { font-size: 1.3rem; }
+  .product-price { font-size: 1.6rem; }
+  .community-section { padding: 0 1rem 4rem; }
+  .footer { padding: 2rem 1rem; }
+  .footer-right { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#capabilities" data-mobile-link>Services</a>
+  <a href="/#showcase" data-mobile-link>Work</a>
+  <a href="/#process" data-mobile-link>Process</a>
+  <a href="/products" data-mobile-link>Products</a>
+  <a href="/#contact" data-mobile-link>Contact</a>
+  <a href="/#contact" data-mobile-link style="color:var(--color-accent);">Book a Call</a>
+</div>
+
+<!-- Navigation -->
+<nav class="nav" id="nav">
+  <a href="/" class="nav-logo"><span class="logo-i">i</span>HelpBuild</a>
+  <ul class="nav-links">
+    <li><a href="/#capabilities">Services</a></li>
+    <li><a href="/#showcase">Work</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/products" class="active">Products</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='/#contact'">Book a Call</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══════════════ HERO ═══════════════ -->
+<section class="products-hero">
+  <div class="hero-content">
+    <p class="hero-eyebrow">Products &amp; Resources</p>
+    <h1 class="hero-headline">Your Path to a <em>Smarter</em> Business</h1>
+    <p class="hero-subtitle">From free resources to hands-on masterclasses — choose the level that fits where you are right now.</p>
+  </div>
+</section>
+
+<!-- ═══════════════ PRODUCT LADDER ═══════════════ -->
+<section class="products-section">
+  <div class="products-grid">
+
+    <!-- Tier 1: Free -->
+    <div class="product-card tier-1">
+      <p class="product-tier-label">Free Tier</p>
+      <h2 class="product-name">The AI Starter Guide</h2>
+      <p class="product-price free">FREE</p>
+      <p class="product-description">10 battle-tested AI prompts that save business owners 10+ hours every week.</p>
+      <ul class="product-bullets">
+        <li>Instant PDF download</li>
+        <li>10 ready-to-use prompts</li>
+        <li>Works with ChatGPT / Claude / Gemini</li>
+        <li>Quick-start templates</li>
+      </ul>
+      <form class="email-form" id="starterGuideForm">
+        <input type="text" name="name" placeholder="Your name" required>
+        <input type="email" name="email" placeholder="Your email" required>
+        <button type="submit">Get Free Guide</button>
+      </form>
+      <p class="form-success" id="formSuccess">Check your inbox — the guide is on its way!</p>
+    </div>
+
+    <!-- Tier 2: $7 -->
+    <div class="product-card tier-2">
+      <p class="product-tier-label">Essential</p>
+      <h2 class="product-name">The AI Cheat Sheet</h2>
+      <p class="product-price">$7</p>
+      <p class="product-description">47 advanced prompts organized by business function — marketing, operations, sales, and more.</p>
+      <ul class="product-bullets">
+        <li>47 categorized prompts</li>
+        <li>Copy-paste ready</li>
+        <li>Industry-specific variations</li>
+        <li>Bonus: prompt engineering tips</li>
+      </ul>
+      <a href="#" class="product-cta cta-basic">Get the Cheat Sheet &mdash; $7</a>
+    </div>
+
+    <!-- Tier 3: $27 -->
+    <div class="product-card tier-3">
+      <p class="product-tier-label">Advanced</p>
+      <h2 class="product-name">The AI Business Blueprint</h2>
+      <p class="product-price">$27</p>
+      <p class="product-description">The complete ebook on building AI-powered systems for your business — from audit to automation.</p>
+      <ul class="product-bullets">
+        <li>150+ page comprehensive guide</li>
+        <li>Step-by-step automation blueprints</li>
+        <li>Real case studies</li>
+        <li>Tech stack recommendations</li>
+        <li>Implementation checklists</li>
+      </ul>
+      <a href="#" class="product-cta cta-accent">Get the Blueprint &mdash; $27</a>
+    </div>
+
+    <!-- Tier 4: $497 Featured -->
+    <div class="product-card tier-4">
+      <span class="product-badge">Most Popular</span>
+      <p class="product-tier-label">Professional</p>
+      <h2 class="product-name">The AI Accelerator Course</h2>
+      <p class="product-price">$497</p>
+      <p class="product-description">8-week online course with video training, live Q&amp;A, and implementation support.</p>
+      <ul class="product-bullets">
+        <li>40+ hours of video content</li>
+        <li>Weekly live Q&amp;A calls</li>
+        <li>Private community access</li>
+        <li>Implementation templates</li>
+        <li>Certificate of completion</li>
+      </ul>
+      <a href="#" class="product-cta cta-featured">Enroll Now &mdash; $497</a>
+    </div>
+
+    <!-- Tier 5: $997 Premium -->
+    <div class="product-card tier-5">
+      <p class="product-tier-label">Premium</p>
+      <h2 class="product-name">The In-Person Masterclass</h2>
+      <p class="product-price premium">$997</p>
+      <p class="product-description">Two-day intensive workshop. Learn, build, and launch your AI systems with hands-on expert guidance.</p>
+      <ul class="product-bullets">
+        <li>2-day intensive workshop</li>
+        <li>Build your systems live</li>
+        <li>1-on-1 strategy session</li>
+        <li>Lifetime community access</li>
+        <li>All digital products included</li>
+      </ul>
+      <a href="#" class="product-cta cta-premium">Reserve Your Seat &mdash; $997</a>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════════ COMMUNITY ═══════════════ -->
+<section class="community-section">
+  <div class="community-card">
+    <h2>Join Our Community</h2>
+    <p>Connect with business owners on the same journey. Get answers, share ideas, and access insider knowledge.</p>
+    <a href="#" class="community-cta">Join the Facebook Group</a>
+  </div>
+</section>
+
+<!-- ═══════════════ FOOTER ═══════════════ -->
+<footer class="footer">
+  <div class="footer-left">&copy; 2026 iHelpBuild. All rights reserved.</div>
+  <div class="footer-right">
+    <a href="/blog">Blog</a>
+    <a href="/faq">FAQ</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script>
+// ═══════════════════════════════════════════
+// NAV SCROLL
+// ═══════════════════════════════════════════
+(function() {
+  const nav = document.getElementById('nav');
+  let ticking = false;
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(() => {
+        if (window.scrollY > 50) {
+          nav.classList.add('scrolled');
+        } else {
+          nav.classList.remove('scrolled');
+        }
+        ticking = false;
+      });
+      ticking = true;
+    }
+  });
+})();
+
+// ═══════════════════════════════════════════
+// MOBILE NAV
+// ═══════════════════════════════════════════
+(function() {
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+
+  document.querySelectorAll('[data-mobile-link]').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+})();
+
+// ═══════════════════════════════════════════
+// SCROLL REVEAL - INTERSECTION OBSERVER
+// ═══════════════════════════════════════════
+(function() {
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('revealed');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, {
+    threshold: 0.15,
+    rootMargin: '0px 0px -60px 0px'
+  });
+
+  document.querySelectorAll('.product-card, .community-card').forEach(card => {
+    observer.observe(card);
+  });
+})();
+
+// ═══════════════════════════════════════════
+// EMAIL FORM SUBMISSION
+// ═══════════════════════════════════════════
+(function() {
+  const form = document.getElementById('starterGuideForm');
+  const success = document.getElementById('formSuccess');
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const name = form.querySelector('input[name="name"]').value.trim();
+    const email = form.querySelector('input[name="email"]').value.trim();
+    if (!name || !email) return;
+
+    try {
+      const res = await fetch('/api/subscribers', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name, email, source: 'products' })
+      });
+
+      if (res.ok) {
+        form.style.display = 'none';
+        success.classList.add('visible');
+      } else {
+        const data = await res.json().catch(() => ({}));
+        alert(data.error || 'Something went wrong. Please try again.');
+      }
+    } catch (err) {
+      alert('Connection error. Please try again.');
+    }
+  });
+})();
+</script>
+</body>
+</html>

@@ -1,6 +1,10 @@
 {
   "rewrites": [
-    { "source": "/admin", "destination": "/admin.html" }
+    { "source": "/admin", "destination": "/admin.html" },
+    { "source": "/free-guide", "destination": "/funnel.html" },
+    { "source": "/products", "destination": "/products.html" },
+    { "source": "/faq", "destination": "/faq.html" },
+    { "source": "/blog", "destination": "/blog.html" }
   ],
   "headers": [
     {
@@ -11,5 +15,8 @@
         { "key": "Access-Control-Allow-Headers", "value": "Content-Type,Authorization" }
       ]
     }
+  ],
+  "crons": [
+    { "path": "/api/sequences", "schedule": "0 */2 * * *" }
   ]
 }

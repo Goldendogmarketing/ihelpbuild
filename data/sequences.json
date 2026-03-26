@@ -1,0 +1,17 @@
+{
+  "subscriber-welcome": {
+    "name": "New Subscriber Welcome",
+    "steps": [
+      { "delay": 0, "templateId": "welcome", "description": "Deliver free guide immediately" },
+      { "delay": 86400000, "templateId": "drip-1", "description": "Pitch $7 cheat sheet (1 day later)" },
+      { "delay": 259200000, "templateId": "drip-2", "description": "Pitch $27 ebook (3 days later)" }
+    ]
+  },
+  "purchaser-upsell": {
+    "name": "Post-Purchase Upsell",
+    "steps": [
+      { "delay": 0, "templateId": "purchase-confirm", "description": "Purchase confirmation + community invite" },
+      { "delay": 172800000, "templateId": "upsell-1", "description": "Pitch next tier (2 days later)" }
+    ]
+  }
+}
