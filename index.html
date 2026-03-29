@@ -295,7 +295,7 @@ body {
    ═══════════════════════════════════════════ */
 .hero {
   position: relative;
-  height: 300vh;
+  height: 200vh;
   overflow: visible;
 }
 .hero-sticky {
@@ -2299,12 +2299,12 @@ function updateHeroScroll() {
   const scrolled = Math.max(0, -rect.top);
   const progress = Math.min(1, scrolled / totalScroll);
 
-  if (progress < 0.25) {
-    heroContent1.style.opacity = 1 - progress * 4;
+  if (progress < 0.3) {
+    heroContent1.style.opacity = 1 - progress * 3.3;
     heroPhase2.classList.remove('active');
     heroPhase3.classList.remove('active');
-    scrollIndicator.style.opacity = 1 - progress * 6;
-  } else if (progress < 0.55) {
+    scrollIndicator.style.opacity = 1 - progress * 5;
+  } else if (progress < 0.65) {
     heroContent1.style.opacity = 0;
     heroPhase2.classList.add('active');
     heroPhase3.classList.remove('active');
