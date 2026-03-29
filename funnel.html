@@ -842,9 +842,16 @@ section {
                 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
               </div>
               <h3>Check your email!</h3>
-              <p>Your guide is on its way.</p>
+              <p>Your guide is on its way. Your download should start automatically.</p>
             </div>
           `;
+          // Trigger immediate PDF download
+          var dl = document.createElement('a');
+          dl.href = '/downloads/ai-cheat-sheet-free.pdf';
+          dl.download = 'AI_Cheat_Sheet_10_Prompts.pdf';
+          document.body.appendChild(dl);
+          dl.click();
+          document.body.removeChild(dl);
           // Close popup if this form was inside it
           if (form.id === 'popupForm') {
             setTimeout(function() {

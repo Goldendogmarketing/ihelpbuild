@@ -686,23 +686,24 @@ body {
       <p class="form-success" id="formSuccess">Check your inbox — the guide is on its way!</p>
     </div>
 
-    <!-- Tier 2: $7 -->
-    <div class="product-card tier-2">
+    <!-- Tier 2: $7 — 25 Prompt Cheat Sheet -->
+    <div class="product-card tier-2" id="cheatsheet">
       <p class="product-tier-label">Essential</p>
-      <h2 class="product-name">The AI Cheat Sheet</h2>
+      <h2 class="product-name">The 25-Prompt AI Cheat Sheet</h2>
       <p class="product-price">$7</p>
-      <p class="product-description">47 advanced prompts organized by business function — marketing, operations, sales, and more.</p>
+      <p class="product-description">25 advanced prompts organized by business function — marketing, operations, sales, and more.</p>
       <ul class="product-bullets">
-        <li>47 categorized prompts</li>
+        <li>25 categorized power prompts</li>
         <li>Copy-paste ready</li>
         <li>Industry-specific variations</li>
         <li>Bonus: prompt engineering tips</li>
       </ul>
-      <a href="#" class="product-cta cta-basic">Get the Cheat Sheet &mdash; $7</a>
+      <!-- TODO: Replace href with your Stripe Payment Link (e.g. https://buy.stripe.com/xxx) -->
+      <a href="#" class="product-cta cta-basic" data-stripe-product="cheatsheet-25">Get the Cheat Sheet &mdash; $7</a>
     </div>
 
-    <!-- Tier 3: $27 -->
-    <div class="product-card tier-3">
+    <!-- Tier 3: $27 — E-Book + Free Cheat Sheet Bonus -->
+    <div class="product-card tier-3" id="ebook">
       <p class="product-tier-label">Advanced</p>
       <h2 class="product-name">The AI Business Blueprint</h2>
       <p class="product-price">$27</p>
@@ -712,9 +713,10 @@ body {
         <li>Step-by-step automation blueprints</li>
         <li>Real case studies</li>
         <li>Tech stack recommendations</li>
-        <li>Implementation checklists</li>
+        <li style="color:var(--color-accent);font-weight:500;">Free bonus: 25-Prompt Cheat Sheet included</li>
       </ul>
-      <a href="#" class="product-cta cta-accent">Get the Blueprint &mdash; $27</a>
+      <!-- TODO: Replace href with your Stripe Payment Link (e.g. https://buy.stripe.com/xxx) -->
+      <a href="#" class="product-cta cta-accent" data-stripe-product="ebook-blueprint">Get the Blueprint &mdash; $27</a>
     </div>
 
     <!-- Tier 4: $497 Featured -->
@@ -862,6 +864,13 @@ body {
       if (res.ok) {
         form.style.display = 'none';
         success.classList.add('visible');
+        // Trigger immediate PDF download
+        var dl = document.createElement('a');
+        dl.href = '/downloads/ai-cheat-sheet-free.pdf';
+        dl.download = 'AI_Cheat_Sheet_10_Prompts.pdf';
+        document.body.appendChild(dl);
+        dl.click();
+        document.body.removeChild(dl);
       } else {
         const data = await res.json().catch(() => ({}));
         alert(data.error || 'Something went wrong. Please try again.');

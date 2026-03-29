@@ -1443,6 +1443,223 @@ body {
 }
 
 /* ═══════════════════════════════════════════
+   CHEAT SHEET CTA
+   ═══════════════════════════════════════════ */
+.cheatsheet-cta {
+  position: relative;
+  padding: 10rem 3rem;
+  text-align: center;
+  overflow: hidden;
+  background: var(--color-bg);
+}
+.cheatsheet-cta-glow-1,
+.cheatsheet-cta-glow-2 {
+  position: absolute;
+  width: 700px;
+  height: 700px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(200, 169, 126, 0.08), transparent 60%);
+  pointer-events: none;
+}
+.cheatsheet-cta-glow-1 {
+  top: -15%;
+  right: -10%;
+  animation: cheatsheetGlowDrift1 12s ease-in-out infinite;
+}
+.cheatsheet-cta-glow-2 {
+  bottom: -15%;
+  left: -10%;
+  animation: cheatsheetGlowDrift2 14s ease-in-out infinite;
+}
+@keyframes cheatsheetGlowDrift1 {
+  0%, 100% { transform: translate(0, 0); opacity: 0.8; }
+  50% { transform: translate(-30px, 20px); opacity: 1; }
+}
+@keyframes cheatsheetGlowDrift2 {
+  0%, 100% { transform: translate(0, 0); opacity: 1; }
+  50% { transform: translate(20px, -25px); opacity: 0.7; }
+}
+.cheatsheet-cta-grid-overlay {
+  position: absolute;
+  inset: 0;
+  background-image:
+    linear-gradient(rgba(200, 169, 126, 0.03) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(200, 169, 126, 0.03) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 100%);
+  -webkit-mask-image: radial-gradient(ellipse 70% 60% at 50% 50%, black 20%, transparent 100%);
+  pointer-events: none;
+}
+.cheatsheet-cta-inner {
+  position: relative;
+  z-index: 1;
+  max-width: 680px;
+  margin: 0 auto;
+}
+.cheatsheet-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.4rem 1.1rem;
+  border: 1px solid rgba(200, 169, 126, 0.25);
+  border-radius: 50px;
+  background: rgba(200, 169, 126, 0.04);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  font-family: var(--font-body);
+  font-size: 0.7rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--color-accent);
+  margin-bottom: 2.5rem;
+}
+.cheatsheet-badge-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  animation: cheatsheetBadgePulse 2s ease-in-out infinite;
+}
+@keyframes cheatsheetBadgePulse {
+  0%, 100% { opacity: 0.4; box-shadow: 0 0 0 0 rgba(200, 169, 126, 0.4); }
+  50% { opacity: 1; box-shadow: 0 0 8px 2px rgba(200, 169, 126, 0.3); }
+}
+.cheatsheet-headline {
+  font-family: var(--font-display);
+  font-size: clamp(2.2rem, 4.5vw, 3.8rem);
+  font-weight: 400;
+  line-height: 1.15;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+.cheatsheet-headline-accent {
+  color: var(--color-accent);
+  position: relative;
+  display: inline-block;
+}
+.cheatsheet-headline-accent::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 126, 0.6), transparent);
+  border-radius: 2px;
+}
+.cheatsheet-subheadline {
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  font-weight: 300;
+  line-height: 1.7;
+  color: rgba(245, 245, 245, 0.5);
+  max-width: 560px;
+  margin: 0 auto 2.5rem;
+}
+.cheatsheet-chips {
+  display: flex;
+  justify-content: center;
+  gap: 0.75rem;
+  flex-wrap: wrap;
+  margin-bottom: 2.5rem;
+}
+.cheatsheet-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.45rem 1rem;
+  border: 1px solid rgba(200, 169, 126, 0.15);
+  border-radius: 50px;
+  background: rgba(200, 169, 126, 0.03);
+  font-family: var(--font-body);
+  font-size: 0.78rem;
+  color: rgba(245, 245, 245, 0.55);
+}
+.cheatsheet-chip-num {
+  font-family: var(--font-display);
+  color: var(--color-accent);
+  font-weight: 700;
+  font-size: 0.82rem;
+}
+.cheatsheet-divider {
+  width: 60px;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(200, 169, 126, 0.35), transparent);
+  margin: 0 auto 2.5rem;
+}
+.cheatsheet-form-wrap {
+  display: flex;
+  border: 1px solid rgba(200, 169, 126, 0.2);
+  border-radius: 8px;
+  overflow: hidden;
+  max-width: 520px;
+  margin: 0 auto 2rem;
+  transition: border-color 0.4s var(--ease-out-expo), box-shadow 0.4s var(--ease-out-expo);
+}
+.cheatsheet-form-wrap:focus-within {
+  border-color: rgba(200, 169, 126, 0.5);
+  box-shadow: 0 0 20px rgba(200, 169, 126, 0.08);
+}
+.cheatsheet-email-input {
+  flex: 1;
+  background: rgba(255, 255, 255, 0.03);
+  border: none;
+  padding: 0.95rem 1.2rem;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+}
+.cheatsheet-email-input::placeholder {
+  color: var(--color-text-dim);
+}
+.cheatsheet-submit-btn {
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  padding: 0.95rem 1.8rem;
+  font-family: var(--font-body);
+  font-size: 0.81rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background 0.3s var(--ease-out-expo);
+}
+.cheatsheet-submit-btn:hover {
+  background: var(--color-accent-warm);
+}
+.cheatsheet-submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+.cheatsheet-trust {
+  display: flex;
+  justify-content: center;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+.cheatsheet-trust-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-family: var(--font-body);
+  font-size: 0.75rem;
+  color: rgba(245, 245, 245, 0.3);
+}
+.cheatsheet-trust-item svg {
+  width: 14px;
+  height: 14px;
+  stroke: rgba(245, 245, 245, 0.3);
+  fill: none;
+  stroke-width: 1.5;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+/* ═══════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════ */
 @media (max-width: 900px) {
@@ -1452,7 +1669,9 @@ body {
   .nav-hamburger { display: flex; }
   .nav-cta { display: none; }
   .hero-content { padding: 0 1.5rem; }
-  .capabilities, .process, .social-proof, .cta-section { padding: 6rem 1.5rem; }
+  .capabilities, .process, .social-proof, .cta-section, .cheatsheet-cta { padding: 6rem 1.5rem; }
+  .cheatsheet-form-wrap { flex-direction: column; }
+  .cheatsheet-submit-btn { padding: 0.95rem; }
   .footer { flex-direction: column; gap: 1.5rem; text-align: center; }
   .showcase-item { width: 300px; height: 200px; }
   .process-step { gap: 1.5rem; }
@@ -1791,6 +2010,44 @@ body {
     </div>
   </div>
   <div class="testimonial-dots" id="testimonialDots"></div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- ═══════════════ CHEAT SHEET CTA ═══════════════ -->
+<section class="cheatsheet-cta" id="cheatsheet">
+  <div class="cheatsheet-cta-glow-1"></div>
+  <div class="cheatsheet-cta-glow-2"></div>
+  <div class="cheatsheet-cta-grid-overlay"></div>
+  <div class="cheatsheet-cta-inner">
+    <div class="cheatsheet-badge reveal"><span class="cheatsheet-badge-dot"></span> Free Resource</div>
+    <h2 class="cheatsheet-headline reveal">Stop Talking to AI<br>Like a <span class="cheatsheet-headline-accent">Search Engine</span></h2>
+    <p class="cheatsheet-subheadline reveal">Get the 10 prompts that turn ChatGPT, Claude, and Gemini into your most productive team member — not just another Google.</p>
+    <div class="cheatsheet-chips reveal">
+      <span class="cheatsheet-chip"><span class="cheatsheet-chip-num">#1</span> The Role Setter</span>
+      <span class="cheatsheet-chip"><span class="cheatsheet-chip-num">#3</span> The Reverse Prompt</span>
+      <span class="cheatsheet-chip"><span class="cheatsheet-chip-num">#7</span> The SOPs Builder</span>
+    </div>
+    <div class="cheatsheet-divider reveal"></div>
+    <form class="cheatsheet-form-wrap reveal" id="cheatsheetForm" onsubmit="submitCheatSheet(event)">
+      <input type="email" class="cheatsheet-email-input" name="email" placeholder="Enter your email" required autocomplete="email">
+      <button type="submit" class="cheatsheet-submit-btn" id="cheatsheetBtn">GET THE CHEAT SHEET</button>
+    </form>
+    <div class="cheatsheet-trust reveal">
+      <span class="cheatsheet-trust-item">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        No spam, ever
+      </span>
+      <span class="cheatsheet-trust-item">
+        <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+        Unsubscribe anytime
+      </span>
+      <span class="cheatsheet-trust-item">
+        <svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>
+        Instant download
+      </span>
+    </div>
+  </div>
 </section>
 
 <div class="section-divider"></div>
@@ -2451,6 +2708,48 @@ async function submitConsultation(e) {
   });
 })();
 
+async function submitCheatSheet(e) {
+  e.preventDefault();
+  const form = e.target;
+  const emailInput = form.querySelector('[name="email"]');
+  const email = emailInput.value.trim();
+  const btn = document.getElementById('cheatsheetBtn');
+
+  if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+    emailInput.focus();
+    return;
+  }
+
+  btn.disabled = true;
+  btn.textContent = 'SENDING...';
+
+  try {
+    // TODO: Connect to email service (ConvertKit/SendGrid)
+    console.log('Cheat sheet subscriber:', email);
+    const res = await fetch('/api/subscribers', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, source: 'cheatsheet-cta' }),
+    });
+    if (res.ok) {
+      btn.textContent = 'Check Your Inbox \u2713';
+      emailInput.disabled = true;
+      // Trigger immediate PDF download
+      const link = document.createElement('a');
+      link.href = '/downloads/ai-cheat-sheet-free.pdf';
+      link.download = 'AI_Cheat_Sheet_10_Prompts.pdf';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+    } else {
+      throw new Error('Request failed');
+    }
+  } catch (err) {
+    btn.disabled = false;
+    btn.textContent = 'GET THE CHEAT SHEET';
+  }
+}
+
 async function submitLeadPopup(e) {
   e.preventDefault();
   const form = e.target;
@@ -2473,8 +2772,15 @@ async function submitLeadPopup(e) {
         <button class="lead-popup-close" onclick="document.getElementById('leadPopup').classList.remove('show')">&times;</button>
         <div class="popup-success">
           <h4>You're in!</h4>
-          <p>Check your email — your free AI prompts guide is on its way.</p>
+          <p>Check your email — your free AI prompts guide is on its way. Your download should start automatically.</p>
         </div>`;
+      // Trigger immediate PDF download
+      var dl = document.createElement('a');
+      dl.href = '/downloads/ai-cheat-sheet-free.pdf';
+      dl.download = 'AI_Cheat_Sheet_10_Prompts.pdf';
+      document.body.appendChild(dl);
+      dl.click();
+      document.body.removeChild(dl);
     }
   } catch (err) {
     btn.disabled = false;

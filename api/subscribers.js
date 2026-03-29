@@ -53,9 +53,11 @@ module.exports = async function handler(req, res) {
 
       // Send welcome email immediately (non-blocking)
       if (welcomeSeq) {
+        const baseUrl = process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000';
         const vars = {
           name: sanitizedName,
-          guideUrl: (process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000') + '/free-guide',
+          guideUrl: baseUrl + '/downloads/ai-cheat-sheet-free.pdf',
+          unsubscribeUrl: baseUrl + '/unsubscribe?id=' + contact.id,
         };
         sendTemplateEmail(sanitizedEmail, 'welcome', vars).catch(err =>
           console.error('Welcome email failed:', err)

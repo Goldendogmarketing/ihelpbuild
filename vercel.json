@@ -2,6 +2,7 @@
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/free-guide", "destination": "/funnel.html" },
+    { "source": "/unsubscribe", "destination": "/api/unsubscribe" },
     { "source": "/products", "destination": "/products.html" },
     { "source": "/faq", "destination": "/faq.html" },
     { "source": "/blog", "destination": "/blog.html" }

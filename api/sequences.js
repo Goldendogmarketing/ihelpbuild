@@ -25,6 +25,12 @@ module.exports = async function handler(req, res) {
     let errors = 0;
 
     for (const contact of dueContacts) {
+      // Skip unsubscribed contacts
+      if (contact.status === 'unsubscribed') {
+        updateContact(contact.id, { sequenceState: null });
+        continue;
+      }
+
       const { sequenceState } = contact;
       const sequence = sequences[sequenceState.sequenceId];
 
@@ -42,11 +48,12 @@ module.exports = async function handler(req, res) {
       }
 
       // Build template variables
+      // TODO: Replace STRIPE_CHEATSHEET_URL and STRIPE_EBOOK_URL with real Stripe Payment Links
       const vars = {
         name: contact.name,
-        guideUrl: baseUrl + '/free-guide',
-        cheatSheetUrl: baseUrl + '/products',
-        ebookUrl: baseUrl + '/products',
+        guideUrl: baseUrl + '/downloads/ai-cheat-sheet-free.pdf',
+        cheatSheetUrl: process.env.STRIPE_CHEATSHEET_URL || baseUrl + '/products#cheatsheet',
+        ebookUrl: process.env.STRIPE_EBOOK_URL || baseUrl + '/products#ebook',
         productsUrl: baseUrl + '/products',
         communityUrl: process.env.FACEBOOK_GROUP_URL || '#',
         lastProduct: contact.products?.length > 0 ? contact.products[contact.products.length - 1] : '',

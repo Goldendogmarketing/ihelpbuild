@@ -98,11 +98,20 @@ module.exports = async function handler(req, res) {
 function enrollInUpsellSequence(contactId, email, name, productName) {
   const baseUrl = process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000';
 
+  // Map product names to download URLs
+  // TODO: Replace with hosted URLs for paid products when ready
+  const downloadUrls = {
+    'AI Cheat Sheet': baseUrl + '/downloads/ai-cheat-sheet-25.pdf',
+    'AI Business Blueprint': baseUrl + '/downloads/ai-business-blueprint.pdf',
+  };
+
   // Send purchase confirmation immediately
   sendTemplateEmail(email, 'purchase-confirm', {
     name,
     productName,
+    downloadUrl: downloadUrls[productName] || baseUrl + '/products',
     communityUrl: process.env.FACEBOOK_GROUP_URL || '#',
+    unsubscribeUrl: baseUrl + '/unsubscribe?id=' + contactId,
   }).catch(err => console.error('Purchase confirm email failed:', err));
 
   // Set up upsell sequence (step 1 = upsell, sent after delay)
