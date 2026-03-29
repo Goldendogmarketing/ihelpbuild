@@ -555,17 +555,274 @@ body { background: var(--color-bg); min-height: 100vh; }
 .empty-icon { font-size: 3rem; margin-bottom: 1rem; opacity: 0.3; }
 .empty-text { font-size: 0.9rem; }
 
+/* Campaign Composer */
+.composer-view { display: none; padding: 2rem; overflow-y: auto; flex: 1; }
+.composer-view.active { display: block; }
+.composer-form { max-width: 800px; }
+.composer-row { margin-bottom: 1.5rem; }
+.composer-label {
+  display: block;
+  font-size: 0.68rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+.composer-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+.composer-input:focus { border-color: var(--color-accent); }
+.composer-input::placeholder { color: var(--color-text-dim); }
+.composer-textarea {
+  width: 100%;
+  min-height: 250px;
+  padding: 1rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.88rem;
+  outline: none;
+  resize: vertical;
+  line-height: 1.7;
+  transition: border-color 0.3s;
+}
+.composer-textarea:focus { border-color: var(--color-accent); }
+.composer-textarea::placeholder { color: var(--color-text-dim); }
+
+.audience-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+}
+.audience-option {
+  padding: 0.85rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 10px;
+  text-align: center;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.audience-option:hover { background: var(--color-glass-hover); }
+.audience-option.active { border-color: var(--color-accent); background: rgba(200,169,126,0.08); }
+.audience-option-label {
+  font-size: 0.82rem;
+  color: var(--color-text);
+  font-weight: 500;
+}
+.audience-option-count {
+  font-size: 0.72rem;
+  color: var(--color-text-dim);
+  margin-top: 0.25rem;
+}
+
+.warmth-pills {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+  margin-top: 0.75rem;
+}
+.warmth-pill {
+  padding: 0.4rem 1rem;
+  border-radius: 20px;
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  border: 1px solid var(--color-glass-border);
+  background: var(--color-glass);
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-weight: 500;
+  transition: all 0.2s;
+}
+.warmth-pill:hover { background: var(--color-glass-hover); }
+.warmth-pill.active { border-color: var(--color-accent); color: var(--color-accent); background: rgba(200,169,126,0.08); }
+
+.audience-preview {
+  margin-top: 1rem;
+  padding: 0.85rem 1rem;
+  background: var(--color-glass);
+  border-radius: 8px;
+  font-size: 0.82rem;
+  color: var(--color-text-muted);
+}
+.audience-count { color: var(--color-accent); font-weight: 600; font-size: 1.1rem; }
+
+.composer-actions {
+  display: flex;
+  gap: 0.75rem;
+  margin-top: 2rem;
+}
+.btn-primary {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-accent);
+  color: var(--color-bg);
+  border: none;
+  border-radius: 8px;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 20px rgba(200,169,126,0.2); }
+.btn-primary:disabled { opacity: 0.5; cursor: not-allowed; transform: none; box-shadow: none; }
+.btn-secondary {
+  padding: 0.75rem 1.5rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 8px;
+  color: var(--color-text-muted);
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-secondary:hover { background: var(--color-glass-hover); color: var(--color-text); }
+.btn-danger {
+  padding: 0.75rem 1.5rem;
+  background: rgba(200,120,120,0.08);
+  border: 1px solid rgba(200,120,120,0.2);
+  border-radius: 8px;
+  color: #c87878;
+  font-family: var(--font-body);
+  font-size: 0.82rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+.btn-danger:hover { background: rgba(200,120,120,0.15); }
+
+/* Campaign List */
+.campaign-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.campaign-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.campaign-card:hover { background: var(--color-glass-hover); border-color: rgba(255,255,255,0.12); }
+.campaign-info { flex: 1; }
+.campaign-name { font-size: 0.92rem; color: var(--color-text); font-weight: 500; margin-bottom: 0.2rem; }
+.campaign-subject { font-size: 0.78rem; color: var(--color-text-dim); }
+.campaign-meta { text-align: right; }
+.campaign-status { margin-bottom: 0.25rem; }
+.campaign-date { font-size: 0.72rem; color: var(--color-text-dim); }
+.campaign-stats { font-size: 0.72rem; color: var(--color-text-muted); }
+
+/* Status badges for campaigns */
+.status-draft { background: rgba(200,169,126,0.12); color: #c8a97e; }
+.status-sending { background: rgba(126,184,200,0.12); color: #7eb8c8; }
+.status-sent { background: rgba(120,200,160,0.12); color: #78c8a0; }
+.status-failed { background: rgba(200,120,120,0.12); color: #c87878; }
+
+/* CTA Manager */
+.cta-list { display: flex; flex-direction: column; gap: 0.75rem; }
+.cta-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.25rem 1.5rem;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 10px;
+  transition: all 0.2s;
+}
+.cta-card:hover { background: var(--color-glass-hover); }
+.cta-info { flex: 1; cursor: pointer; }
+.cta-name { font-size: 0.92rem; color: var(--color-text); font-weight: 500; margin-bottom: 0.2rem; }
+.cta-detail { font-size: 0.78rem; color: var(--color-text-dim); }
+.cta-actions { display: flex; align-items: center; gap: 0.75rem; }
+
+/* Toggle switch */
+.toggle-switch {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  cursor: pointer;
+}
+.toggle-switch input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--color-glass);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 24px;
+  transition: all 0.3s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 2px;
+  top: 2px;
+  background: var(--color-text-dim);
+  border-radius: 50%;
+  transition: all 0.3s;
+}
+.toggle-switch input:checked + .toggle-slider {
+  background: rgba(200,169,126,0.2);
+  border-color: var(--color-accent);
+}
+.toggle-switch input:checked + .toggle-slider::before {
+  transform: translateX(20px);
+  background: var(--color-accent);
+}
+
+/* CTA Preview */
+.cta-preview-box {
+  margin-top: 1.5rem;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+}
+.cta-preview-title { font-size: 1.2rem; font-weight: 600; margin-bottom: 0.35rem; }
+.cta-preview-subtitle { font-size: 0.88rem; opacity: 0.85; margin-bottom: 1rem; }
+.cta-preview-btn {
+  display: inline-block;
+  padding: 0.6rem 1.5rem;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  border: 2px solid currentColor;
+  background: rgba(255,255,255,0.15);
+}
+
 /* Responsive */
 @media (max-width: 900px) {
   .sidebar { display: none; }
   .pipeline-stats { grid-template-columns: repeat(3, 1fr); }
   .topbar { flex-wrap: wrap; }
   .search-input { width: 100%; }
+  .audience-grid { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 480px) {
   .pipeline-stats { grid-template-columns: repeat(2, 1fr); }
   .leads-table th:nth-child(4), .leads-table td:nth-child(4),
   .leads-table th:nth-child(5), .leads-table td:nth-child(5) { display: none; }
+  .audience-grid { grid-template-columns: 1fr; }
 }
 </style>
 </head>
@@ -607,6 +864,18 @@ body { background: var(--color-bg); min-height: 100vh; }
         <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
         Pipeline
       </div>
+      <div class="sidebar-item" data-view="campaigns">
+        <svg viewBox="0 0 24 24"><path d="M22 2L11 13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/></svg>
+        Campaigns
+      </div>
+      <div class="sidebar-item" data-view="cta">
+        <svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"/><line x1="9" y1="3" x2="9" y2="21"/></svg>
+        CTA Manager
+      </div>
+      <div class="sidebar-item" data-view="settings">
+        <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></svg>
+        Homepage Settings
+      </div>
     </div>
     <div class="sidebar-footer">
       <button class="sidebar-logout" onclick="logout()">
@@ -638,8 +907,8 @@ body { background: var(--color-bg); min-height: 100vh; }
     <!-- Pipeline Stats -->
     <div class="pipeline-stats" id="pipelineStats"></div>
 
-    <!-- Data Table -->
-    <div class="leads-content">
+    <!-- Data Table (leads/subscribers/purchasers/pipeline) -->
+    <div class="leads-content" id="tableView">
       <table class="leads-table">
         <thead id="tableHead">
           <tr>
@@ -655,6 +924,299 @@ body { background: var(--color-bg); min-height: 100vh; }
       <div class="empty-state" id="emptyState" style="display:none;">
         <div class="empty-icon">&#9776;</div>
         <div class="empty-text" id="emptyText">No leads yet. They'll appear here when someone books a consultation.</div>
+      </div>
+    </div>
+
+    <!-- Campaigns View -->
+    <div class="composer-view" id="campaignsView">
+      <div id="campaignListSection">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+          <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:400;">Email Campaigns</h2>
+          <button class="btn-primary" onclick="showCampaignComposer()">+ New Campaign</button>
+        </div>
+        <div class="campaign-list" id="campaignList"></div>
+        <div class="empty-state" id="campaignEmpty" style="display:none;">
+          <div class="empty-icon">&#9993;</div>
+          <div class="empty-text">No campaigns yet. Create your first email blast.</div>
+        </div>
+      </div>
+
+      <div id="campaignComposer" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:2rem;">
+          <button class="btn-secondary" onclick="showCampaignList()">&larr; Back</button>
+          <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:400;" id="composerTitle">New Campaign</h2>
+        </div>
+        <div class="composer-form">
+          <div class="composer-row">
+            <label class="composer-label">Campaign Name</label>
+            <input type="text" class="composer-input" id="campName" placeholder="e.g. March Newsletter">
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Email Subject Line</label>
+            <input type="text" class="composer-input" id="campSubject" placeholder="e.g. Big news this week...">
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Email Body (HTML)</label>
+            <textarea class="composer-textarea" id="campBody" placeholder="Write your email content here... Use HTML for formatting. You can use {{name}} for personalization."></textarea>
+          </div>
+
+          <div class="composer-row">
+            <label class="composer-label">Audience</label>
+            <div class="audience-grid" id="audienceGrid">
+              <div class="audience-option active" data-type="all" onclick="selectAudience('all')">
+                <div class="audience-option-label">All Contacts</div>
+                <div class="audience-option-count" id="countAll">--</div>
+              </div>
+              <div class="audience-option" data-type="subscribers" onclick="selectAudience('subscribers')">
+                <div class="audience-option-label">Subscribers</div>
+                <div class="audience-option-count" id="countSubscribers">--</div>
+              </div>
+              <div class="audience-option" data-type="purchasers" onclick="selectAudience('purchasers')">
+                <div class="audience-option-label">Purchasers</div>
+                <div class="audience-option-count" id="countPurchasers">--</div>
+              </div>
+              <div class="audience-option" data-type="leads" onclick="selectAudience('leads')">
+                <div class="audience-option-label">Leads</div>
+                <div class="audience-option-count" id="countLeads">--</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="composer-row">
+            <label class="composer-label">Warmth Filter</label>
+            <div class="warmth-pills">
+              <button class="warmth-pill active" data-warmth="all" onclick="selectWarmth('all')">All</button>
+              <button class="warmth-pill" data-warmth="hot" onclick="selectWarmth('hot')">Hot (Engaged/Qualified)</button>
+              <button class="warmth-pill" data-warmth="warm" onclick="selectWarmth('warm')">Warm (Active/Contacted)</button>
+              <button class="warmth-pill" data-warmth="cold" onclick="selectWarmth('cold')">Cold (New/Lost)</button>
+              <button class="warmth-pill" data-warmth="new" onclick="selectWarmth('new')">New (Last 7 days)</button>
+            </div>
+          </div>
+
+          <div class="audience-preview" id="audiencePreview">
+            Sending to <span class="audience-count" id="recipientCount">--</span> recipients
+          </div>
+
+          <div class="composer-actions">
+            <button class="btn-primary" id="campSaveBtn" onclick="saveCampaign()">Save Draft</button>
+            <button class="btn-primary" id="campSendBtn" onclick="sendCampaign()" style="background:#78c8a0;">Send Now</button>
+            <button class="btn-danger" id="campDeleteBtn" onclick="deleteCampaignAction()" style="display:none;">Delete</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Homepage Settings View -->
+    <div class="composer-view" id="settingsView">
+      <div class="composer-form" style="max-width:800px;">
+        <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:400;margin-bottom:2rem;">Homepage CTA Settings</h2>
+
+        <!-- Lead Magnet Popup -->
+        <div style="margin-bottom:2.5rem;padding:1.5rem;background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+            <h3 style="font-size:0.95rem;color:var(--color-accent);font-weight:600;">Lead Magnet Popup</h3>
+            <label class="toggle-switch"><input type="checkbox" id="setPopupEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="composer-row" style="margin-bottom:0.75rem;">
+              <label class="composer-label">Delay (seconds)</label>
+              <input type="number" class="composer-input" id="setPopupDelay" value="7" min="0" max="120">
+            </div>
+            <div class="composer-row" style="margin-bottom:0.75rem;">
+              <label class="composer-label">Scroll Trigger (%)</label>
+              <input type="number" class="composer-input" id="setPopupScroll" value="50" min="0" max="100">
+            </div>
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Headline (HTML allowed)</label>
+            <input type="text" class="composer-input" id="setPopupHeadline">
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Body Text</label>
+            <textarea class="composer-textarea" id="setPopupBody" style="min-height:80px;"></textarea>
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="composer-row" style="margin-bottom:0.75rem;">
+              <label class="composer-label">Button Text</label>
+              <input type="text" class="composer-input" id="setPopupButton">
+            </div>
+            <div class="composer-row" style="margin-bottom:0.75rem;">
+              <label class="composer-label">Download URL</label>
+              <input type="text" class="composer-input" id="setPopupDownload">
+            </div>
+          </div>
+        </div>
+
+        <!-- Cheat Sheet CTA Section -->
+        <div style="margin-bottom:2.5rem;padding:1.5rem;background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:12px;">
+          <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:1.25rem;">
+            <h3 style="font-size:0.95rem;color:var(--color-accent);font-weight:600;">Cheat Sheet CTA Section</h3>
+            <label class="toggle-switch"><input type="checkbox" id="setCheatEnabled" checked><span class="toggle-slider"></span></label>
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Badge Text</label>
+            <input type="text" class="composer-input" id="setCheatBadge">
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Headline (HTML allowed)</label>
+            <input type="text" class="composer-input" id="setCheatHeadline">
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Subtitle</label>
+            <textarea class="composer-textarea" id="setCheatSubtitle" style="min-height:60px;"></textarea>
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Button Text</label>
+            <input type="text" class="composer-input" id="setCheatButton">
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Chips (comma-separated)</label>
+            <input type="text" class="composer-input" id="setCheatChips" placeholder="#1 The Role Setter, #3 The Reverse Prompt, #7 The SOPs Builder">
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Trust Items (comma-separated)</label>
+            <input type="text" class="composer-input" id="setCheatTrust" placeholder="No spam, ever, Unsubscribe anytime, Instant download">
+          </div>
+        </div>
+
+        <!-- Hero Section -->
+        <div style="margin-bottom:2.5rem;padding:1.5rem;background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:12px;">
+          <h3 style="font-size:0.95rem;color:var(--color-accent);font-weight:600;margin-bottom:1.25rem;">Hero Section CTAs</h3>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="composer-row" style="margin-bottom:0.75rem;">
+              <label class="composer-label">Primary Button Text</label>
+              <input type="text" class="composer-input" id="setHeroPrimary">
+            </div>
+            <div class="composer-row" style="margin-bottom:0.75rem;">
+              <label class="composer-label">Secondary Button Text</label>
+              <input type="text" class="composer-input" id="setHeroSecondary">
+            </div>
+          </div>
+        </div>
+
+        <!-- Bottom CTA -->
+        <div style="margin-bottom:2.5rem;padding:1.5rem;background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:12px;">
+          <h3 style="font-size:0.95rem;color:var(--color-accent);font-weight:600;margin-bottom:1.25rem;">Bottom CTA Section</h3>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Headline (HTML allowed)</label>
+            <input type="text" class="composer-input" id="setBottomHeadline">
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Body Text</label>
+            <textarea class="composer-textarea" id="setBottomBody" style="min-height:60px;"></textarea>
+          </div>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Button Text</label>
+            <input type="text" class="composer-input" id="setBottomButton">
+          </div>
+        </div>
+
+        <!-- Nav CTA -->
+        <div style="margin-bottom:2.5rem;padding:1.5rem;background:var(--color-glass);border:1px solid var(--color-glass-border);border-radius:12px;">
+          <h3 style="font-size:0.95rem;color:var(--color-accent);font-weight:600;margin-bottom:1.25rem;">Navigation Bar CTA</h3>
+          <div class="composer-row" style="margin-bottom:0.75rem;">
+            <label class="composer-label">Button Text</label>
+            <input type="text" class="composer-input" id="setNavButton">
+          </div>
+        </div>
+
+        <div class="composer-actions">
+          <button class="btn-primary" onclick="saveSettings()">Save All Settings</button>
+          <button class="btn-secondary" onclick="loadSettings()">Reset to Saved</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- CTA Manager View -->
+    <div class="composer-view" id="ctaView">
+      <div id="ctaListSection">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:1.5rem;">
+          <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:400;">Call-to-Action Manager</h2>
+          <button class="btn-primary" onclick="showCTAEditor()">+ New CTA</button>
+        </div>
+        <div class="cta-list" id="ctaList"></div>
+        <div class="empty-state" id="ctaEmpty" style="display:none;">
+          <div class="empty-icon">&#9889;</div>
+          <div class="empty-text">No CTAs yet. Create your first call-to-action.</div>
+        </div>
+      </div>
+
+      <div id="ctaEditor" style="display:none;">
+        <div style="display:flex;align-items:center;gap:0.75rem;margin-bottom:2rem;">
+          <button class="btn-secondary" onclick="showCTAList()">&larr; Back</button>
+          <h2 style="font-family:var(--font-display);font-size:1.2rem;font-weight:400;" id="ctaEditorTitle">New CTA</h2>
+        </div>
+        <div class="composer-form">
+          <div class="composer-row">
+            <label class="composer-label">CTA Name (internal)</label>
+            <input type="text" class="composer-input" id="ctaName" placeholder="e.g. Homepage Banner">
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Type</label>
+            <select class="filter-select" id="ctaType" style="width:100%;padding:0.75rem 1rem;" onchange="updateCTAPreview()">
+              <option value="banner">Banner</option>
+              <option value="popup">Popup</option>
+              <option value="inline">Inline</option>
+              <option value="hero">Hero Section</option>
+            </select>
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Headline</label>
+            <input type="text" class="composer-input" id="ctaTitle" placeholder="e.g. Get Your Free AI Guide" oninput="updateCTAPreview()">
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Subtitle</label>
+            <input type="text" class="composer-input" id="ctaSubtitle" placeholder="e.g. 10 prompts that will save you hours" oninput="updateCTAPreview()">
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Button Text</label>
+            <input type="text" class="composer-input" id="ctaButtonText" placeholder="e.g. Download Free" oninput="updateCTAPreview()">
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Button URL</label>
+            <input type="text" class="composer-input" id="ctaButtonUrl" placeholder="e.g. /free-guide">
+          </div>
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+            <div class="composer-row">
+              <label class="composer-label">Background Color</label>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input type="color" id="ctaBgColor" value="#c8a97e" onchange="updateCTAPreview()" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;background:none;">
+                <input type="text" class="composer-input" id="ctaBgColorText" value="#c8a97e" oninput="document.getElementById('ctaBgColor').value=this.value;updateCTAPreview();" style="flex:1;">
+              </div>
+            </div>
+            <div class="composer-row">
+              <label class="composer-label">Text Color</label>
+              <div style="display:flex;gap:0.5rem;align-items:center;">
+                <input type="color" id="ctaTextColor" value="#08080a" onchange="updateCTAPreview()" style="width:40px;height:36px;border:none;border-radius:6px;cursor:pointer;background:none;">
+                <input type="text" class="composer-input" id="ctaTextColorText" value="#08080a" oninput="document.getElementById('ctaTextColor').value=this.value;updateCTAPreview();" style="flex:1;">
+              </div>
+            </div>
+          </div>
+          <div class="composer-row">
+            <label class="composer-label">Placement</label>
+            <select class="filter-select" id="ctaPlacement" style="width:100%;padding:0.75rem 1rem;">
+              <option value="all-pages">All Pages</option>
+              <option value="homepage">Homepage Only</option>
+              <option value="blog">Blog Only</option>
+              <option value="products">Products Page Only</option>
+              <option value="funnel">Funnel Page Only</option>
+            </select>
+          </div>
+
+          <div class="composer-row">
+            <label class="composer-label">Preview</label>
+            <div class="cta-preview-box" id="ctaPreviewBox" style="background:#c8a97e;color:#08080a;">
+              <div class="cta-preview-title" id="ctaPreviewTitle">Your Headline Here</div>
+              <div class="cta-preview-subtitle" id="ctaPreviewSubtitle">Your subtitle text</div>
+              <span class="cta-preview-btn" id="ctaPreviewBtn">Button Text</span>
+            </div>
+          </div>
+
+          <div class="composer-actions">
+            <button class="btn-primary" onclick="saveCTA()">Save CTA</button>
+            <button class="btn-danger" id="ctaDeleteBtn" onclick="deleteCTAAction()" style="display:none;">Delete</button>
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -681,8 +1243,13 @@ let token = sessionStorage.getItem('ihb_token') || '';
 let leads = [];
 let subscribers = [];
 let purchasers = [];
+let campaigns = [];
+let ctas = [];
 let currentItem = null;
 let currentView = 'leads';
+let editingCampaignId = null;
+let editingCTAId = null;
+let selectedAudience = { type: 'all', warmth: 'all' };
 
 // Auto-login if token exists
 if (token) {
@@ -713,9 +1280,54 @@ function switchView(view) {
     leads: 'Lead Management',
     subscribers: 'Subscriber Management',
     purchasers: 'Purchaser Management',
-    pipeline: 'Pipeline'
+    pipeline: 'Pipeline',
+    campaigns: 'Email Campaigns',
+    cta: 'CTA Manager',
+    settings: 'Homepage Settings'
   };
   document.getElementById('topbarTitle').textContent = titles[view] || 'Dashboard';
+
+  // Show/hide views
+  var tableView = document.getElementById('tableView');
+  var campaignsViewEl = document.getElementById('campaignsView');
+  var ctaViewEl = document.getElementById('ctaView');
+  var settingsViewEl = document.getElementById('settingsView');
+  var pipelineStats = document.getElementById('pipelineStats');
+  var topbarActions = document.querySelector('.topbar-actions');
+
+  tableView.style.display = 'none';
+  campaignsViewEl.classList.remove('active');
+  ctaViewEl.classList.remove('active');
+  settingsViewEl.classList.remove('active');
+  pipelineStats.style.display = '';
+  topbarActions.style.display = '';
+
+  if (view === 'campaigns') {
+    campaignsViewEl.classList.add('active');
+    pipelineStats.style.display = 'none';
+    topbarActions.style.display = 'none';
+    loadCampaigns();
+    return;
+  }
+
+  if (view === 'cta') {
+    ctaViewEl.classList.add('active');
+    pipelineStats.style.display = 'none';
+    topbarActions.style.display = 'none';
+    loadCTAs();
+    return;
+  }
+
+  if (view === 'settings') {
+    settingsViewEl.classList.add('active');
+    pipelineStats.style.display = 'none';
+    topbarActions.style.display = 'none';
+    loadSettings();
+    return;
+  }
+
+  // Table-based views
+  tableView.style.display = '';
 
   // Update search placeholder
   var placeholders = {
@@ -1373,8 +1985,515 @@ function esc(str) {
   return div.innerHTML;
 }
 
+// ── Campaigns ──
+
+async function loadCampaigns() {
+  try {
+    var res = await fetch('/api/campaigns', {
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    if (res.status === 401) { logout(); return; }
+    var data = await res.json();
+    campaigns = data.campaigns || [];
+    renderCampaignList();
+  } catch (err) {
+    console.error('Failed to load campaigns:', err);
+  }
+}
+
+function renderCampaignList() {
+  var container = document.getElementById('campaignList');
+  var empty = document.getElementById('campaignEmpty');
+
+  if (campaigns.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  container.innerHTML = campaigns.map(function(c) {
+    var date = new Date(c.sentAt || c.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    var statsHtml = '';
+    if (c.status === 'sent') {
+      statsHtml = '<div class="campaign-stats">' + c.sentCount + ' sent' + (c.failCount > 0 ? ', ' + c.failCount + ' failed' : '') + '</div>';
+    }
+    return '<div class="campaign-card" onclick="editCampaign(\'' + c.id + '\')">' +
+      '<div class="campaign-info"><div class="campaign-name">' + esc(c.name) + '</div>' +
+      '<div class="campaign-subject">' + esc(c.subject || 'No subject') + '</div></div>' +
+      '<div class="campaign-meta"><div class="campaign-status"><span class="status-badge status-' + c.status + '">' + esc(c.status) + '</span></div>' +
+      '<div class="campaign-date">' + date + '</div>' + statsHtml + '</div></div>';
+  }).join('');
+}
+
+function showCampaignComposer() {
+  editingCampaignId = null;
+  document.getElementById('composerTitle').textContent = 'New Campaign';
+  document.getElementById('campName').value = '';
+  document.getElementById('campSubject').value = '';
+  document.getElementById('campBody').value = '';
+  document.getElementById('campDeleteBtn').style.display = 'none';
+  document.getElementById('campSendBtn').style.display = '';
+  document.getElementById('campSaveBtn').textContent = 'Save Draft';
+  selectedAudience = { type: 'all', warmth: 'all' };
+  resetAudienceUI();
+  document.getElementById('campaignListSection').style.display = 'none';
+  document.getElementById('campaignComposer').style.display = 'block';
+  previewAudience();
+}
+
+function showCampaignList() {
+  document.getElementById('campaignComposer').style.display = 'none';
+  document.getElementById('campaignListSection').style.display = 'block';
+  loadCampaigns();
+}
+
+function editCampaign(id) {
+  var campaign = campaigns.find(function(c) { return c.id === id; });
+  if (!campaign) return;
+
+  editingCampaignId = id;
+  document.getElementById('composerTitle').textContent = 'Edit Campaign';
+  document.getElementById('campName').value = campaign.name || '';
+  document.getElementById('campSubject').value = campaign.subject || '';
+  document.getElementById('campBody').value = campaign.body || '';
+  document.getElementById('campDeleteBtn').style.display = '';
+
+  if (campaign.status === 'sent') {
+    document.getElementById('campSendBtn').style.display = 'none';
+    document.getElementById('campSaveBtn').textContent = 'Update';
+  } else {
+    document.getElementById('campSendBtn').style.display = '';
+    document.getElementById('campSaveBtn').textContent = 'Save Draft';
+  }
+
+  selectedAudience = campaign.audience || { type: 'all', warmth: 'all' };
+  resetAudienceUI();
+
+  document.getElementById('campaignListSection').style.display = 'none';
+  document.getElementById('campaignComposer').style.display = 'block';
+  previewAudience();
+}
+
+function resetAudienceUI() {
+  document.querySelectorAll('#audienceGrid .audience-option').forEach(function(el) {
+    el.classList.remove('active');
+    if (el.getAttribute('data-type') === selectedAudience.type) el.classList.add('active');
+  });
+  document.querySelectorAll('.warmth-pill').forEach(function(el) {
+    el.classList.remove('active');
+    if (el.getAttribute('data-warmth') === (selectedAudience.warmth || 'all')) el.classList.add('active');
+  });
+}
+
+function selectAudience(type) {
+  selectedAudience.type = type;
+  document.querySelectorAll('#audienceGrid .audience-option').forEach(function(el) {
+    el.classList.remove('active');
+    if (el.getAttribute('data-type') === type) el.classList.add('active');
+  });
+  previewAudience();
+}
+
+function selectWarmth(warmth) {
+  selectedAudience.warmth = warmth;
+  document.querySelectorAll('.warmth-pill').forEach(function(el) {
+    el.classList.remove('active');
+    if (el.getAttribute('data-warmth') === warmth) el.classList.add('active');
+  });
+  previewAudience();
+}
+
+async function previewAudience() {
+  try {
+    // Get counts for each type
+    var types = ['all', 'subscribers', 'purchasers', 'leads'];
+    for (var i = 0; i < types.length; i++) {
+      var t = types[i];
+      var res = await fetch('/api/campaigns/preview', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ audience: { type: t, warmth: 'all' } }),
+      });
+      var data = await res.json();
+      var countEl = document.getElementById('count' + t.charAt(0).toUpperCase() + t.slice(1));
+      if (countEl) countEl.textContent = data.count + ' contacts';
+    }
+
+    // Get count for selected filters
+    var res2 = await fetch('/api/campaigns/preview', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ audience: selectedAudience }),
+    });
+    var data2 = await res2.json();
+    document.getElementById('recipientCount').textContent = data2.count;
+  } catch (err) {
+    console.error('Preview audience error:', err);
+  }
+}
+
+async function saveCampaign() {
+  var name = document.getElementById('campName').value.trim();
+  var subject = document.getElementById('campSubject').value.trim();
+  var body = document.getElementById('campBody').value;
+
+  if (!name || !subject) {
+    alert('Please enter a campaign name and subject line.');
+    return;
+  }
+
+  try {
+    if (editingCampaignId) {
+      await fetch('/api/campaigns/' + editingCampaignId, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ name: name, subject: subject, body: body, audience: selectedAudience }),
+      });
+    } else {
+      var res = await fetch('/api/campaigns', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify({ name: name, subject: subject, body: body, audience: selectedAudience }),
+      });
+      var data = await res.json();
+      editingCampaignId = data.campaign.id;
+    }
+    alert('Campaign saved!');
+    showCampaignList();
+  } catch (err) {
+    alert('Failed to save campaign.');
+    console.error(err);
+  }
+}
+
+async function sendCampaign() {
+  if (!editingCampaignId) {
+    await saveCampaign();
+    if (!editingCampaignId) return;
+  } else {
+    // Save latest changes first
+    var name = document.getElementById('campName').value.trim();
+    var subject = document.getElementById('campSubject').value.trim();
+    var body = document.getElementById('campBody').value;
+    await fetch('/api/campaigns/' + editingCampaignId, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ name: name, subject: subject, body: body, audience: selectedAudience }),
+    });
+  }
+
+  var count = document.getElementById('recipientCount').textContent;
+  if (!confirm('Send this campaign to ' + count + ' recipients? This cannot be undone.')) return;
+
+  document.getElementById('campSendBtn').disabled = true;
+  document.getElementById('campSendBtn').textContent = 'Sending...';
+
+  try {
+    var res = await fetch('/api/campaigns/send', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ campaignId: editingCampaignId }),
+    });
+    var data = await res.json();
+    if (data.success) {
+      alert('Campaign sent! ' + data.summary.sent + ' delivered, ' + data.summary.failed + ' failed.');
+      showCampaignList();
+    } else {
+      alert('Send failed: ' + (data.error || 'Unknown error'));
+    }
+  } catch (err) {
+    alert('Failed to send campaign.');
+    console.error(err);
+  } finally {
+    document.getElementById('campSendBtn').disabled = false;
+    document.getElementById('campSendBtn').textContent = 'Send Now';
+  }
+}
+
+async function deleteCampaignAction() {
+  if (!editingCampaignId) return;
+  if (!confirm('Delete this campaign? This cannot be undone.')) return;
+
+  try {
+    await fetch('/api/campaigns/' + editingCampaignId, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    showCampaignList();
+  } catch (err) {
+    alert('Failed to delete campaign.');
+  }
+}
+
+// ── CTAs ──
+
+async function loadCTAs() {
+  try {
+    var res = await fetch('/api/cta', {
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    if (res.status === 401) { logout(); return; }
+    var data = await res.json();
+    ctas = data.ctas || [];
+    renderCTAList();
+  } catch (err) {
+    console.error('Failed to load CTAs:', err);
+  }
+}
+
+function renderCTAList() {
+  var container = document.getElementById('ctaList');
+  var empty = document.getElementById('ctaEmpty');
+
+  if (ctas.length === 0) {
+    container.innerHTML = '';
+    empty.style.display = 'flex';
+    return;
+  }
+  empty.style.display = 'none';
+
+  container.innerHTML = ctas.map(function(c) {
+    return '<div class="cta-card">' +
+      '<div class="cta-info" onclick="editCTA(\'' + c.id + '\')">' +
+      '<div class="cta-name">' + esc(c.name) + '</div>' +
+      '<div class="cta-detail">' + esc(c.type) + ' &middot; ' + esc(c.placement) + ' &middot; &quot;' + esc(c.title) + '&quot;</div></div>' +
+      '<div class="cta-actions">' +
+      '<label class="toggle-switch"><input type="checkbox" ' + (c.active ? 'checked' : '') + ' onchange="toggleCTA(\'' + c.id + '\', this.checked)">' +
+      '<span class="toggle-slider"></span></label></div></div>';
+  }).join('');
+}
+
+function showCTAEditor() {
+  editingCTAId = null;
+  document.getElementById('ctaEditorTitle').textContent = 'New CTA';
+  document.getElementById('ctaName').value = '';
+  document.getElementById('ctaType').value = 'banner';
+  document.getElementById('ctaTitle').value = '';
+  document.getElementById('ctaSubtitle').value = '';
+  document.getElementById('ctaButtonText').value = '';
+  document.getElementById('ctaButtonUrl').value = '';
+  document.getElementById('ctaBgColor').value = '#c8a97e';
+  document.getElementById('ctaBgColorText').value = '#c8a97e';
+  document.getElementById('ctaTextColor').value = '#08080a';
+  document.getElementById('ctaTextColorText').value = '#08080a';
+  document.getElementById('ctaPlacement').value = 'all-pages';
+  document.getElementById('ctaDeleteBtn').style.display = 'none';
+  document.getElementById('ctaListSection').style.display = 'none';
+  document.getElementById('ctaEditor').style.display = 'block';
+  updateCTAPreview();
+}
+
+function showCTAList() {
+  document.getElementById('ctaEditor').style.display = 'none';
+  document.getElementById('ctaListSection').style.display = 'block';
+  loadCTAs();
+}
+
+function editCTA(id) {
+  var cta = ctas.find(function(c) { return c.id === id; });
+  if (!cta) return;
+
+  editingCTAId = id;
+  document.getElementById('ctaEditorTitle').textContent = 'Edit CTA';
+  document.getElementById('ctaName').value = cta.name || '';
+  document.getElementById('ctaType').value = cta.type || 'banner';
+  document.getElementById('ctaTitle').value = cta.title || '';
+  document.getElementById('ctaSubtitle').value = cta.subtitle || '';
+  document.getElementById('ctaButtonText').value = cta.buttonText || '';
+  document.getElementById('ctaButtonUrl').value = cta.buttonUrl || '';
+  document.getElementById('ctaBgColor').value = cta.backgroundColor || '#c8a97e';
+  document.getElementById('ctaBgColorText').value = cta.backgroundColor || '#c8a97e';
+  document.getElementById('ctaTextColor').value = cta.textColor || '#08080a';
+  document.getElementById('ctaTextColorText').value = cta.textColor || '#08080a';
+  document.getElementById('ctaPlacement').value = cta.placement || 'all-pages';
+  document.getElementById('ctaDeleteBtn').style.display = '';
+  document.getElementById('ctaListSection').style.display = 'none';
+  document.getElementById('ctaEditor').style.display = 'block';
+  updateCTAPreview();
+}
+
+function updateCTAPreview() {
+  var bg = document.getElementById('ctaBgColor').value;
+  var text = document.getElementById('ctaTextColor').value;
+  var title = document.getElementById('ctaTitle').value || 'Your Headline Here';
+  var subtitle = document.getElementById('ctaSubtitle').value || 'Your subtitle text';
+  var btn = document.getElementById('ctaButtonText').value || 'Button Text';
+
+  var box = document.getElementById('ctaPreviewBox');
+  box.style.background = bg;
+  box.style.color = text;
+  document.getElementById('ctaPreviewTitle').textContent = title;
+  document.getElementById('ctaPreviewSubtitle').textContent = subtitle;
+  document.getElementById('ctaPreviewBtn').textContent = btn;
+}
+
+async function saveCTA() {
+  var data = {
+    name: document.getElementById('ctaName').value.trim(),
+    type: document.getElementById('ctaType').value,
+    title: document.getElementById('ctaTitle').value.trim(),
+    subtitle: document.getElementById('ctaSubtitle').value.trim(),
+    buttonText: document.getElementById('ctaButtonText').value.trim(),
+    buttonUrl: document.getElementById('ctaButtonUrl').value.trim(),
+    backgroundColor: document.getElementById('ctaBgColor').value,
+    textColor: document.getElementById('ctaTextColor').value,
+    placement: document.getElementById('ctaPlacement').value,
+  };
+
+  if (!data.name || !data.title) {
+    alert('Please enter a CTA name and headline.');
+    return;
+  }
+
+  try {
+    if (editingCTAId) {
+      await fetch('/api/cta/' + editingCTAId, {
+        method: 'PUT',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify(data),
+      });
+    } else {
+      await fetch('/api/cta', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+        body: JSON.stringify(data),
+      });
+    }
+    showCTAList();
+  } catch (err) {
+    alert('Failed to save CTA.');
+    console.error(err);
+  }
+}
+
+async function toggleCTA(id, active) {
+  try {
+    await fetch('/api/cta/' + id, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify({ active: active }),
+    });
+  } catch (err) {
+    console.error('Toggle CTA failed:', err);
+    loadCTAs();
+  }
+}
+
+async function deleteCTAAction() {
+  if (!editingCTAId) return;
+  if (!confirm('Delete this CTA? This cannot be undone.')) return;
+
+  try {
+    await fetch('/api/cta/' + editingCTAId, {
+      method: 'DELETE',
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    showCTAList();
+  } catch (err) {
+    alert('Failed to delete CTA.');
+  }
+}
+
+// ── Homepage Settings ──
+
+async function loadSettings() {
+  try {
+    var res = await fetch('/api/settings', {
+      headers: { 'Authorization': 'Bearer ' + token },
+    });
+    var data = await res.json();
+    var s = data.settings;
+
+    // Popup
+    document.getElementById('setPopupEnabled').checked = s.popup.enabled !== false;
+    document.getElementById('setPopupDelay').value = s.popup.delaySeconds || 7;
+    document.getElementById('setPopupScroll').value = s.popup.scrollTriggerPercent || 50;
+    document.getElementById('setPopupHeadline').value = s.popup.headline || '';
+    document.getElementById('setPopupBody').value = s.popup.body || '';
+    document.getElementById('setPopupButton').value = s.popup.buttonText || '';
+    document.getElementById('setPopupDownload').value = s.popup.downloadUrl || '';
+
+    // Cheatsheet
+    document.getElementById('setCheatEnabled').checked = s.cheatsheet.enabled !== false;
+    document.getElementById('setCheatBadge').value = s.cheatsheet.badge || '';
+    document.getElementById('setCheatHeadline').value = s.cheatsheet.headline || '';
+    document.getElementById('setCheatSubtitle').value = s.cheatsheet.subtitle || '';
+    document.getElementById('setCheatButton').value = s.cheatsheet.buttonText || '';
+    document.getElementById('setCheatChips').value = (s.cheatsheet.chips || []).join(', ');
+    document.getElementById('setCheatTrust').value = (s.cheatsheet.trustItems || []).join(', ');
+
+    // Hero
+    document.getElementById('setHeroPrimary').value = s.hero.primaryButtonText || '';
+    document.getElementById('setHeroSecondary').value = s.hero.secondaryButtonText || '';
+
+    // Bottom CTA
+    document.getElementById('setBottomHeadline').value = s.bottomCta.headline || '';
+    document.getElementById('setBottomBody').value = s.bottomCta.body || '';
+    document.getElementById('setBottomButton').value = s.bottomCta.buttonText || '';
+
+    // Nav
+    document.getElementById('setNavButton').value = s.navCta.buttonText || '';
+  } catch (err) {
+    console.error('Failed to load settings:', err);
+  }
+}
+
+async function saveSettings() {
+  var settings = {
+    popup: {
+      enabled: document.getElementById('setPopupEnabled').checked,
+      delaySeconds: parseInt(document.getElementById('setPopupDelay').value) || 7,
+      scrollTriggerPercent: parseInt(document.getElementById('setPopupScroll').value) || 50,
+      headline: document.getElementById('setPopupHeadline').value,
+      body: document.getElementById('setPopupBody').value,
+      buttonText: document.getElementById('setPopupButton').value,
+      downloadUrl: document.getElementById('setPopupDownload').value,
+    },
+    cheatsheet: {
+      enabled: document.getElementById('setCheatEnabled').checked,
+      badge: document.getElementById('setCheatBadge').value,
+      headline: document.getElementById('setCheatHeadline').value,
+      subtitle: document.getElementById('setCheatSubtitle').value,
+      buttonText: document.getElementById('setCheatButton').value,
+      chips: document.getElementById('setCheatChips').value.split(',').map(function(s) { return s.trim(); }).filter(Boolean),
+      trustItems: document.getElementById('setCheatTrust').value.split(',').map(function(s) { return s.trim(); }).filter(Boolean),
+    },
+    hero: {
+      primaryButtonText: document.getElementById('setHeroPrimary').value,
+      secondaryButtonText: document.getElementById('setHeroSecondary').value,
+    },
+    bottomCta: {
+      headline: document.getElementById('setBottomHeadline').value,
+      body: document.getElementById('setBottomBody').value,
+      buttonText: document.getElementById('setBottomButton').value,
+    },
+    navCta: {
+      buttonText: document.getElementById('setNavButton').value,
+    },
+  };
+
+  try {
+    var res = await fetch('/api/settings', {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + token },
+      body: JSON.stringify(settings),
+    });
+    if (res.ok) {
+      alert('Settings saved! Changes will appear on the homepage immediately.');
+    } else {
+      alert('Failed to save settings.');
+    }
+  } catch (err) {
+    alert('Failed to save settings.');
+    console.error(err);
+  }
+}
+
 // Auto-refresh every 30 seconds
-setInterval(loadData, 30000);
+setInterval(function() {
+  if (['leads', 'subscribers', 'purchasers', 'pipeline'].includes(currentView)) loadData();
+}, 30000);
 </script>
 </body>
 </html>

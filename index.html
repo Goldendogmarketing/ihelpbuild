@@ -1765,7 +1765,7 @@ body {
     <li><a href="/products">Products</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
-  <button class="nav-cta" onclick="openConsultationModal()">Book a Call</button>
+  <button class="nav-cta" id="navCtaBtn" onclick="openConsultationModal()">Book a Call</button>
   <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
     <span></span><span></span><span></span>
   </button>
@@ -1791,8 +1791,8 @@ body {
       <h1 class="hero-title" id="heroTitle">Build a <em>Smarter</em> Business</h1>
       <p class="hero-subtitle" id="heroSubtitle">We design, develop, and automate — from cinematic websites to intelligent systems that scale your vision.</p>
       <div class="hero-cta-group" id="heroCta">
-        <button class="btn-primary" onclick="openConsultationModal()">Start Your Project</button>
-        <button class="btn-ghost" onclick="document.getElementById('capabilities').scrollIntoView({behavior:'smooth'})">Explore Services</button>
+        <button class="btn-primary" id="heroPrimaryBtn" onclick="openConsultationModal()">Start Your Project</button>
+        <button class="btn-ghost" id="heroSecondaryBtn" onclick="document.getElementById('capabilities').scrollIntoView({behavior:'smooth'})">Explore Services</button>
       </div>
     </div>
 
@@ -2020,10 +2020,10 @@ body {
   <div class="cheatsheet-cta-glow-2"></div>
   <div class="cheatsheet-cta-grid-overlay"></div>
   <div class="cheatsheet-cta-inner">
-    <div class="cheatsheet-badge reveal"><span class="cheatsheet-badge-dot"></span> Free Resource</div>
-    <h2 class="cheatsheet-headline reveal">Stop Talking to AI<br>Like a <span class="cheatsheet-headline-accent">Search Engine</span></h2>
-    <p class="cheatsheet-subheadline reveal">Get the 10 prompts that turn ChatGPT, Claude, and Gemini into your most productive team member — not just another Google.</p>
-    <div class="cheatsheet-chips reveal">
+    <div class="cheatsheet-badge reveal" id="cheatBadge"><span class="cheatsheet-badge-dot"></span> Free Resource</div>
+    <h2 class="cheatsheet-headline reveal" id="cheatHeadline">Stop Talking to AI<br>Like a <span class="cheatsheet-headline-accent">Search Engine</span></h2>
+    <p class="cheatsheet-subheadline reveal" id="cheatSubtitle">Get the 10 prompts that turn ChatGPT, Claude, and Gemini into your most productive team member — not just another Google.</p>
+    <div class="cheatsheet-chips reveal" id="cheatChips">
       <span class="cheatsheet-chip"><span class="cheatsheet-chip-num">#1</span> The Role Setter</span>
       <span class="cheatsheet-chip"><span class="cheatsheet-chip-num">#3</span> The Reverse Prompt</span>
       <span class="cheatsheet-chip"><span class="cheatsheet-chip-num">#7</span> The SOPs Builder</span>
@@ -2033,7 +2033,7 @@ body {
       <input type="email" class="cheatsheet-email-input" name="email" placeholder="Enter your email" required autocomplete="email">
       <button type="submit" class="cheatsheet-submit-btn" id="cheatsheetBtn">GET THE CHEAT SHEET</button>
     </form>
-    <div class="cheatsheet-trust reveal">
+    <div class="cheatsheet-trust reveal" id="cheatTrust">
       <span class="cheatsheet-trust-item">
         <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
         No spam, ever
@@ -2055,10 +2055,10 @@ body {
 <!-- ═══════════════ CTA ═══════════════ -->
 <section class="cta-section" id="contact">
   <div class="cta-glow"></div>
-  <h2 class="reveal">Ready to build<br>something <em>extraordinary?</em></h2>
-  <p class="cta-body reveal">Whether you have a clear vision or just a spark of an idea — let's talk. Every great system starts with a conversation.</p>
+  <h2 class="reveal" id="bottomCtaHeadline">Ready to build<br>something <em>extraordinary?</em></h2>
+  <p class="cta-body reveal" id="bottomCtaBody">Whether you have a clear vision or just a spark of an idea — let's talk. Every great system starts with a conversation.</p>
   <div class="cta-button-wrap reveal">
-    <button class="cta-button" onclick="openConsultationModal()">Schedule Your Consultation</button>
+    <button class="cta-button" id="bottomCtaBtn" onclick="openConsultationModal()">Schedule Your Consultation</button>
   </div>
 </section>
 
@@ -2167,12 +2167,12 @@ body {
 <div class="lead-popup-overlay" id="leadPopup">
   <div class="lead-popup">
     <button class="lead-popup-close" id="leadPopupClose">&times;</button>
-    <h3>Get 10 Free <em style="font-family:var(--font-display);color:var(--color-accent);">AI Prompts</em></h3>
-    <p>Join 500+ business owners using AI to automate, scale, and save 10+ hours every week. Delivered instantly to your inbox.</p>
+    <h3 id="popupHeadline">Get 10 Free <em style="font-family:var(--font-display);color:var(--color-accent);">AI Prompts</em></h3>
+    <p id="popupBody">Join 500+ business owners using AI to automate, scale, and save 10+ hours every week. Delivered instantly to your inbox.</p>
     <form class="popup-form" id="leadPopupForm" onsubmit="submitLeadPopup(event)">
       <input type="text" name="name" placeholder="Your name" autocomplete="given-name">
       <input type="email" name="email" placeholder="Your email" required autocomplete="email">
-      <button type="submit">Get Free Access</button>
+      <button type="submit" id="popupSubmitBtn">Get Free Access</button>
     </form>
   </div>
 </div>
@@ -2673,12 +2673,16 @@ async function submitConsultation(e) {
 }
 
 // ═══════════════════════════════════════════
-// LEAD MAGNET POPUP (delayed CTA)
+// LEAD MAGNET POPUP (delayed CTA — settings-driven)
 // ═══════════════════════════════════════════
-(function() {
+function initPopup(popupSettings) {
   const popup = document.getElementById('leadPopup');
   const closeBtn = document.getElementById('leadPopupClose');
   if (!popup || sessionStorage.getItem('lead-popup-shown')) return;
+  if (popupSettings && popupSettings.enabled === false) return;
+
+  var delaySec = (popupSettings && popupSettings.delaySeconds) || 7;
+  var scrollPct = ((popupSettings && popupSettings.scrollTriggerPercent) || 50) / 100;
 
   let shown = false;
   function showPopup() {
@@ -2688,25 +2692,24 @@ async function submitConsultation(e) {
     popup.classList.add('show');
   }
 
-  // Trigger after 7 seconds
-  const timer = setTimeout(showPopup, 7000);
+  setTimeout(showPopup, delaySec * 1000);
 
-  // Or trigger at 50% scroll
   function checkScroll() {
     const scrollPercent = window.scrollY / (document.body.scrollHeight - window.innerHeight);
-    if (scrollPercent >= 0.5) {
+    if (scrollPercent >= scrollPct) {
       showPopup();
       window.removeEventListener('scroll', checkScroll);
     }
   }
   window.addEventListener('scroll', checkScroll, { passive: true });
 
-  // Close handlers
   closeBtn.addEventListener('click', () => popup.classList.remove('show'));
   popup.addEventListener('click', (e) => {
     if (e.target === popup) popup.classList.remove('show');
   });
-})();
+}
+
+var siteDownloadUrl = '/downloads/ai-cheat-sheet-free.pdf';
 
 async function submitCheatSheet(e) {
   e.preventDefault();
@@ -2724,8 +2727,6 @@ async function submitCheatSheet(e) {
   btn.textContent = 'SENDING...';
 
   try {
-    // TODO: Connect to email service (ConvertKit/SendGrid)
-    console.log('Cheat sheet subscriber:', email);
     const res = await fetch('/api/subscribers', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -2734,9 +2735,8 @@ async function submitCheatSheet(e) {
     if (res.ok) {
       btn.textContent = 'Check Your Inbox \u2713';
       emailInput.disabled = true;
-      // Trigger immediate PDF download
       const link = document.createElement('a');
-      link.href = '/downloads/ai-cheat-sheet-free.pdf';
+      link.href = siteDownloadUrl;
       link.download = 'AI_Cheat_Sheet_10_Prompts.pdf';
       document.body.appendChild(link);
       link.click();
@@ -2774,9 +2774,8 @@ async function submitLeadPopup(e) {
           <h4>You're in!</h4>
           <p>Check your email — your free AI prompts guide is on its way. Your download should start automatically.</p>
         </div>`;
-      // Trigger immediate PDF download
       var dl = document.createElement('a');
-      dl.href = '/downloads/ai-cheat-sheet-free.pdf';
+      dl.href = siteDownloadUrl;
       dl.download = 'AI_Cheat_Sheet_10_Prompts.pdf';
       document.body.appendChild(dl);
       dl.click();
@@ -2787,6 +2786,94 @@ async function submitLeadPopup(e) {
     btn.textContent = 'Get Free Access';
   }
 }
+
+// ═══════════════════════════════════════════
+// LOAD SETTINGS FROM ADMIN
+// ═══════════════════════════════════════════
+(function() {
+  fetch('/api/settings').then(function(res) { return res.json(); }).then(function(data) {
+    var s = data.settings;
+    if (!s) { initPopup(null); return; }
+
+    // Popup settings
+    if (s.popup) {
+      var ph = document.getElementById('popupHeadline');
+      var pb = document.getElementById('popupBody');
+      var psb = document.getElementById('popupSubmitBtn');
+      if (ph && s.popup.headline) ph.innerHTML = s.popup.headline;
+      if (pb && s.popup.body) pb.textContent = s.popup.body;
+      if (psb && s.popup.buttonText) psb.textContent = s.popup.buttonText;
+      if (s.popup.downloadUrl) siteDownloadUrl = s.popup.downloadUrl;
+      initPopup(s.popup);
+    } else {
+      initPopup(null);
+    }
+
+    // Cheatsheet section
+    if (s.cheatsheet) {
+      var cs = document.getElementById('cheatsheet');
+      if (s.cheatsheet.enabled === false && cs) { cs.style.display = 'none'; }
+      var cb = document.getElementById('cheatBadge');
+      if (cb && s.cheatsheet.badge) cb.innerHTML = '<span class="cheatsheet-badge-dot"></span> ' + s.cheatsheet.badge;
+      var ch = document.getElementById('cheatHeadline');
+      if (ch && s.cheatsheet.headline) ch.innerHTML = s.cheatsheet.headline;
+      var csu = document.getElementById('cheatSubtitle');
+      if (csu && s.cheatsheet.subtitle) csu.textContent = s.cheatsheet.subtitle;
+      var cbtn = document.getElementById('cheatsheetBtn');
+      if (cbtn && s.cheatsheet.buttonText) cbtn.textContent = s.cheatsheet.buttonText;
+      // Chips
+      if (s.cheatsheet.chips && s.cheatsheet.chips.length > 0) {
+        var cc = document.getElementById('cheatChips');
+        if (cc) {
+          cc.innerHTML = s.cheatsheet.chips.map(function(chip) {
+            var parts = chip.match(/^(#\d+)\s*(.*)/);
+            if (parts) return '<span class="cheatsheet-chip"><span class="cheatsheet-chip-num">' + parts[1] + '</span> ' + parts[2] + '</span>';
+            return '<span class="cheatsheet-chip">' + chip + '</span>';
+          }).join('');
+        }
+      }
+      // Trust items
+      if (s.cheatsheet.trustItems && s.cheatsheet.trustItems.length > 0) {
+        var ct = document.getElementById('cheatTrust');
+        var svgs = ['<svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+          '<svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>',
+          '<svg viewBox="0 0 24 24"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/></svg>'];
+        if (ct) {
+          ct.innerHTML = s.cheatsheet.trustItems.map(function(item, i) {
+            return '<span class="cheatsheet-trust-item">' + (svgs[i % svgs.length] || '') + ' ' + item + '</span>';
+          }).join('');
+        }
+      }
+    }
+
+    // Hero buttons
+    if (s.hero) {
+      var hp = document.getElementById('heroPrimaryBtn');
+      var hs = document.getElementById('heroSecondaryBtn');
+      if (hp && s.hero.primaryButtonText) hp.textContent = s.hero.primaryButtonText;
+      if (hs && s.hero.secondaryButtonText) hs.textContent = s.hero.secondaryButtonText;
+    }
+
+    // Bottom CTA
+    if (s.bottomCta) {
+      var bh = document.getElementById('bottomCtaHeadline');
+      var bb = document.getElementById('bottomCtaBody');
+      var bbtn = document.getElementById('bottomCtaBtn');
+      if (bh && s.bottomCta.headline) bh.innerHTML = s.bottomCta.headline;
+      if (bb && s.bottomCta.body) bb.textContent = s.bottomCta.body;
+      if (bbtn && s.bottomCta.buttonText) bbtn.textContent = s.bottomCta.buttonText;
+    }
+
+    // Nav CTA
+    if (s.navCta) {
+      var nb = document.getElementById('navCtaBtn');
+      if (nb && s.navCta.buttonText) nb.textContent = s.navCta.buttonText;
+    }
+  }).catch(function() {
+    // Settings not available, use defaults and init popup with defaults
+    initPopup(null);
+  });
+})();
 </script>
 </body>
 </html>

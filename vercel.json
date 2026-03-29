@@ -1,4 +1,7 @@
 {
+  "functions": {
+    "api/campaigns/send.js": { "maxDuration": 60 }
+  },
   "rewrites": [
     { "source": "/admin", "destination": "/admin.html" },
     { "source": "/free-guide", "destination": "/funnel.html" },
