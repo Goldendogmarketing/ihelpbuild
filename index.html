@@ -2345,12 +2345,16 @@ function updateNav() {
 
   document.querySelectorAll('[data-mobile-link]').forEach(link => {
     link.addEventListener('click', (e) => {
-      e.preventDefault();
+      const href = link.getAttribute('href');
       hamburger.classList.remove('open');
       mobileMenu.classList.remove('open');
       document.body.style.overflow = '';
-      const target = document.querySelector(link.getAttribute('href'));
-      if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 100);
+      // Only intercept anchor links, let page links navigate normally
+      if (href.startsWith('#')) {
+        e.preventDefault();
+        const target = document.querySelector(href);
+        if (target) setTimeout(() => target.scrollIntoView({ behavior: 'smooth' }), 100);
+      }
     });
   });
 })();
