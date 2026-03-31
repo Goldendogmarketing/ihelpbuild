@@ -358,11 +358,11 @@ body {
     <!-- Order Summary -->
     <div class="order-summary">
       <p class="order-eyebrow">Order Summary</p>
-      <h1 class="order-product-name">The 25-Prompt AI Cheat Sheet</h1>
-      <p class="order-price">$7.00</p>
+      <h1 class="order-product-name" id="orderProductName">The 25-Prompt AI Cheat Sheet</h1>
+      <p class="order-price" id="orderPrice">$7.00</p>
       <hr class="order-divider">
       <p class="order-includes-label">What's Included</p>
-      <ul class="order-includes">
+      <ul class="order-includes" id="orderIncludes">
         <li>25 categorized power prompts</li>
         <li>Copy-paste ready for any AI tool</li>
         <li>Industry-specific variations</li>
@@ -395,7 +395,7 @@ body {
       </div>
 
       <button type="button" class="pay-button" id="payButton" disabled>
-        Pay $7.00
+        Pay <span id="payButtonPrice">$7.00</span>
       </button>
 
       <p class="secure-note">Secured by Stripe. Your card details never touch our servers.</p>
@@ -440,7 +440,41 @@ body {
   // REPLACE with your Stripe publishable key
   const stripe = Stripe('pk_live_51SDrByEJ8QE9budLjr73Y71UmdTVlsRQHJyV2pOIZyOQqvV6VUVYD5V3jqoEyow4PoIvSmUeELMtCaP7B9vH3jsS00Aik3FnBw');
 
+  const PRODUCT_INFO = {
+    'cheatsheet-25': {
+      name: 'The 25-Prompt AI Cheat Sheet',
+      price: '$7.00',
+      includes: [
+        '25 categorized power prompts',
+        'Copy-paste ready for any AI tool',
+        'Industry-specific variations',
+        'Bonus: prompt engineering tips',
+        'Instant PDF download after purchase',
+      ],
+    },
+    'ebook-blueprint': {
+      name: 'The AI Business Blueprint',
+      price: '$27.00',
+      includes: [
+        '150+ page comprehensive guide',
+        'Step-by-step automation blueprints',
+        'Real case studies',
+        'Tech stack recommendations',
+        'Free bonus: 25-Prompt Cheat Sheet included',
+        'Instant PDF download after purchase',
+      ],
+    },
+  };
+
   const product = new URLSearchParams(window.location.search).get('product') || 'cheatsheet-25';
+  const info = PRODUCT_INFO[product];
+  if (info) {
+    document.getElementById('orderProductName').textContent = info.name;
+    document.getElementById('orderPrice').textContent = info.price;
+    document.getElementById('payButtonPrice').textContent = info.price;
+    const includesList = document.getElementById('orderIncludes');
+    includesList.innerHTML = info.includes.map(item => '<li>' + item + '</li>').join('');
+  }
   const payButton = document.getElementById('payButton');
   const errorMessage = document.getElementById('errorMessage');
   const nameInput = document.getElementById('customerName');

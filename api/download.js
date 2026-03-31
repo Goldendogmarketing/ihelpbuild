@@ -17,6 +17,11 @@ const PRODUCT_FILES = {
     downloadName: 'The_25_Prompt_AI_Cheat_Sheet.pdf',
     contentType: 'application/pdf',
   },
+  'ebook-blueprint': {
+    filename: 'ai-business-blueprint.pdf',
+    downloadName: 'The_AI_Business_Blueprint.pdf',
+    contentType: 'application/pdf',
+  },
 };
 
 module.exports = async function handler(req, res) {

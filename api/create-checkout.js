@@ -6,6 +6,11 @@ const PRODUCTS = {
     price: 700, // in cents
     currency: 'usd',
   },
+  'ebook-blueprint': {
+    name: 'The AI Business Blueprint',
+    price: 2700, // in cents
+    currency: 'usd',
+  },
 };
 
 module.exports = async function handler(req, res) {
