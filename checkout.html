@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Checkout — iHelpBuild</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --color-bg: #08080a;
+  --color-surface: #111114;
+  --color-surface-elevated: #1a1a1f;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8690;
+  --color-text-dim: #55515c;
+  --color-accent: #c8a97e;
+  --color-accent-warm: #d4a855;
+  --color-accent-cool: #7eb8c8;
+  --color-white: #ffffff;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.07);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* ═══ NAVIGATION ═══ */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.5s, backdrop-filter 0.5s; }
+.nav.scrolled { background: rgba(8, 8, 10, 0.85); backdrop-filter: blur(30px) saturate(1.5); }
+.nav-logo { font-family: var(--font-body); font-weight: 300; font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--color-text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+.nav-logo .logo-i { color: var(--color-accent); font-family: var(--font-display); font-style: italic; font-size: 1.1rem; font-weight: 700; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400; transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--color-accent); transition: width 0.4s var(--ease-out-expo); }
+.nav-links a:hover { color: var(--color-text); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta { padding: 0.6rem 1.6rem; border: 1px solid var(--color-glass-border); background: var(--color-glass); color: var(--color-text); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: var(--font-body); cursor: pointer; transition: all 0.4s var(--ease-out-expo); backdrop-filter: blur(10px); }
+.nav-cta:hover { background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent); }
+
+/* ═══ MOBILE NAV ═══ */
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 1002; }
+.nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--color-text); transition: all 0.3s var(--ease-out-expo); transform-origin: center; }
+.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+.mobile-menu { position: fixed; inset: 0; background: rgba(8, 8, 10, 0.97); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 1001; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; visibility: hidden; transition: opacity 0.4s var(--ease-out-expo), visibility 0.4s; }
+.mobile-menu.open { opacity: 1; visibility: visible; }
+.mobile-menu a { color: var(--color-text); text-decoration: none; font-family: var(--font-display); font-size: 2rem; font-weight: 400; opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo), color 0.3s; }
+.mobile-menu.open a { opacity: 1; transform: translateY(0); }
+.mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu a:nth-child(6) { transition-delay: 0.35s; }
+.mobile-menu a:hover { color: var(--color-accent); }
+
+/* ═══ CHECKOUT LAYOUT ═══ */
+.checkout-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8rem 2rem 4rem;
+}
+
+.checkout-container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3rem;
+  max-width: 900px;
+  width: 100%;
+}
+
+/* ═══ ORDER SUMMARY ═══ */
+.order-summary {
+  background: var(--color-surface);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 12px;
+  padding: 2.5rem;
+}
+
+.order-eyebrow {
+  font-size: 0.65rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--color-text-dim);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+
+.order-product-name {
+  font-family: var(--font-display);
+  font-size: 1.5rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 0.5rem;
+}
+
+.order-price {
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin-bottom: 1.5rem;
+}
+
+.order-divider {
+  border: none;
+  border-top: 1px solid var(--color-glass-border);
+  margin: 1.5rem 0;
+}
+
+.order-includes-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0.75rem;
+  font-weight: 500;
+}
+
+.order-includes {
+  list-style: none;
+}
+
+.order-includes li {
+  font-size: 0.85rem;
+  color: var(--color-text-muted);
+  padding: 0.4rem 0;
+  padding-left: 1.5rem;
+  position: relative;
+  font-weight: 400;
+}
+
+.order-includes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  opacity: 0.6;
+}
+
+
+/* ═══ PAYMENT FORM ═══ */
+.payment-section {
+  background: var(--color-surface);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 12px;
+  padding: 2.5rem;
+  background: linear-gradient(135deg, var(--color-surface) 0%, var(--color-surface-elevated) 100%);
+}
+
+.payment-title {
+  font-family: var(--font-display);
+  font-size: 1.3rem;
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 1.5rem;
+}
+
+.form-group {
+  margin-bottom: 1.25rem;
+}
+
+.form-label {
+  display: block;
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-text-muted);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.form-input {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  background: var(--color-bg);
+  border: 1px solid var(--color-glass-border);
+  border-radius: 4px;
+  color: var(--color-text);
+  font-family: var(--font-body);
+  font-size: 0.9rem;
+  outline: none;
+  transition: border-color 0.3s;
+}
+
+.form-input::placeholder {
+  color: var(--color-text-dim);
+}
+
+.form-input:focus {
+  border-color: var(--color-accent);
+}
+
+#payment-element {
+  margin-bottom: 1.5rem;
+  min-height: 100px;
+}
+
+.pay-button {
+  width: 100%;
+  padding: 1rem;
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  color: var(--color-bg);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.pay-button:hover:not(:disabled) {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.pay-button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.pay-button.loading {
+  position: relative;
+  color: transparent;
+}
+
+.pay-button.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 20px;
+  height: 20px;
+  margin: -10px 0 0 -10px;
+  border: 2px solid var(--color-bg);
+  border-top-color: transparent;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.error-message {
+  display: none;
+  background: rgba(220, 50, 50, 0.1);
+  border: 1px solid rgba(220, 50, 50, 0.3);
+  border-radius: 4px;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  color: #e8564a;
+  font-size: 0.85rem;
+  line-height: 1.5;
+}
+
+.error-message.visible {
+  display: block;
+}
+
+.secure-note {
+  margin-top: 1rem;
+  text-align: center;
+  font-size: 0.72rem;
+  color: var(--color-text-dim);
+  letter-spacing: 0.05em;
+}
+
+/* ═══ FOOTER ═══ */
+.footer { display: flex; justify-content: space-between; align-items: center; padding: 2rem 3rem; border-top: 1px solid var(--color-glass-border); }
+.footer-left { font-size: 0.75rem; color: var(--color-text-dim); letter-spacing: 0.05em; }
+.footer-right { display: flex; gap: 2rem; }
+.footer-right a { color: var(--color-text-dim); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.05em; transition: color 0.3s; }
+.footer-right a:hover { color: var(--color-accent); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+  .checkout-page { padding: 6rem 1rem 3rem; }
+  .checkout-container { grid-template-columns: 1fr; gap: 2rem; }
+  .footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .checkout-page { padding: 5rem 0.75rem 2rem; }
+  .order-summary, .payment-section { padding: 1.5rem; }
+  .order-product-name { font-size: 1.2rem; }
+  .order-price { font-size: 1.6rem; }
+  .footer { padding: 2rem 1rem; }
+  .footer-right { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#capabilities" data-mobile-link>Services</a>
+  <a href="/#showcase" data-mobile-link>Work</a>
+  <a href="/#process" data-mobile-link>Process</a>
+  <a href="/products" data-mobile-link>Products</a>
+  <a href="/#contact" data-mobile-link>Contact</a>
+  <a href="/#contact" data-mobile-link style="color:var(--color-accent);">Book a Call</a>
+</div>
+
+<!-- Navigation -->
+<nav class="nav scrolled" id="nav">
+  <a href="/" class="nav-logo"><span class="logo-i">i</span>HelpBuild</a>
+  <ul class="nav-links">
+    <li><a href="/#capabilities">Services</a></li>
+    <li><a href="/#showcase">Work</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='/#contact'">Book a Call</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ CHECKOUT ═══ -->
+<section class="checkout-page">
+  <div class="checkout-container">
+
+    <!-- Order Summary -->
+    <div class="order-summary">
+      <p class="order-eyebrow">Order Summary</p>
+      <h1 class="order-product-name">The 25-Prompt AI Cheat Sheet</h1>
+      <p class="order-price">$7.00</p>
+      <hr class="order-divider">
+      <p class="order-includes-label">What's Included</p>
+      <ul class="order-includes">
+        <li>25 categorized power prompts</li>
+        <li>Copy-paste ready for any AI tool</li>
+        <li>Industry-specific variations</li>
+        <li>Bonus: prompt engineering tips</li>
+        <li>Instant PDF download after purchase</li>
+      </ul>
+    </div>
+
+    <!-- Payment Form -->
+    <div class="payment-section">
+      <h2 class="payment-title">Complete Your Purchase</h2>
+
+      <div class="error-message" id="errorMessage"></div>
+
+      <div class="form-group">
+        <label class="form-label" for="customerName">Full Name</label>
+        <input type="text" id="customerName" class="form-input" placeholder="John Smith" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label" for="customerEmail">Email Address</label>
+        <input type="email" id="customerEmail" class="form-input" placeholder="john@example.com" required>
+      </div>
+
+      <div class="form-group">
+        <label class="form-label">Payment Details</label>
+        <div id="payment-element">
+          <!-- Stripe Payment Element will mount here -->
+        </div>
+      </div>
+
+      <button type="button" class="pay-button" id="payButton" disabled>
+        Pay $7.00
+      </button>
+
+      <p class="secure-note">Secured by Stripe. Your card details never touch our servers.</p>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-left">&copy; 2026 iHelpBuild. All rights reserved.</div>
+  <div class="footer-right">
+    <a href="/blog">Blog</a>
+    <a href="/faq">FAQ</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script src="https://js.stripe.com/v3/"></script>
+<script>
+(function() {
+  // ═══ MOBILE NAV ═══
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('[data-mobile-link]').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ═══ STRIPE CHECKOUT ═══
+
+  // REPLACE with your Stripe publishable key
+  const stripe = Stripe('pk_live_51SDrByEJ8QE9budLjr73Y71UmdTVlsRQHJyV2pOIZyOQqvV6VUVYD5V3jqoEyow4PoIvSmUeELMtCaP7B9vH3jsS00Aik3FnBw');
+
+  const product = new URLSearchParams(window.location.search).get('product') || 'cheatsheet-25';
+  const payButton = document.getElementById('payButton');
+  const errorMessage = document.getElementById('errorMessage');
+  const nameInput = document.getElementById('customerName');
+  const emailInput = document.getElementById('customerEmail');
+
+  let elements;
+  let paymentElement;
+  let clientSecret;
+  let paymentIntentId;
+  let isProcessing = false;
+
+  function showError(msg) {
+    errorMessage.textContent = msg;
+    errorMessage.classList.add('visible');
+  }
+
+  function hideError() {
+    errorMessage.classList.remove('visible');
+  }
+
+  // Initialize: create PaymentIntent when user fills in their details
+  // We defer creation until the user is ready, but Stripe Elements needs
+  // a clientSecret to mount. So we create the intent on first interaction.
+  let initialized = false;
+
+  async function initializePayment() {
+    if (initialized) return;
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+
+    if (!name || !email) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return;
+
+    initialized = true;
+    hideError();
+
+    try {
+      const res = await fetch('/api/create-checkout', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ product, email, name }),
+      });
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        initialized = false;
+        showError(data.error || 'Failed to initialize payment.');
+        return;
+      }
+
+      clientSecret = data.clientSecret;
+      paymentIntentId = data.paymentIntentId;
+
+      // Mount Stripe Payment Element
+      elements = stripe.elements({
+        clientSecret,
+        appearance: {
+          theme: 'night',
+          variables: {
+            colorPrimary: '#c8a97e',
+            colorBackground: '#08080a',
+            colorText: '#f0ece4',
+            colorDanger: '#e8564a',
+            fontFamily: 'Inter, -apple-system, sans-serif',
+            borderRadius: '4px',
+            spacingUnit: '4px',
+          },
+          rules: {
+            '.Input': {
+              border: '1px solid rgba(255, 255, 255, 0.08)',
+              backgroundColor: '#08080a',
+            },
+            '.Input:focus': {
+              border: '1px solid #c8a97e',
+              boxShadow: 'none',
+            },
+            '.Label': {
+              color: '#8a8690',
+              fontSize: '0.75rem',
+              letterSpacing: '0.1em',
+              textTransform: 'uppercase',
+            },
+          },
+        },
+      });
+
+      paymentElement = elements.create('payment');
+      paymentElement.mount('#payment-element');
+
+      paymentElement.on('ready', () => {
+        payButton.disabled = false;
+      });
+
+    } catch (err) {
+      initialized = false;
+      showError('Connection error. Please try again.');
+      console.error('Init error:', err);
+    }
+  }
+
+  // Trigger initialization when email field loses focus (user has filled in details)
+  emailInput.addEventListener('blur', initializePayment);
+  // Also trigger on name blur in case email was autofilled first
+  nameInput.addEventListener('blur', () => {
+    if (emailInput.value.trim()) initializePayment();
+  });
+
+  // ═══ PAY BUTTON ═══
+  payButton.addEventListener('click', async () => {
+    if (isProcessing) return;
+
+    const name = nameInput.value.trim();
+    const email = emailInput.value.trim();
+
+    if (!name) { showError('Please enter your name.'); nameInput.focus(); return; }
+    if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('Please enter a valid email address.'); emailInput.focus(); return; }
+
+    // Make sure payment is initialized
+    if (!initialized) {
+      await initializePayment();
+      if (!initialized) return;
+      // Wait for Stripe Elements to be ready
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+
+    if (!clientSecret) {
+      showError('Payment not initialized. Please try again.');
+      return;
+    }
+
+    isProcessing = true;
+    hideError();
+    payButton.disabled = true;
+    payButton.classList.add('loading');
+    payButton.textContent = 'Processing...';
+
+    try {
+      // Confirm the payment with Stripe
+      const { error, paymentIntent } = await stripe.confirmPayment({
+        elements,
+        confirmParams: {
+          payment_method_data: {
+            billing_details: {
+              name: name,
+              email: email,
+            },
+          },
+          return_url: window.location.origin + '/thank-you',
+        },
+        redirect: 'if_required',
+      });
+
+      if (error) {
+        showError(error.message);
+        isProcessing = false;
+        payButton.disabled = false;
+        payButton.classList.remove('loading');
+        payButton.textContent = 'Pay $7.00';
+        return;
+      }
+
+      // Payment succeeded (no redirect needed) — verify and get download token
+      if (paymentIntent && paymentIntent.status === 'succeeded') {
+        const verifyRes = await fetch('/api/verify-payment', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ paymentIntentId: paymentIntent.id }),
+        });
+
+        const verifyData = await verifyRes.json();
+
+        if (verifyData.success && verifyData.downloadToken) {
+          window.location.href = '/thank-you?token=' + encodeURIComponent(verifyData.downloadToken) + '&product=' + encodeURIComponent(product);
+        } else {
+          // Payment went through but token generation failed — still redirect
+          window.location.href = '/thank-you?payment=success&product=' + encodeURIComponent(product);
+        }
+      } else {
+        // Payment requires additional action or redirect happened
+        showError('Payment status: ' + (paymentIntent ? paymentIntent.status : 'unknown') + '. Please try again.');
+        isProcessing = false;
+        payButton.disabled = false;
+        payButton.classList.remove('loading');
+        payButton.textContent = 'Pay $7.00';
+      }
+
+    } catch (err) {
+      console.error('Payment error:', err);
+      showError('Payment failed. Please try again.');
+      isProcessing = false;
+      payButton.disabled = false;
+      payButton.classList.remove('loading');
+      payButton.textContent = 'Pay $7.00';
+    }
+  });
+
+})();
+</script>
+</body>
+</html>

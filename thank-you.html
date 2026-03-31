@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank You — iHelpBuild</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Playfair+Display:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+<style>
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+:root {
+  --color-bg: #08080a;
+  --color-surface: #111114;
+  --color-surface-elevated: #1a1a1f;
+  --color-text: #f0ece4;
+  --color-text-muted: #8a8690;
+  --color-text-dim: #55515c;
+  --color-accent: #c8a97e;
+  --color-accent-warm: #d4a855;
+  --color-accent-cool: #7eb8c8;
+  --color-white: #ffffff;
+  --color-glass: rgba(255, 255, 255, 0.04);
+  --color-glass-border: rgba(255, 255, 255, 0.08);
+  --color-glass-hover: rgba(255, 255, 255, 0.07);
+  --font-display: 'Playfair Display', Georgia, serif;
+  --font-body: 'Inter', -apple-system, sans-serif;
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-out-quart: cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+body {
+  background: var(--color-bg);
+  overflow-x: hidden;
+}
+
+/* ═══ NAVIGATION ═══ */
+.nav { position: fixed; top: 0; left: 0; right: 0; z-index: 1000; padding: 1.5rem 3rem; display: flex; align-items: center; justify-content: space-between; transition: background 0.5s, backdrop-filter 0.5s; }
+.nav.scrolled { background: rgba(8, 8, 10, 0.85); backdrop-filter: blur(30px) saturate(1.5); }
+.nav-logo { font-family: var(--font-body); font-weight: 300; font-size: 0.85rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--color-text); text-decoration: none; display: flex; align-items: center; gap: 0.5rem; }
+.nav-logo .logo-i { color: var(--color-accent); font-family: var(--font-display); font-style: italic; font-size: 1.1rem; font-weight: 700; }
+.nav-links { display: flex; gap: 2.5rem; list-style: none; }
+.nav-links a { color: var(--color-text-muted); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; font-weight: 400; transition: color 0.3s; position: relative; }
+.nav-links a::after { content: ''; position: absolute; bottom: -4px; left: 0; width: 0; height: 1px; background: var(--color-accent); transition: width 0.4s var(--ease-out-expo); }
+.nav-links a:hover { color: var(--color-text); }
+.nav-links a:hover::after { width: 100%; }
+.nav-cta { padding: 0.6rem 1.6rem; border: 1px solid var(--color-glass-border); background: var(--color-glass); color: var(--color-text); font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase; font-family: var(--font-body); cursor: pointer; transition: all 0.4s var(--ease-out-expo); backdrop-filter: blur(10px); }
+.nav-cta:hover { background: var(--color-accent); color: var(--color-bg); border-color: var(--color-accent); }
+
+/* ═══ MOBILE NAV ═══ */
+.nav-hamburger { display: none; flex-direction: column; gap: 5px; background: none; border: none; cursor: pointer; padding: 4px; z-index: 1002; }
+.nav-hamburger span { display: block; width: 24px; height: 1.5px; background: var(--color-text); transition: all 0.3s var(--ease-out-expo); transform-origin: center; }
+.nav-hamburger.open span:nth-child(1) { transform: rotate(45deg) translate(4px, 5px); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: rotate(-45deg) translate(4px, -5px); }
+
+.mobile-menu { position: fixed; inset: 0; background: rgba(8, 8, 10, 0.97); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); z-index: 1001; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2rem; opacity: 0; visibility: hidden; transition: opacity 0.4s var(--ease-out-expo), visibility 0.4s; }
+.mobile-menu.open { opacity: 1; visibility: visible; }
+.mobile-menu a { color: var(--color-text); text-decoration: none; font-family: var(--font-display); font-size: 2rem; font-weight: 400; opacity: 0; transform: translateY(20px); transition: opacity 0.5s var(--ease-out-expo), transform 0.5s var(--ease-out-expo), color 0.3s; }
+.mobile-menu.open a { opacity: 1; transform: translateY(0); }
+.mobile-menu a:nth-child(1) { transition-delay: 0.1s; }
+.mobile-menu a:nth-child(2) { transition-delay: 0.15s; }
+.mobile-menu a:nth-child(3) { transition-delay: 0.2s; }
+.mobile-menu a:nth-child(4) { transition-delay: 0.25s; }
+.mobile-menu a:nth-child(5) { transition-delay: 0.3s; }
+.mobile-menu a:nth-child(6) { transition-delay: 0.35s; }
+.mobile-menu a:hover { color: var(--color-accent); }
+
+/* ═══ THANK YOU PAGE ═══ */
+.thankyou-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8rem 2rem 4rem;
+}
+
+.thankyou-page::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 600px;
+  height: 600px;
+  background: radial-gradient(ellipse, rgba(200, 169, 126, 0.06) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+.thankyou-card {
+  max-width: 580px;
+  width: 100%;
+  text-align: center;
+  background: var(--color-surface);
+  border: 1px solid rgba(200, 169, 126, 0.2);
+  border-radius: 12px;
+  padding: 3.5rem 3rem;
+  position: relative;
+}
+
+.thankyou-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(200, 169, 126, 0.1);
+  border: 1px solid rgba(200, 169, 126, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  font-size: 1.8rem;
+}
+
+.thankyou-headline {
+  font-family: var(--font-display);
+  font-size: clamp(1.8rem, 4vw, 2.5rem);
+  font-weight: 400;
+  color: var(--color-text);
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.thankyou-headline em {
+  font-style: italic;
+  color: var(--color-accent);
+}
+
+.thankyou-subtitle {
+  font-size: 1rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+  margin-bottom: 2rem;
+  font-weight: 300;
+}
+
+.download-button {
+  display: inline-block;
+  padding: 1rem 2.5rem;
+  background: var(--color-accent);
+  border: 1px solid var(--color-accent);
+  color: var(--color-bg);
+  font-size: 0.8rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 600;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: all 0.4s var(--ease-out-expo);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+}
+
+.download-button:hover {
+  background: transparent;
+  color: var(--color-accent);
+}
+
+.no-download {
+  display: none;
+  padding: 1rem;
+  background: rgba(126, 184, 200, 0.08);
+  border: 1px solid rgba(126, 184, 200, 0.2);
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+}
+
+.no-download p {
+  font-size: 0.85rem;
+  color: var(--color-accent-cool);
+  line-height: 1.6;
+}
+
+.thankyou-divider {
+  border: none;
+  border-top: 1px solid var(--color-glass-border);
+  margin: 1.5rem 0;
+}
+
+.thankyou-receipt {
+  font-size: 0.85rem;
+  color: var(--color-text-dim);
+  line-height: 1.7;
+  margin-bottom: 1.5rem;
+}
+
+.back-link {
+  display: inline-block;
+  padding: 0.7rem 1.8rem;
+  border: 1px solid var(--color-glass-border);
+  background: transparent;
+  color: var(--color-text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  font-family: var(--font-body);
+  font-weight: 500;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: all 0.4s var(--ease-out-expo);
+}
+
+.back-link:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+
+/* ═══ FOOTER ═══ */
+.footer { display: flex; justify-content: space-between; align-items: center; padding: 2rem 3rem; border-top: 1px solid var(--color-glass-border); }
+.footer-left { font-size: 0.75rem; color: var(--color-text-dim); letter-spacing: 0.05em; }
+.footer-right { display: flex; gap: 2rem; }
+.footer-right a { color: var(--color-text-dim); text-decoration: none; font-size: 0.75rem; letter-spacing: 0.05em; transition: color 0.3s; }
+.footer-right a:hover { color: var(--color-accent); }
+
+/* ═══ RESPONSIVE ═══ */
+@media (max-width: 900px) {
+  .nav { padding: 1rem 1.5rem; }
+  .nav-links { display: none; }
+  .nav-hamburger { display: flex; }
+  .nav-cta { display: none; }
+  .thankyou-page { padding: 6rem 1rem 3rem; }
+  .footer { flex-direction: column; gap: 1.5rem; text-align: center; }
+}
+
+@media (max-width: 600px) {
+  .thankyou-page { padding: 5rem 0.75rem 2rem; }
+  .thankyou-card { padding: 2.5rem 1.5rem; }
+  .footer { padding: 2rem 1rem; }
+  .footer-right { gap: 1rem; flex-wrap: wrap; justify-content: center; }
+}
+</style>
+</head>
+<body>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu">
+  <a href="/#capabilities" data-mobile-link>Services</a>
+  <a href="/#showcase" data-mobile-link>Work</a>
+  <a href="/#process" data-mobile-link>Process</a>
+  <a href="/products" data-mobile-link>Products</a>
+  <a href="/#contact" data-mobile-link>Contact</a>
+  <a href="/#contact" data-mobile-link style="color:var(--color-accent);">Book a Call</a>
+</div>
+
+<!-- Navigation -->
+<nav class="nav scrolled" id="nav">
+  <a href="/" class="nav-logo"><span class="logo-i">i</span>HelpBuild</a>
+  <ul class="nav-links">
+    <li><a href="/#capabilities">Services</a></li>
+    <li><a href="/#showcase">Work</a></li>
+    <li><a href="/#process">Process</a></li>
+    <li><a href="/products">Products</a></li>
+    <li><a href="/#contact">Contact</a></li>
+  </ul>
+  <button class="nav-cta" onclick="window.location.href='/#contact'">Book a Call</button>
+  <button class="nav-hamburger" id="navHamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- ═══ THANK YOU ═══ -->
+<section class="thankyou-page">
+  <div class="thankyou-card">
+    <div class="thankyou-icon">&#10003;</div>
+    <h1 class="thankyou-headline">Thank You for Your <em>Purchase</em></h1>
+    <p class="thankyou-subtitle">Your payment was successful. Your 25-Prompt AI Cheat Sheet is ready to download.</p>
+
+    <a class="download-button" id="downloadButton" href="#">
+      Download Your Cheat Sheet
+    </a>
+
+    <div class="no-download" id="noDownload">
+      <p>Your payment was confirmed, but we could not generate a download link. Please check your email for your receipt and download instructions, or contact support.</p>
+    </div>
+
+    <hr class="thankyou-divider">
+
+    <p class="thankyou-receipt">
+      A receipt has been sent to your email address by Stripe.<br>
+      Check your inbox (and spam folder) for your purchase confirmation.
+    </p>
+
+    <a href="/products" class="back-link">Browse More Products</a>
+  </div>
+</section>
+
+<!-- ═══ FOOTER ═══ -->
+<footer class="footer">
+  <div class="footer-left">&copy; 2026 iHelpBuild. All rights reserved.</div>
+  <div class="footer-right">
+    <a href="/blog">Blog</a>
+    <a href="/faq">FAQ</a>
+    <a href="#">LinkedIn</a>
+    <a href="#">Instagram</a>
+    <a href="#">Twitter</a>
+  </div>
+</footer>
+
+<script>
+(function() {
+  // ═══ MOBILE NAV ═══
+  const hamburger = document.getElementById('navHamburger');
+  const mobileMenu = document.getElementById('mobileMenu');
+  hamburger.addEventListener('click', () => {
+    hamburger.classList.toggle('open');
+    mobileMenu.classList.toggle('open');
+    document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+  });
+  document.querySelectorAll('[data-mobile-link]').forEach(link => {
+    link.addEventListener('click', () => {
+      hamburger.classList.remove('open');
+      mobileMenu.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+
+  // ═══ DOWNLOAD LINK ═══
+  const params = new URLSearchParams(window.location.search);
+  const token = params.get('token');
+  const product = params.get('product') || 'cheatsheet-25';
+  const downloadButton = document.getElementById('downloadButton');
+  const noDownload = document.getElementById('noDownload');
+
+  if (token) {
+    downloadButton.href = '/api/download?token=' + encodeURIComponent(token) + '&product=' + encodeURIComponent(product);
+    downloadButton.style.display = 'inline-block';
+    noDownload.style.display = 'none';
+  } else {
+    downloadButton.style.display = 'none';
+    noDownload.style.display = 'block';
+  }
+})();
+</script>
+</body>
+</html>

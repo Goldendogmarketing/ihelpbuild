@@ -8,7 +8,9 @@
     { "source": "/unsubscribe", "destination": "/api/unsubscribe" },
     { "source": "/products", "destination": "/products.html" },
     { "source": "/faq", "destination": "/faq.html" },
-    { "source": "/blog", "destination": "/blog.html" }
+    { "source": "/blog", "destination": "/blog.html" },
+    { "source": "/checkout", "destination": "/checkout.html" },
+    { "source": "/thank-you", "destination": "/thank-you.html" }
   ],
   "headers": [
     {
