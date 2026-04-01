@@ -12,7 +12,7 @@ module.exports = async function handler(req, res) {
   // GET — list all campaigns
   if (req.method === 'GET') {
     try {
-      const campaigns = getAllCampaigns();
+      const campaigns = await getAllCampaigns();
       return res.status(200).json({ campaigns });
     } catch (err) {
       console.error('Get campaigns error:', err);
@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
       if (!name || !subject) {
         return res.status(400).json({ error: 'Name and subject are required' });
       }
-      const campaign = createCampaign({ name, subject, body, audience });
+      const campaign = await createCampaign({ name, subject, body, audience });
       return res.status(201).json({ campaign });
     } catch (err) {
       console.error('Create campaign error:', err);

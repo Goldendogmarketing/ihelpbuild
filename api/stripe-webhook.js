@@ -42,14 +42,14 @@ module.exports = async function handler(req, res) {
       }
 
       // Check if contact exists
-      const existing = getContactByEmail(email);
+      const existing = await getContactByEmail(email);
 
       if (existing) {
         // Upgrade to purchaser, add product
         const products = existing.products || [];
         if (!products.includes(productName)) products.push(productName);
 
-        updateContact(existing.id, {
+        await updateContact(existing.id, {
           type: 'purchaser',
           name: name || existing.name,
           products,
@@ -57,10 +57,10 @@ module.exports = async function handler(req, res) {
         });
 
         // Start purchaser upsell sequence
-        enrollInUpsellSequence(existing.id, email, name, productName);
+        await enrollInUpsellSequence(existing.id, email, name, productName);
       } else {
         // Create new purchaser contact
-        const sequences = getSequences();
+        const sequences = await getSequences();
         const upsellSeq = sequences['purchaser-upsell'];
         let sequenceState = null;
 
@@ -72,7 +72,7 @@ module.exports = async function handler(req, res) {
           };
         }
 
-        const contact = createContact({
+        const contact = await createContact({
           type: 'purchaser',
           email,
           name,
@@ -82,7 +82,7 @@ module.exports = async function handler(req, res) {
           sequenceState,
         });
 
-        enrollInUpsellSequence(contact.id, email, name, productName);
+        await enrollInUpsellSequence(contact.id, email, name, productName);
       }
 
       console.log(`Stripe: processed purchase of ${productName} by ${email}`);
@@ -95,7 +95,7 @@ module.exports = async function handler(req, res) {
   }
 };
 
-function enrollInUpsellSequence(contactId, email, name, productName) {
+async function enrollInUpsellSequence(contactId, email, name, productName) {
   const baseUrl = process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000';
 
   // Map product names to download URLs
@@ -115,10 +115,10 @@ function enrollInUpsellSequence(contactId, email, name, productName) {
   }).catch(err => console.error('Purchase confirm email failed:', err));
 
   // Set up upsell sequence (step 1 = upsell, sent after delay)
-  const sequences = getSequences();
+  const sequences = await getSequences();
   const upsellSeq = sequences['purchaser-upsell'];
   if (upsellSeq && upsellSeq.steps.length > 1) {
-    updateContact(contactId, {
+    await updateContact(contactId, {
       sequenceState: {
         sequenceId: 'purchaser-upsell',
         stepIndex: 1,

@@ -16,7 +16,7 @@ module.exports = async function handler(req, res) {
         return res.status(400).json({ error: 'Name, email, and project type are required.' });
       }
 
-      const lead = createLead({
+      const lead = await createLead({
         name: String(name).slice(0, 200),
         email: String(email).slice(0, 200),
         phone: phone ? String(phone).slice(0, 30) : '',
@@ -47,7 +47,7 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-      const leads = getAllLeads();
+      const leads = await getAllLeads();
       return res.status(200).json({ leads });
     } catch (err) {
       console.error('Get leads error:', err);

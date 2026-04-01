@@ -6,7 +6,7 @@ module.exports = async function handler(req, res) {
   // GET is public (frontend needs settings to render CTAs)
   if (req.method === 'GET') {
     try {
-      const settings = getSettings();
+      const settings = await getSettings();
       return res.status(200).json({ settings });
     } catch (err) {
       console.error('Get settings error:', err);
@@ -23,7 +23,7 @@ module.exports = async function handler(req, res) {
 
   if (req.method === 'PUT') {
     try {
-      const settings = updateSettings(req.body);
+      const settings = await updateSettings(req.body);
       return res.status(200).json({ settings });
     } catch (err) {
       console.error('Update settings error:', err);

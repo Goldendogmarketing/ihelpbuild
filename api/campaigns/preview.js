@@ -15,7 +15,7 @@ module.exports = async function handler(req, res) {
 
   try {
     const { audience } = req.body;
-    const recipients = getFilteredRecipients(audience || { type: 'all' });
+    const recipients = await getFilteredRecipients(audience || { type: 'all' });
     return res.status(200).json({
       count: recipients.length,
       recipients: recipients.slice(0, 50).map(r => ({

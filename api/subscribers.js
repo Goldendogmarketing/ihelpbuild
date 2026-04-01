@@ -18,11 +18,11 @@ module.exports = async function handler(req, res) {
       const sanitizedSource = source ? String(source).slice(0, 50) : 'direct';
 
       // Deduplicate by email
-      const existing = getContactByEmail(sanitizedEmail);
+      const existing = await getContactByEmail(sanitizedEmail);
       if (existing) {
         // Already in system — update source tag if different, but don't create duplicate
         if (!existing.tags.includes(sanitizedSource)) {
-          updateContact(existing.id, {
+          await updateContact(existing.id, {
             tags: [...existing.tags, sanitizedSource],
           });
         }
@@ -30,7 +30,7 @@ module.exports = async function handler(req, res) {
       }
 
       // Enroll in welcome sequence
-      const sequences = getSequences();
+      const sequences = await getSequences();
       const welcomeSeq = sequences['subscriber-welcome'];
       let sequenceState = null;
 
@@ -42,7 +42,7 @@ module.exports = async function handler(req, res) {
         };
       }
 
-      const contact = createContact({
+      const contact = await createContact({
         type: 'subscriber',
         email: sanitizedEmail,
         name: sanitizedName,
@@ -66,7 +66,7 @@ module.exports = async function handler(req, res) {
         // Advance sequence to step 1
         const nextStep = welcomeSeq.steps[1];
         if (nextStep) {
-          updateContact(contact.id, {
+          await updateContact(contact.id, {
             sequenceState: {
               sequenceId: 'subscriber-welcome',
               stepIndex: 1,
@@ -74,7 +74,7 @@ module.exports = async function handler(req, res) {
             },
           });
         } else {
-          updateContact(contact.id, { sequenceState: null });
+          await updateContact(contact.id, { sequenceState: null });
         }
       }
 
@@ -94,7 +94,7 @@ module.exports = async function handler(req, res) {
     }
 
     try {
-      const subscribers = getAllContacts({ type: 'subscriber' });
+      const subscribers = await getAllContacts({ type: 'subscriber' });
       return res.status(200).json({ subscribers });
     } catch (err) {
       console.error('Get subscribers error:', err);

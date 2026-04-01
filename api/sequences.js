@@ -17,8 +17,8 @@ module.exports = async function handler(req, res) {
 
   try {
     const now = new Date().toISOString();
-    const dueContacts = getContactsDueForSequence(now);
-    const sequences = getSequences();
+    const dueContacts = await getContactsDueForSequence(now);
+    const sequences = await getSequences();
     const baseUrl = process.env.VERCEL_URL ? 'https://' + process.env.VERCEL_URL : 'http://localhost:3000';
 
     let processed = 0;
@@ -27,7 +27,7 @@ module.exports = async function handler(req, res) {
     for (const contact of dueContacts) {
       // Skip unsubscribed contacts
       if (contact.status === 'unsubscribed') {
-        updateContact(contact.id, { sequenceState: null });
+        await updateContact(contact.id, { sequenceState: null });
         continue;
       }
 
@@ -36,14 +36,14 @@ module.exports = async function handler(req, res) {
 
       if (!sequence) {
         // Unknown sequence — clear it
-        updateContact(contact.id, { sequenceState: null });
+        await updateContact(contact.id, { sequenceState: null });
         continue;
       }
 
       const step = sequence.steps[sequenceState.stepIndex];
       if (!step) {
         // No more steps — sequence complete
-        updateContact(contact.id, { sequenceState: null });
+        await updateContact(contact.id, { sequenceState: null });
         continue;
       }
 
@@ -69,7 +69,7 @@ module.exports = async function handler(req, res) {
         const nextStep = sequence.steps[nextIndex];
 
         if (nextStep) {
-          updateContact(contact.id, {
+          await updateContact(contact.id, {
             sequenceState: {
               sequenceId: sequenceState.sequenceId,
               stepIndex: nextIndex,
@@ -78,7 +78,7 @@ module.exports = async function handler(req, res) {
           });
         } else {
           // Sequence complete
-          updateContact(contact.id, { sequenceState: null });
+          await updateContact(contact.id, { sequenceState: null });
         }
       } catch (err) {
         console.error(`Sequence email failed for ${contact.email}:`, err);

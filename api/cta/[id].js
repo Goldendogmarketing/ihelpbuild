@@ -12,14 +12,14 @@ module.exports = async function handler(req, res) {
   const { id } = req.query;
 
   if (req.method === 'GET') {
-    const cta = getCTAById(id);
+    const cta = await getCTAById(id);
     if (!cta) return res.status(404).json({ error: 'CTA not found' });
     return res.status(200).json({ cta });
   }
 
   if (req.method === 'PUT') {
     try {
-      const cta = updateCTA(id, req.body);
+      const cta = await updateCTA(id, req.body);
       if (!cta) return res.status(404).json({ error: 'CTA not found' });
       return res.status(200).json({ cta });
     } catch (err) {
@@ -29,7 +29,7 @@ module.exports = async function handler(req, res) {
   }
 
   if (req.method === 'DELETE') {
-    const success = deleteCTA(id);
+    const success = await deleteCTA(id);
     if (!success) return res.status(404).json({ error: 'CTA not found' });
     return res.status(200).json({ success: true });
   }

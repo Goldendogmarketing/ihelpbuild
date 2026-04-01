@@ -19,7 +19,7 @@ module.exports = async function handler(req, res) {
       if (status) filters.status = status;
       if (source) filters.source = source;
 
-      const contacts = getAllContacts(filters);
+      const contacts = await getAllContacts(filters);
       return res.status(200).json({ contacts });
     } catch (err) {
       console.error('Get contacts error:', err);

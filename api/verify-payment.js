@@ -61,20 +61,20 @@ module.exports = async function handler(req, res) {
 
     if (email) {
       try {
-        const existing = getContactByEmail(email);
+        const existing = await getContactByEmail(email);
 
         if (existing) {
           const products = existing.products || [];
           if (!products.includes(productName)) products.push(productName);
 
-          updateContact(existing.id, {
+          await updateContact(existing.id, {
             type: 'purchaser',
             name: name || existing.name,
             products,
             status: 'active',
           });
         } else {
-          const sequences = getSequences();
+          const sequences = await getSequences();
           const upsellSeq = sequences['purchaser-upsell'];
           let sequenceState = null;
 
@@ -86,7 +86,7 @@ module.exports = async function handler(req, res) {
             };
           }
 
-          createContact({
+          await createContact({
             type: 'purchaser',
             email,
             name,

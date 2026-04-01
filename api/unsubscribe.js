@@ -10,7 +10,7 @@ module.exports = async function handler(req, res) {
     return res.status(400).send(unsubPage('Missing subscriber ID.', true));
   }
 
-  const contact = getContactById(id);
+  const contact = await getContactById(id);
   if (!contact) {
     return res.status(404).send(unsubPage('Subscriber not found.', true));
   }
@@ -20,7 +20,7 @@ module.exports = async function handler(req, res) {
   }
 
   // Unsubscribe: stop sequences and mark inactive
-  updateContact(id, {
+  await updateContact(id, {
     status: 'unsubscribed',
     sequenceState: null,
   });

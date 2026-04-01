@@ -18,7 +18,7 @@ module.exports = async function handler(req, res) {
     const { campaignId } = req.body;
     if (!campaignId) return res.status(400).json({ error: 'campaignId is required' });
 
-    const campaign = getCampaignById(campaignId);
+    const campaign = await getCampaignById(campaignId);
     if (!campaign) return res.status(404).json({ error: 'Campaign not found' });
     if (campaign.status === 'sending') return res.status(409).json({ error: 'Campaign is already sending' });
     if (!campaign.subject || !campaign.body) {
@@ -26,13 +26,13 @@ module.exports = async function handler(req, res) {
     }
 
     // Get filtered recipients
-    const recipients = getFilteredRecipients(campaign.audience || { type: 'all' });
+    const recipients = await getFilteredRecipients(campaign.audience || { type: 'all' });
     if (recipients.length === 0) {
       return res.status(400).json({ error: 'No recipients match the selected audience filter' });
     }
 
     // Mark as sending
-    updateCampaign(campaignId, { status: 'sending' });
+    await updateCampaign(campaignId, { status: 'sending' });
 
     let sentCount = 0;
     let failCount = 0;
@@ -59,7 +59,7 @@ module.exports = async function handler(req, res) {
     }
 
     // Update campaign with results
-    const updated = updateCampaign(campaignId, {
+    const updated = await updateCampaign(campaignId, {
       status: 'sent',
       sentCount,
       failCount,

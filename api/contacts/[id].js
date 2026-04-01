@@ -14,7 +14,7 @@ module.exports = async function handler(req, res) {
 
   // GET — single contact
   if (req.method === 'GET') {
-    const contact = getContactById(id);
+    const contact = await getContactById(id);
     if (!contact) return res.status(404).json({ error: 'Contact not found' });
     return res.status(200).json({ contact });
   }
@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
     let contact;
 
     if (note) {
-      contact = addContactNote(id, String(note).slice(0, 2000));
+      contact = await addContactNote(id, String(note).slice(0, 2000));
     }
 
     const allowedUpdates = {};
@@ -37,17 +37,17 @@ module.exports = async function handler(req, res) {
     if (updates.products) allowedUpdates.products = updates.products;
 
     if (Object.keys(allowedUpdates).length > 0) {
-      contact = updateContact(id, allowedUpdates);
+      contact = await updateContact(id, allowedUpdates);
     }
 
-    if (!contact) contact = getContactById(id);
+    if (!contact) contact = await getContactById(id);
     if (!contact) return res.status(404).json({ error: 'Contact not found' });
     return res.status(200).json({ contact });
   }
 
   // DELETE — remove contact
   if (req.method === 'DELETE') {
-    const success = deleteContact(id);
+    const success = await deleteContact(id);
     if (!success) return res.status(404).json({ error: 'Contact not found' });
     return res.status(200).json({ success: true });
   }

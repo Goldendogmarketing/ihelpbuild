@@ -14,7 +14,7 @@ module.exports = async function handler(req, res) {
 
   // GET — single lead
   if (req.method === 'GET') {
-    const lead = getLeadById(id);
+    const lead = await getLeadById(id);
     if (!lead) return res.status(404).json({ error: 'Lead not found' });
     return res.status(200).json({ lead });
   }
@@ -25,7 +25,7 @@ module.exports = async function handler(req, res) {
     let lead;
 
     if (note) {
-      lead = addNote(id, String(note).slice(0, 2000));
+      lead = await addNote(id, String(note).slice(0, 2000));
     }
 
     const allowedUpdates = {};
@@ -36,11 +36,11 @@ module.exports = async function handler(req, res) {
     if (otherUpdates.preferredTime) allowedUpdates.preferredTime = String(otherUpdates.preferredTime).slice(0, 20);
 
     if (Object.keys(allowedUpdates).length > 0) {
-      lead = updateLead(id, allowedUpdates);
+      lead = await updateLead(id, allowedUpdates);
     }
 
     if (!lead) {
-      lead = getLeadById(id);
+      lead = await getLeadById(id);
     }
     if (!lead) return res.status(404).json({ error: 'Lead not found' });
     return res.status(200).json({ lead });
@@ -48,7 +48,7 @@ module.exports = async function handler(req, res) {
 
   // DELETE — remove lead
   if (req.method === 'DELETE') {
-    const success = deleteLead(id);
+    const success = await deleteLead(id);
     if (!success) return res.status(404).json({ error: 'Lead not found' });
     return res.status(200).json({ success: true });
   }
